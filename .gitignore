@@ -11,3 +11,5 @@ dummy.xlsx
 EGCO_Sudanese_24_HFC.do
 HFC_Report.xlsx
 questionnaire.xlsx
+helpers/__pycache__/
+.gitignore
