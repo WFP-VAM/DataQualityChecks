@@ -1,7 +1,44 @@
-# Columns of food groups related to FCS
-fcs_cols = ['FCSStap', 'FCSPulse', 'FCSDairy', 'FCSPr', 'FCSVeg', 'FCSFruit', 'FCSFat', 'FCSSugar']
+# Columns of demographics related to male age groups
+male_cols = ['HHSize01M',
+             'HHSize24M',
+             'HHSize511M', 
+             'HHSize1217M', 
+             'HHSize1859M',
+             'HHSize60AboveM']
 
-# Weuights of food groups related to FCS
+# Columns of demographics related to female age groups
+female_cols = ['HHSize01F',
+             'HHSize24F',
+             'HHSize511F', 
+             'HHSize1217F', 
+             'HHSize1859F',
+             'HHSize60AboveF']
+
+# Columns of demographics related to adults
+adult_cols = ['HHSize1859M',
+              'HHSize60AboveM',
+              'HHSize1859F',
+              'HHSize60AboveF']
+
+# Flags related to Demographics
+demo_flags = {
+    'Flag_Demo_High_HHSize': "The Household Size is very high (More than 30)",
+    'Flag_Demo_Incosistent_HHSize': "Sum of Males and Females does not match the household size",
+    'Flag_Demo_No_Adults': "There are no adults in the household",
+    'Flag_Demo_plw': "Number of pregnant and lactating females is higher than females aged 12-59",
+}
+
+# Columns of food groups related to FCS
+fcs_cols = ['FCSStap',
+            'FCSPulse',
+            'FCSDairy',
+            'FCSPr',
+            'FCSVeg',
+            'FCSFruit',
+            'FCSFat',
+            'FCSSugar']
+
+# Weights of food groups related to FCS
 fcs_weights = [2, 3, 4, 4, 1, 1, 0.5, 0.5]
 
 # Flags related to FCS

@@ -11,11 +11,19 @@ from helpers.config import fcs_flags
 # Read from dummy data (replace with your actual data loading)
 df = pd.read_csv('congo.csv')
 
-# Call the functions to process the data
+# Calculate Food Consumption Score
 calculate_fcs(df)
-calculate_fcg(df)
+
+# Categorize FCS into FCG
+# Parameter: "True" if The consumption of sugar and oil is usually high in the context, "False" if otherwise
+calculate_fcg(df, high_sugar_oil_consumption = True)
+
+# Calculate Reduced Coping Strategy Index
 calculate_rcsi(df)
-generate_fcs_flags(df)
+
+# Generate Data Quality Flags for FCS
+# Parameters: 14 for Low FCS and 100 for High FCS (Adjust if needed)
+generate_fcs_flags(df, low_fcs=14, high_fcs=100)
 
 # Generate reports
 hh_summary = df[['EnuName', 'FCSStap', 'FCSPulse', 'FCSDairy', 'FCSPr', 'FCSVeg',
