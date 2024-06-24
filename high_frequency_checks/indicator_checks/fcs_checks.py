@@ -9,8 +9,6 @@ class FCSChecks(IndicatorChecks):
     def __init__(self, self.df):
         super().__init__(self.df)
 
-
-
     def food_consumption_score(self, threshold="21/35"):
         # Calculate FCS and generate FCS Flags---------------------------------------------------------------#
         fcs_cols = ['FCSStap', 'FCSPulse', 'FCSDairy', 'FCSPr', 'FCSVeg', 'FCSFruit', 'FCSFat', 'FCSSugar']
