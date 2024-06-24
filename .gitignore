@@ -1,15 +1,12 @@
 # dependencies
 
-.gitignore
 cleanR-main
 DataBridgesConnect-dev
 DataBridgesKnots-main
-~$HFC_Report.xlsx
 ~$qu.xlsx
 congo.csv
 dummy.xlsx
 EGCO_Sudanese_24_HFC.do
-HFC_Report.xlsx
 questionnaire.xlsx
 helpers/__pycache__/
 .gitignore

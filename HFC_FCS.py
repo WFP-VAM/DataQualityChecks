@@ -38,5 +38,3 @@ with pd.ExcelWriter('Reports/HFC_Report.xlsx') as writer:
     hh_summary.to_excel(writer, sheet_name='HH_Report', index=False)
     enu_summary.to_excel(writer, sheet_name='Enu_Report', index=False)
     id02_enu_summary.to_excel(writer, sheet_name='Admin2_Enu_Report', index=False)
-import sys
-print(sys.path)
