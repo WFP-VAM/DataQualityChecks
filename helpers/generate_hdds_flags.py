@@ -34,10 +34,10 @@ HDDSCond -> FCSCond
 def check_hdds(df):
     # if household has consumped staples for 0 days in FCS but has not consummed staples in the last 24hrs
     if df["FCSStap"] == 7 and (df["HDDSStapCer"] == 0 or df["HDDSStapRoot"] == 0):
-        df["Flag_HHDStap"] = True
+        df["Flag_HHDSStap"] = True
     # if household has consumped pulse for 0 days in FCS but has not consummed pulse in the last 24hrs
     if df["HDDSPulse"] == 0 and df["FCSPulse"] == 7:
-        df["Flag_HHDPulse"] = True
+        df["Flag_HHDSPulse"] = True
     # check dairy
     if df["HDDSDairy"] == 0 and df["FCSDairy"] == 7:
         df["Flag_HDDSDairy"] = True

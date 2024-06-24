@@ -1,4 +1,4 @@
-from config import fcs_cols, fcs_weights
+from .config import fcs_cols, fcs_weights
 
 # Function to calculate FCS based on predefined weights
 def calculate_fcs(df):

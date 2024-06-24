@@ -18,8 +18,7 @@ fcs_flags = {
 
 hdds_flags = {
     "Flag_HHDStap": "Reported HHDS staple consumption is not matching FCS staple consumption",
-    "Flag_HHDPr": "Reported HHDS pulse consumption is not matching FCSPr consumption",
-    "HDDSPulse"
+    "Flag_HHDPr": "Reported HHDS pulse consumption is not matching FCSPr consumption"
 }
 
 

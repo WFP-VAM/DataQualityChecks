@@ -1,13 +1,6 @@
 import pandas as pd
-from helpers.calculate_fcg import calculate_fcg
-from helpers.calculate_fcs import calculate_fcs
-from helpers.calculate_rcsi import calculate_rcsi
-from helpers.generate_fcs_flags import generate_fcs_flags
-from helpers.generate_hdds_flags import generate_hdds_flags
-from helpers.summarize_flags import summarize_flags
-from helpers.plot_flags_count import plot_flags_count
-from helpers.plot_error_percentage import plot_error_percentage
-from helpers.config import fcs_flags
+from helpers import calculate_fcs, calculate_fcg, calculate_rcsi, generate_fcs_flags, generate_hdds_flags
+
 from datetime import date
 
 date = date.today()
@@ -28,7 +21,8 @@ hh_summary = df[['EnuName', 'FCSStap', 'FCSPulse', 'FCSDairy', 'FCSPr', 'FCSVeg'
                  'Flag_FCS_Missing_Values', 'Flag_FCS_Erroneous_Values', 
                  'Flag_FCS_Abnormal_Identical', 'Flag_FCS_Low_Staple', 'Flag_FCS_Low_FCS',
                  'Flag_FCS_High_FCS', 'Flag_FCS_Poor_FCG_Zero_rCSI', 'Flag_FCS', 
-                 'Flag_FCS_Narrative']]
+                 'Flag_FCS_Narrative', 
+                 'Flag_HHDSStap', 'Flag_HHDSPulse', 'Flag_HDDSDairy', 'Flag_HDDSPr', 'Flag_HDDSVeg', 'Flag_HDDSFruit', 'Flag_HDDSFat', 'Flag_HDDSSugar', 'Flag_HDDSSugar']]
 
 plot_flags_count(df, list(fcs_flags.keys())[:-1], fcs_flags, 'Reports/Flags_Count.png')
 

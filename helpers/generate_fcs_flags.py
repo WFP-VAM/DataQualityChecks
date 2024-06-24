@@ -1,5 +1,5 @@
 import numpy as np
-from config import fcs_flags, fcs_cols
+from .config import fcs_flags, fcs_cols
 
 
 # Function to generate FCS flags
