@@ -179,3 +179,4 @@ HFC.py
 # config files 
 *.yaml
 
+high_frequency_checks

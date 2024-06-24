@@ -15,3 +15,11 @@ fcs_flags = {
     'Flag_FCS_Poor_FCG_Zero_rCSI': "Poor FCG with no coping (rCSI is zero)",
     'Flag_FCS': "One or more FCS flag(s) triggered"
 }
+
+hdds_flags = {
+    "Flag_HHDStap": "Reported HHDS staple consumption is not matching FCS staple consumption",
+    "Flag_HHDPr": "Reported HHDS pulse consumption is not matching FCSPr consumption",
+    "HDDSPulse"
+}
+
+

@@ -1,8 +1,29 @@
 import numpy as np
 from config import fcs_flags, fcs_cols
 
+
 # Function to generate FCS flags
 def generate_fcs_flags(df):
+    """
+    Generates FCS flags for a given DataFrame `df`.
+
+    The function creates the following flags:
+    - `Flag_FCS_Missing_Values`: Indicates if any FCS-related columns have missing values.
+    - `Flag_FCS_Erroneous_Values`: Indicates if any FCS-related column values are outside the valid range of 0-7.
+    - `Flag_FCS_Abnormal_Identical`: Indicates if all FCS-related column values are identical.
+    - `Flag_FCS_Low_Staple`: Indicates if the `FCSStap` column value is less than 4.
+    - `Flag_FCS_Low_FCS`: Indicates if the `FCS` column value is less than or equal to 10.
+    - `Flag_FCS_High_FCS`: Indicates if the `FCS` column value is greater than or equal to 90.
+    - `Flag_FCS_Poor_FCG_Zero_rCSI`: Indicates if the `FCSCat28` column is 'Poor' and the `rCSI` column is 0.
+    - `Flag_FCS`: Indicates if any of the above flags are set to 1.
+    - `Flag_FCS_Narrative`: Provides a string representation of the active flags.
+
+    Args:
+        df (pandas.DataFrame): The input DataFrame to generate the FCS flags for.
+
+    Returns:
+        pandas.DataFrame: The input DataFrame with the FCS flags added.
+    """
     for flag in fcs_flags.keys():
         df[flag] = np.nan
 
