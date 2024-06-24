@@ -1,4 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 # dependencies
 
 .gitignore
@@ -11,5 +10,4 @@ congo.csv
 dummy.xlsx
 EGCO_Sudanese_24_HFC.do
 HFC_Report.xlsx
-qu.xlsx
-HFC.py
+questionnaire.xlsx
