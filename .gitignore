@@ -170,7 +170,7 @@ DataBridgesKnots-main
 
 # code
 EGCO_Sudanese_24_HFC.do
-HFC_FCS.py
+HFC_FCS
 
 # data
 *.xlsx
