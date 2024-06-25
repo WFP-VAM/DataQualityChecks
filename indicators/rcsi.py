@@ -21,20 +21,28 @@ rcsi_flags = {
     'Flag_rCSI_Missing_Values': "Missing value(s) in the reduced coping strategies",
     'Flag_rCSI_Erroneous_Values': "Erroneous value(s) (negative or above 7) in the reduced coping strategies",
     'Flag_rCSI_Abnormal_Identical': "The values of all reduced coping strategies is identical",
+    'Flag_rCSI_Poor_FCS_and_Zero_rCSI': "The food consumption is poor with no coping (rCSI=0)",
     'Flag_rCSI': "One or more rCSI flag(s) triggered"
 }
 
 class rCSI(BaseIndicator):
-    def __init__(self, df, low_erroneous, high_erroneous):
+    def __init__(self, df, low_erroneous, high_erroneous, high_sugar_oil_consumption):
         super().__init__(df, 'rCSI', rcsi_cols, rcsi_flags, rcsi_weights)
         self.low_erroneous = low_erroneous
         self.high_erroneous = high_erroneous
+        self.high_sugar_oil_consumption = high_sugar_oil_consumption
 
     def custom_flag_logic(self):
         print("Custom flag logic for rCSI...")
+        
         # Identical Values
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_Abnormal_Identical'] = \
             (self.df[self.cols].nunique(axis=1) == 1).astype(int)
+        
+        # No Coping With Poor Consumption
+        fcs_cat_column = 'FCSCat28' if self.high_sugar_oil_consumption else 'FCSCat21'
+        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_Poor_FCS_and_Zero_rCSI'] = \
+        ((self.df[fcs_cat_column] == 'Poor') & (self.df['rCSI'] == 0)).astype(int)
 
     def calculate_rCSI(self):
         print("Calculating rCSI...")

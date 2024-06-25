@@ -12,7 +12,6 @@ class BaseIndicator:
         self.df[f'Flag_{self.indicator_name}'] = np.nan  # Overall flag initialization
         self.df[f'Flag_{self.indicator_name}_Narrative'] = ''   # Narrative flag initialization
 
-
     def _validate_columns(self):
         required_columns = ['EnuName', 'ID02'] + self.cols
         missing_columns = [col for col in required_columns if col not in self.df.columns]
@@ -32,7 +31,8 @@ class BaseIndicator:
         self.df[f'Flag_{self.indicator_name}_Missing_Values'] = self.df[self.cols].isnull().any(axis=1).astype(int)
 
         # Erroneous Values
-        erroneous_condition = (self.df[self.cols] < 0) | (self.df[self.cols] > 7)
+        print(f"Erroneous value parameters for {self.indicator_name}: low = {self.low_erroneous}, high = {self.high_erroneous}")
+        erroneous_condition = (self.df[self.cols] < self.low_erroneous) | (self.df[self.cols] > self.high_erroneous)
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Missing_Values'] == 0, f'Flag_{self.indicator_name}_Erroneous_Values'] = erroneous_condition.any(axis=1).astype(int)
 
         self.custom_flag_logic()
