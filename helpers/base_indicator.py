@@ -4,6 +4,7 @@ from datetime import datetime
 
 today = datetime.now().strftime("%Y%m%d")  
 
+
 class BaseIndicator:
     def __init__(self, df, indicator_name, cols, flags, weights=None):
         self.df = df
@@ -14,6 +15,7 @@ class BaseIndicator:
         self._validate_columns()
         self.df[f'Flag_{self.indicator_name}'] = np.nan  # Overall flag initialization
         self.df[f'Flag_{self.indicator_name}_Narrative'] = ''   # Narrative flag initialization
+
 
     def _validate_columns(self):
         required_columns = ['EnuName', 'ID02'] + self.cols
@@ -35,10 +37,7 @@ class BaseIndicator:
 
         # Erroneous Values
         erroneous_condition = (self.df[self.cols] < 0) | (self.df[self.cols] > 7)
-        self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] = np.where(
-            (self.df[f'Flag_{self.indicator_name}_Missing_Values'].fillna(0) == 0) & erroneous_condition.any(axis=1),
-            1, 0
-        )
+        self.df.loc[self.df[f'Flag_{self.indicator_name}_Missing_Values'] == 0, f'Flag_{self.indicator_name}_Erroneous_Values'] = erroneous_condition.any(axis=1).astype(int)
 
         self.custom_flag_logic()
 
