@@ -1,5 +1,9 @@
 import pandas as pd
 import numpy as np
+from datetime import datetime
+
+today = datetime.now().strftime("%Y%m%d")  
+
 
 class BaseIndicator:
     def __init__(self, df, indicator_name, cols, flags, weights=None):
@@ -66,7 +70,7 @@ class BaseIndicator:
         id02_enu_summary = self.summarize_flags(['ID02', 'EnuName'])
         id02_enu_summary = id02_enu_summary.reset_index()
 
-        with pd.ExcelWriter(f'{output_dir}/{self.indicator_name}_Report.xlsx') as writer:
+        with pd.ExcelWriter(f'{output_dir}/{today}_{self.indicator_name}_Report.xlsx') as writer:
             hh_summary.to_excel(writer, sheet_name='HH_Report', index=False)
             enu_summary.to_excel(writer, sheet_name='Enu_Report', index=False)
             id02_enu_summary.to_excel(writer, sheet_name='Admin2_Enu_Report', index=False)
