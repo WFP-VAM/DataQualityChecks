@@ -36,9 +36,10 @@ class rCSI(BaseIndicator):
     def custom_flag_logic(self):
         print("Custom flag logic for rCSI...")
         
-        # Identical Values
+        # Identical Values (Except for 0's)
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_Abnormal_Identical'] = \
-            (self.df[self.cols].nunique(axis=1) == 1).astype(int)
+        ((self.df[self.cols].nunique(axis=1) == 1) & (self.df[self.cols].sum(axis=1) != 0)).astype(int)
+
         
         # No Coping With Poor Consumption
         fcs_cat_column = 'FCSCat28' if self.high_sugar_oil_consumption else 'FCSCat21'
