@@ -10,7 +10,7 @@ from config import (high_fcs,
                     rcsi_low_erroneous)
 
 if __name__ == "__main__":
-    df = pd.read_csv('data/congo.csv')
+    df = pd.read_csv('congo.csv')
 
     # Initialize FCS instance and calculate indicators
     fcs_instance = FCS(df.copy(), low_fcs, high_fcs, fcs_low_erroneous, fcs_high_erroneous, high_sugar_oil_consumption)
@@ -27,3 +27,5 @@ if __name__ == "__main__":
     output_dir = './Reports'
     fcs_instance.generate_report(output_dir)
     rcsi_instance.generate_report(output_dir)
+    print(f"Cannot generate report {e}")
+        
