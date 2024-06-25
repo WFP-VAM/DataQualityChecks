@@ -22,3 +22,7 @@ demo_high_erroneous = 40
 
 # Set thresholds for Demographics High Household Size
 high_hhsize = 40
+
+# Set thresholds for HDDS Erroneous Values
+hdds_low_erroneous = 0
+hdds_high_erroneous = 7

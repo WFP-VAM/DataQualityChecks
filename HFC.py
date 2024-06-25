@@ -2,6 +2,7 @@ import pandas as pd
 from indicators.fcs import FCS
 from indicators.rcsi import rCSI
 from indicators.demographics import Demo
+from indicators.hdds import HDDS
 from config import (high_fcs, 
                     low_fcs,
                     fcs_high_erroneous,
@@ -12,7 +13,9 @@ from config import (high_fcs,
                     rcsi_low_erroneous,
                     demo_low_erroneous,
                     demo_high_erroneous,
-                    high_hhsize)
+                    high_hhsize,
+                    hdds_low_erroneous,
+                    hdds_high_erroneous)
 
 if __name__ == "__main__":
     df = pd.read_csv('data/congo.csv')
@@ -45,8 +48,16 @@ if __name__ == "__main__":
     demo_instance.calculate_indicators()
     demo_instance.generate_flags()
     
+    # Initialize HDDS instance and calculate indicators
+    hdds_instance = HDDS(demo_instance.df.copy(), 
+                         low_erroneous=hdds_low_erroneous,
+                         high_erroneous=hdds_high_erroneous)
+    hdds_instance.calculate_hdds()
+    hdds_instance.generate_flags()
+    
     # Output directory for reports
     output_dir = './Reports'
     fcs_instance.generate_report(output_dir)
     rcsi_instance.generate_report(output_dir)
     demo_instance.generate_report(output_dir)
+    hdds_instance.generate_report(output_dir)
