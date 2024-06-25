@@ -177,6 +177,4 @@ HFC_FCS.py
 *.csv
 
 # config files 
-*.yaml
-
-high_frequency_checks
+data_bridges_api_config.yaml

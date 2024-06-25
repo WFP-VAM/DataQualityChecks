@@ -1,6 +1,7 @@
 import pandas as pd
 from indicators.fcs import FCS
 from indicators.rcsi import rCSI
+from indicators.hdds import HDDS
 from config import (high_fcs, 
                     low_fcs,
                     fcs_high_erroneous,
@@ -23,9 +24,14 @@ if __name__ == "__main__":
     rcsi_instance.calculate_rCSI()
     rcsi_instance.generate_flags()
     
+    # Initiate HDDS instance and run checks
+    hdds_instance = HDDS(df.copy())
+    hdds_instance.generate_flags()
+
     # Output directory for reports
     output_dir = './Reports'
     fcs_instance.generate_report(output_dir)
     rcsi_instance.generate_report(output_dir)
+    hdds_instance.generate_report(output_dir)
     print(f"Cannot generate report {e}")
         
