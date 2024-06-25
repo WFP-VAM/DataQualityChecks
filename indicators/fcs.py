@@ -30,7 +30,6 @@ fcs_flags = {
     'Flag_FCS_Low_Staple': "Low staple consumption (below 4)",
     'Flag_FCS_Low_FCS': "Low FCS",
     'Flag_FCS_High_FCS': "High FCS",
-    'Flag_FCS': "One or more FCS flag(s) triggered"
 }
 
 class FCS(BaseIndicator):

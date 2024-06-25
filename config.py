@@ -13,6 +13,9 @@ high_sugar_oil_consumption = True
 rcsi_low_erroneous = 0
 rcsi_high_erroneous = 7
 
+# Set threshold for HIGH rCSI
+high_rcsi = 50
+
 # Set thresholds for Demographics Erroneous Values
 demo_low_erroneous = 0
 demo_high_erroneous = 40

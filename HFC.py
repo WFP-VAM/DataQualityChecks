@@ -7,6 +7,7 @@ from config import (high_fcs,
                     fcs_high_erroneous,
                     fcs_low_erroneous,
                     high_sugar_oil_consumption,
+                    high_rcsi,
                     rcsi_high_erroneous,
                     rcsi_low_erroneous,
                     demo_low_erroneous,
@@ -28,7 +29,8 @@ if __name__ == "__main__":
     fcs_instance.generate_flags()
     
     # Initialize rCSI instance and calculate indicators
-    rcsi_instance = rCSI(fcs_instance.df.copy(), 
+    rcsi_instance = rCSI(fcs_instance.df.copy(),
+                         high_rcsi=high_rcsi,
                          low_erroneous=rcsi_low_erroneous,
                          high_erroneous=rcsi_high_erroneous,
                          high_sugar_oil_consumption=high_sugar_oil_consumption)

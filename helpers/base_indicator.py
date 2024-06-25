@@ -23,7 +23,7 @@ class BaseIndicator:
         pass
 
     def generate_flags(self):
-        print("Generating flags...")
+        print(f"Generating flags for {self.indicator_name}")
         for flag in self.flags.keys():
             self.df[f'Flag_{self.indicator_name}_{flag}'] = np.nan
 
@@ -47,34 +47,19 @@ class BaseIndicator:
         self.generate_narrative_flags()
 
     def generate_narrative_flags(self):
-        print("Generating narrative flags...")
-        narrative_flags = list(self.flags.keys())[:-1]
+        print(f"Generating narrative flags for {self.indicator_name}")
+        narrative_flags = list(self.flags.keys())
 
         self.df[f'Flag_{self.indicator_name}_Narrative'] = self.df[narrative_flags].apply(
             lambda row: " & ".join([self.flags[flag] for flag in narrative_flags if row[flag] == 1]), axis=1
         )
 
     def generate_report(self, output_dir, additional_cols=[]):
-        print("Generating report...")
+        print(f"Generating report for {self.indicator_name}")
         hh_summary_cols = ['EnuName'] + self.cols + additional_cols + list(self.flags.keys()) + [f'Flag_{self.indicator_name}', f'Flag_{self.indicator_name}_Narrative']
 
         hh_summary = self.df[hh_summary_cols]
 
-        enu_summary = self.summarize_flags('EnuName')
-        enu_summary = enu_summary[enu_summary['Error_Percentage'] >= 0.1].sort_values(by='Error_Percentage', ascending=True)
-
-        id02_enu_summary = self.summarize_flags(['ID02', 'EnuName'])
-        id02_enu_summary = id02_enu_summary.reset_index()
-
         with pd.ExcelWriter(f'{output_dir}/{self.indicator_name}_Report.xlsx') as writer:
             hh_summary.to_excel(writer, sheet_name='HH_Report', index=False)
-            enu_summary.to_excel(writer, sheet_name='Enu_Report', index=False)
-            id02_enu_summary.to_excel(writer, sheet_name='Admin2_Enu_Report', index=False)
 
-    def summarize_flags(self, group_by_cols):
-        print("Summarizing flags...")
-        summary = self.df.groupby(group_by_cols).agg({flag: 'sum' for flag in [f'Flag_{self.indicator_name}_{flag}' for flag in self.flags.keys() if not flag.startswith('Flag_FCS_')]})
-        summary['Total'] = summary.sum(axis=1)
-        summary['Error_Percentage'] = (summary['Total'] / len(self.df)) * 100
-        summary = summary.reset_index()
-        return summary
