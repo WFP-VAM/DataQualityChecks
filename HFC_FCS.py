@@ -6,7 +6,7 @@ from helpers.generate_fcs_flags import generate_fcs_flags
 from helpers.summarize_flags import summarize_flags
 from helpers.plot_flags_count import plot_flags_count
 from helpers.plot_error_percentage import plot_error_percentage
-from helpers.config import fcs_flags
+from helpers.config.config import fcs_flags
 
 # Read from dummy data (replace with your actual data loading)
 df = pd.read_csv('congo.csv')
