@@ -8,6 +8,7 @@ hdds_cols = ['HDDSStapCer', 'HDDSStapRoot', 'HDDSPulse', 'HDDSDairy', 'HDDSPrMea
 # Flags related to HDDS
 hdds_flags = {
     'Flag_HDDS_Missing_Values': "Missing value(s) in the consumption of the food groups",
+    'Flag_HDDS_Erroneous_Values': "Erroneous value(s) (negative or above 7)",
     'Flag_HDDS_Stap_mismatch': "Mismatch between FCSStap and HDDSStapCer/HDDSStapRoot",
     'Flag_HDDS_Pulse_mismatch': "Mismatch between FCSPulse and HDDSPulse",
     'Flag_HDDS_Dairy_mismatch': "Mismatch between FCSDairy and HDDSDairy",
@@ -22,73 +23,35 @@ hdds_flags = {
 class HDDS(BaseIndicator):
     def __init__(self, df):
         super().__init__(df, 'HDDS', hdds_cols, hdds_flags)
-
-    def calculate_fcs(self):
-        print("Calculating HDDS...")
-        pass
-
-    def custom_flag_logic(self):
-        column_pairs = {
-        "Stap": ("FCSStap", "HDDSStapCer", "HDDSStapRoot"),
-        "Pulse": ("FCSPulse", "HDDSPulse"),
-        "Dairy": ("FCSDairy", "HDDSDairy"),
-        "Pr": ("FCSPr", "HDDSPrMeatF", "HDDSPrMeatO", "HDDSPrFish", "HDDSPrEggs"),
-        "Veg": ("FCSVeg", "HDDSVeg"),
-        "Fruit": ("FCSFruit", "HDDSFruit"),
-        "Fat": ("FCSFat", "HDDSFat"),
-        "Sugar": ("FCSSugar", "HDDSSugar"),
-        "Cond": ("FCSCond", "HDDSCond")
+        self.column_pairs = {
+            "Stap": ("FCSStap", "HDDSStapCer", "HDDSStapRoot"),
+            "Pulse": ("FCSPulse", "HDDSPulse"),
+            "Dairy": ("FCSDairy", "HDDSDairy"),
+            "Pr": ("FCSPr", "HDDSPrMeatF", "HDDSPrMeatO", "HDDSPrFish", "HDDSPrEggs"),
+            "Veg": ("FCSVeg", "HDDSVeg"),
+            "Fruit": ("FCSFruit", "HDDSFruit"),
+            "Fat": ("FCSFat", "HDDSFat"),
+            "Sugar": ("FCSSugar", "HDDSSugar"),
+            "Cond": ("FCSCond", "HDDSCond")
         }
 
-        for key, cols in column_pairs.items():
-            fcs_col, *hdds_cols = cols
-            fcs_value = self.df[fcs_col]
-            hdds_values = [self.df[col] for col in hdds_cols]
+        # Create flag columns in the DataFrame
+        for key in self.column_pairs.keys():
+            self.df[f"Flag_{self.indicator_name}{key}_mismatch"] = False
 
-        # Check for mismatches
-        if fcs_value == 7 and any(value == 0 for value in hdds_values):
-            self.df[f"Flag_{self.indicator_name}{key}_mismatch"] = True
+    def custom_flag_logic(self):
+        pass
+        # for key, cols in self.column_pairs.items():
+        #     fcs_col, *hdds_cols = cols
+        #     fcs_values = self.df[fcs_col]
+        #     hdds_values = [self.df[col].fillna(0) for col in hdds_cols]  # Replace NaN with 0
 
-        return self.df
+        #     # Check for mismatches row-wise
+        #     mismatch_condition = (fcs_values == 7) & (np.any(np.array(hdds_values) == 0, axis=0))
+        #     flag_column_name = f"Flag_{self.indicator_name}{key}_mismatch"
+        #     self.df[flag_column_name] = mismatch_condition
 
-        # if self.df["FCSStap"] == 7 and (selfdf["HDDSStapCer"] == 0 or self.df["HDDSStapRoot"] == 0):
-        #     df[f"Flag_{self.indicator_name}Stap_mismatch"] = True
-        
-        # # if household has consumped pulse for 0 days in FCS but has not consummed pulse in the last 24hrs
-        # if df["HDDSPulse"] == 0 and df["FCSPulse"] == 7:
-        #     df[f"Flag_{self.indicator_name}Pulse_mismatch"] = True
-
-        # # check dairy
-        # if df["HDDSDairy"] == 0 and df["FCSDairy"] == 7:
-        #     df[f"Flag_{self.indicator_name}Dairy_mismatch"] = True
-
-        # # check animal proteins
-        # if (df["HDDSPrMeatF"] == 0 or df["HDDSPrMeatO"] == 0 or df["HDDSPrFish"] == 0 or df["HDDSPrEggs"] == 0) and df["FCSPr"] == 7:
-        #     df[f"Flag_{self.indicator_name}Pr_mismatch"] = True
-
-        # # check vegetables
-        # if df["HDDSVeg"] == 0 and df["FCSVeg"] == 7:
-        #     df["Flag_HDDSVeg"] = True
-
-        # # check fruit
-        # if df["HDDSFruit"] == 0 and df["FCSFruit"] == 7:
-        #     df["Flag_HDDSFruit"] = True
-
-        # # check fat
-        # if df["HDDSFat"] == 0 and df["FCSFat"] == 7:
-        #     df["Flag_HDDSFat"] = True
-
-        # # check sugar
-        # if df["HDDSSugar"] == 0 and df["FCSSugar"] == 7:
-        #     df["Flag_HDDSSugar"] = True
-
-        # # check condiments
-        # if df["HHDSCond"] == 0 and df["FCSCond"] == 7:
-        #     df["Flag_HDDSSugar"] = True
-
-
-        return  df
-
+        # return self.df
 
 #%% Additional code
 
