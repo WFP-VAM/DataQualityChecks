@@ -1,63 +1,47 @@
 import pandas as pd
-from indicators.fcs import FCS
-from indicators.rcsi import rCSI
-from indicators.demographics import Demo
-from indicators.hdds import HDDS
-from config import (high_fcs, 
-                    low_fcs,
-                    fcs_high_erroneous,
-                    fcs_low_erroneous,
-                    high_sugar_oil_consumption,
-                    high_rcsi,
-                    rcsi_high_erroneous,
-                    rcsi_low_erroneous,
-                    demo_low_erroneous,
-                    demo_high_erroneous,
-                    high_hhsize,
-                    hdds_low_erroneous,
-                    hdds_high_erroneous)
+from indicators import FCS, rCSI, Demo, HDDS, FEXP_7D, NFEXP_1M, NFEXP_6M   
+# from indicators.fcs import FCS
+# from indicators.rcsi import rCSI
+# from indicators.demographics import Demo
+# from indicators.hdds import HDDS
+# from indicators.fexp_7d import FEXP_7D
+# from indicators.nfexp_1m import NFEXP_1M
+# from indicators.nfexp_6m import NFEXP_6M
+from mastersheet.mastersheet import MasterSheet
+from config import config
+from datetime import datetime
+
+today = datetime.now().strftime("%Y%m%d")  
+
+# List of Indicator Classes
+indicators = [
+    (Demo, 'Demo'),
+    (FCS, 'FCS'),
+    (rCSI, 'rCSI'),
+    (HDDS, 'HDDS'),
+    (FEXP_7D, 'FEXP_7D'),
+    (NFEXP_1M, 'NFEXP_1M'),
+    (NFEXP_6M, 'NFEXP_6M')
+]
+
+def process_indicator(instance, writer):
+    """Process the indicator instance."""
+    instance.calculate_indicators()
+    instance.generate_flags()
+    instance.generate_report(writer)
 
 if __name__ == "__main__":
-    df = pd.read_csv('congo.csv')
-
-    # Initialize FCS instance and calculate indicators
-    fcs_instance = FCS(df.copy(), 
-                       low_fcs=low_fcs,
-                       high_fcs=high_fcs,
-                       low_erroneous=fcs_low_erroneous,
-                       high_erroneous=fcs_high_erroneous,
-                       high_sugar_oil_consumption=high_sugar_oil_consumption)
-    fcs_instance.calculate_fcs()
-    fcs_instance.calculate_fcg()
-    fcs_instance.generate_flags()
-    
-    # Initialize rCSI instance and calculate indicators
-    rcsi_instance = rCSI(fcs_instance.df.copy(),
-                         high_rcsi=high_rcsi,
-                         low_erroneous=rcsi_low_erroneous,
-                         high_erroneous=rcsi_high_erroneous,
-                         high_sugar_oil_consumption=high_sugar_oil_consumption)
-    rcsi_instance.calculate_rCSI()
-    rcsi_instance.generate_flags()
-    
-    # Initialize Demographics instance and calculate indicators
-    demo_instance = Demo(rcsi_instance.df.copy(), 
-                         low_erroneous=demo_low_erroneous,
-                         high_erroneous=demo_high_erroneous,
-                         high_hhsize=high_hhsize)
-    demo_instance.calculate_indicators()
-    demo_instance.generate_flags()
-    
-    # Initialize HDDS instance and calculate indicators
-    hdds_instance = HDDS(df.copy(), 
-                         low_erroneous=hdds_low_erroneous,
-                         high_erroneous=hdds_high_erroneous)
-    hdds_instance.calculate_hdds()
-    hdds_instance.generate_flags()
-    
-    # Output directory for reports
+    df = pd.read_csv('data/congo.csv')
     output_dir = './Reports'
-    fcs_instance.generate_report(output_dir)
-    rcsi_instance.generate_report(output_dir)
-    demo_instance.generate_report(output_dir)
-    hdds_instance.generate_report(output_dir)
+    report_path = f'{output_dir}/{today}_All_Indicators_Report.xlsx'
+
+    with pd.ExcelWriter(report_path) as writer:
+        current_df = df.copy()
+        for indicator_class, config_key in indicators:
+            config_values = config[config_key]
+            instance = indicator_class(current_df, **config_values)
+            process_indicator(instance, writer)
+            current_df = instance.df.copy()  # Update current_df for the next indicator
+
+        mastersheet = MasterSheet(current_df)
+        mastersheet.generate_report(writer)

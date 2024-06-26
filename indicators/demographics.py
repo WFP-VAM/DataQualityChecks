@@ -21,6 +21,15 @@ adult_cols = ['HHSize1859M',
               'HHSize1859F',
               'HHSize60AboveF']
 
+children_cols = ['HHSize01M',
+                'HHSize24M',
+                'HHSize511M',
+                'HHSize1217M',
+                'HHSize01F',
+                'HHSize24F',
+                'HHSize511F',
+                'HHSize1217F']
+
 demo_flags = {
     'Flag_Demo_Missing_Values': "Missing value(s) in the Demographics Module",
     'Flag_Demo_Erroneous_Values': "Erroneous value(s) in the Demographics Module",
@@ -65,6 +74,7 @@ class Demo(BaseIndicator):
         
         self.calculate_hh_size()
         self.calculate_total_adults()
+        self.calculate_total_children()
         self.calculate_total_plw_range()
 
     def calculate_hh_size(self):
@@ -77,6 +87,10 @@ class Demo(BaseIndicator):
         print("Calculating total adults...")
         self.df['Sum_adults'] = self.df[adult_cols].sum(axis=1)
 
+    def calculate_total_children(self):
+        print("Calculating total children...")
+        self.df['Sum_children'] = self.df[children_cols].sum(axis=1)
+        
     def calculate_total_plw_range(self):
-        print("Calculating PLW range...")
+        print("Calculating total women/girls between 12 and 59...")
         self.df['in_plw_range'] = self.df['HHSize1217F'] + self.df['HHSize1859F']

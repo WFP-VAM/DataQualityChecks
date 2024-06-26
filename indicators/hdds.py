@@ -40,7 +40,7 @@ class HDDS(BaseIndicator):
             "FCSCond": ("HDDSCond")
         }
         
-    def calculate_hdds(self):
+    def calculate_indicators(self):
         print("Calculating HDDS...")
 
         self.df['HDDS'] = (self.df['HDDSStapCer'] + self.df['HDDSStapRoot'] + self.df['HDDSVeg'] + self.df['HDDSFruit'] +

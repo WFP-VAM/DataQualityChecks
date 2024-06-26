@@ -1,8 +1,4 @@
-import pandas as pd
 import numpy as np
-from datetime import datetime
-
-today = datetime.now().strftime("%Y%m%d")  
 
 
 class BaseIndicator:
@@ -45,7 +41,7 @@ class BaseIndicator:
         base_flags = [f'Flag_{self.indicator_name}_{flag}' for flag in self.flags.keys() if not flag.startswith('Flag_FCS_')]
         custom_flags = [col for col in self.df.columns if col.startswith(f'Flag_{self.indicator_name}_')]
         overall_flag = self.df[base_flags + custom_flags].any(axis=1)
-        self.df[f'Flag_{self.indicator_name}'] = overall_flag.astype(int)
+        self.df[f'Flag_{self.indicator_name}_Overall'] = overall_flag.astype(int)
 
         # Generate Narrative Flags
         self.generate_narrative_flags()
@@ -57,13 +53,12 @@ class BaseIndicator:
         self.df[f'Flag_{self.indicator_name}_Narrative'] = self.df[narrative_flags].apply(
             lambda row: " & ".join([self.flags[flag] for flag in narrative_flags if row[flag] == 1]), axis=1
         )
-
-    def generate_report(self, output_dir, additional_cols=[]):
+                        
+    def generate_report(self, writer):
         print(f"Generating report for {self.indicator_name}")
-        hh_summary_cols = ['EnuName'] + self.cols + additional_cols + list(self.flags.keys()) + [f'Flag_{self.indicator_name}', f'Flag_{self.indicator_name}_Narrative']
-
+        hh_summary_cols = ['_uuid', 'EnuName', 'EnuSupervisorName', 'ID01', 'ID02', 'ID03', 'ID04'] + self.cols + list(self.flags.keys()) + [f'Flag_{self.indicator_name}_Overall', f'Flag_{self.indicator_name}_Narrative']
         hh_summary = self.df[hh_summary_cols]
-
-        with pd.ExcelWriter(f'{output_dir}/{today}_{self.indicator_name}_report.xlsx') as writer:
-            hh_summary.to_excel(writer, sheet_name='HH_Report', index=False)
-
+        
+        # Filtering the Summary Dataset to include only Household with triggered flags
+        hh_filtered = hh_summary[hh_summary[f'Flag_{self.indicator_name}_Overall'] == 1]
+        hh_filtered.to_excel(writer, sheet_name=self.indicator_name, index=False)           
