@@ -43,12 +43,6 @@ if __name__ == "__main__":
     rcsi_instance.calculate_rCSI()
     rcsi_instance.generate_flags()
     
-<<<<<<< HEAD
-    # Initiate HDDS instance and run checks
-    hdds_instance = HDDS(df.copy())
-    hdds_instance.generate_flags()
-
-=======
     # Initialize Demographics instance and calculate indicators
     demo_instance = Demo(rcsi_instance.df.copy(), 
                          low_erroneous=demo_low_erroneous,
@@ -64,16 +58,9 @@ if __name__ == "__main__":
     hdds_instance.calculate_hdds()
     hdds_instance.generate_flags()
     
->>>>>>> HFC
     # Output directory for reports
     output_dir = './Reports'
     fcs_instance.generate_report(output_dir)
     rcsi_instance.generate_report(output_dir)
-<<<<<<< HEAD
-    hdds_instance.generate_report(output_dir)
-    print(f"Cannot generate report {e}")
-        
-=======
     demo_instance.generate_report(output_dir)
     hdds_instance.generate_report(output_dir)
->>>>>>> HFC

@@ -40,19 +40,31 @@ class HDDS(BaseIndicator):
         
     def calculate_hdds(self):
         print("Calculating HDDS...")
-        self.df['HDDS'] = 0
+
+        # self.df['HDDS'] = 0
+
+        self.df['HDDS'] = (self.df['HDDSStapCer'] + self.df['HDDSStapRoot'] + self.df['HDDSVeg'] + self.df['HDDSFruit'] +
+                        self.df['HDDSPrMeatF'] + self.df['HDDSPrMeatO'] + self.df['HDDSPrFish'] + self.df['HDDSPulse'] +
+                        self.df['HDDSDairy'] + self.df['HDDSFat'] + self.df['HDDSSugar'] + self.df['HDDSCond'])
+
+        # Replace NaN values with 0 if present
+        self.df['HDDS'] = self.df['HDDS'].fillna(0)
+
+        # Create HDDS categories
+        conditions = [
+            (self.df['HDDS'] >= 0) & (self.df['HDDS'] <= 2),
+            (self.df['HDDS'] >= 3) & (self.df['HDDS'] <= 4),
+            (self.df['HDDS'] >= 5)
+        ]
+        values = ['0-2 food groups (phase 4 to 5)', '3-4 food groups (phase 3)', '5-12 food groups (phase 1 to 2)']
+        self.df['HDDSCat_IPC'] = pd.np.select(conditions, values)
+
         
+    # Create flag columns in the DataFrame
     def custom_flag_logic(self):
-        print("Custom flag logic for HDDS...")
-        for col in hdds_flags.keys():
-            self.df[col] = 1
+        # for key in self.column_pairs.keys():
+        #     self.df[f"Flag_{self.indicator_name}{key}_mismatch"] = False
 
-
-        # Create flag columns in the DataFrame
-        for key in self.column_pairs.keys():
-            self.df[f"Flag_{self.indicator_name}{key}_mismatch"] = False
-
-    def custom_flag_logic(self):
         for key, cols in self.column_pairs.items():
             fcs_col, *hdds_cols = cols
             fcs_values = self.df[fcs_col]

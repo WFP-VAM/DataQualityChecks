@@ -27,11 +27,7 @@ class BaseIndicator:
         pass
 
     def generate_flags(self):
-<<<<<<< HEAD
-        print(f"Generating flags for {self.indicator_name}...")
-=======
         print(f"Generating flags for {self.indicator_name}")
->>>>>>> HFC
         for flag in self.flags.keys():
             self.df[f'Flag_{self.indicator_name}_{flag}'] = np.nan
 
@@ -55,38 +51,19 @@ class BaseIndicator:
         self.generate_narrative_flags()
 
     def generate_narrative_flags(self):
-<<<<<<< HEAD
-        print(f"Generating narrative flags for {self.indicator_name}...")
-        narrative_flags = list(self.flags.keys())[:-1]
-=======
         print(f"Generating narrative flags for {self.indicator_name}")
         narrative_flags = list(self.flags.keys())
->>>>>>> HFC
 
         self.df[f'Flag_{self.indicator_name}_Narrative'] = self.df[narrative_flags].apply(
             lambda row: " & ".join([self.flags[flag] for flag in narrative_flags if row[flag] == 1]), axis=1
         )
 
     def generate_report(self, output_dir, additional_cols=[]):
-<<<<<<< HEAD
-        print(f"Generating report for {self.indicator_name}...")
-=======
         print(f"Generating report for {self.indicator_name}")
->>>>>>> HFC
         hh_summary_cols = ['EnuName'] + self.cols + additional_cols + list(self.flags.keys()) + [f'Flag_{self.indicator_name}', f'Flag_{self.indicator_name}_Narrative']
 
         hh_summary = self.df[hh_summary_cols]
 
-<<<<<<< HEAD
-        enu_summary = self.summarize_flags('EnuName')
-        enu_summary = enu_summary[enu_summary['Error_Percentage'] >= 0.1].sort_values(by='Error_Percentage', ascending=True)
-
-        id02_enu_summary = self.summarize_flags(['ID02', 'EnuName'])
-        id02_enu_summary = id02_enu_summary.reset_index()
-
-        with pd.ExcelWriter(f'{output_dir}/{today}_{self.indicator_name}_Report.xlsx') as writer:
-=======
         with pd.ExcelWriter(f'{output_dir}/{self.indicator_name}_Report.xlsx') as writer:
->>>>>>> HFC
             hh_summary.to_excel(writer, sheet_name='HH_Report', index=False)
 
