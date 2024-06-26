@@ -49,7 +49,7 @@ if __name__ == "__main__":
     demo_instance.generate_flags()
     
     # Initialize HDDS instance and calculate indicators
-    hdds_instance = HDDS(demo_instance.df.copy(), 
+    hdds_instance = HDDS(demo_instance.copy(), 
                          low_erroneous=hdds_low_erroneous,
                          high_erroneous=hdds_high_erroneous)
     hdds_instance.calculate_hdds()

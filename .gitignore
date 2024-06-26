@@ -176,5 +176,8 @@ HFC_FCS
 *.xlsx
 *.csv
 
+# other files
+NOTES.md
+
 # config files 
 data_bridges_api_config.yaml
