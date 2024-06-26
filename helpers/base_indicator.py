@@ -56,10 +56,9 @@ class BaseIndicator:
 
     def generate_report(self, output_dir, additional_cols=[]):
         print(f"Generating report for {self.indicator_name}")
-        hh_summary_cols = ['EnuName'] + self.cols + additional_cols + list(self.flags.keys()) + [f'Flag_{self.indicator_name}', f'Flag_{self.indicator_name}_Narrative']
+        hh_summary_cols = ['_uuid', 'EnuName'] + self.cols + additional_cols + list(self.flags.keys()) + [f'Flag_{self.indicator_name}', f'Flag_{self.indicator_name}_Narrative']
 
         hh_summary = self.df[hh_summary_cols]
 
         with pd.ExcelWriter(f'{output_dir}/{self.indicator_name}_Report.xlsx') as writer:
             hh_summary.to_excel(writer, sheet_name='HH_Report', index=False)
-

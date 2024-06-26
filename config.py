@@ -26,3 +26,15 @@ high_hhsize = 40
 # Set thresholds for HDDS Erroneous Values
 hdds_low_erroneous = 0
 hdds_high_erroneous = 7
+
+# Set thresholds for Food Expenditures - Last 7 days
+HHExpF_7D_low_erroneous = 0
+HHExpF_7D_high_erroneous = 100000
+
+# Set thresholds for non-food expenditures - last 1 month
+HHExpNF_1M_low_erroneous = 0
+HHExpNF_1M_high_erroneous = 500000
+
+# Set thresholds for non-food expenditures - last 6 months
+HHExpNF_6M_low_erroneous = 0
+HHExpNF_6M_high_erroneous = 1000000
