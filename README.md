@@ -2,6 +2,17 @@
 
 This repository supports WFP Country Offices in checking the quality of the data collected in needs assessment surveys. 
 
+
+## Features
+
+- **Food Consumption Score (FCS) Checks**: Performs a series of checks on the FCS data, including missing values, erroneous values, abnormal patterns (e.g., all zeros, all sevens, identical values), low staple consumption, and low/high FCS scores.
+- **Reduced Coping Strategy Index (rCSI) Checks**: Validates the rCSI data by checking for missing values, erroneous values, and high rCSI scores.
+- **Demographic Checks**: Checks for erroneous values in age groups and flags households with extremely large household sizes.
+- **Household Dietary Diversity Score (HDDS) Checks**: Validates the HDDS data by checking for missing values and erroneous values.
+- **Food Expenditure Checks**: Checks for erroneous values in food expenditure data for 7 days, 1 month, and 6 months.
+- **Enumerator Performance Evaluation**: Generates reports summarizing the data quality issues at the enumerator level, including the total number of records and error percentages.
+- **Mastersheet Generation**: Consolidates all indicator checks into a single mastersheet, providing an overview of data quality across all indicators.
+
 ## Installation
 
 To use the data quality functionalities, follow these steps:
@@ -14,23 +25,17 @@ To use the data quality functionalities, follow these steps:
 
 To run the data checks on your data, follow these steps:
 
-1. Prepare your data in a CSV or Excel file format.
-2. Update the `config.py` file with the appropriate file paths and configurations.
-3. Run the `main.py` script: `python main.py`
+1. Get your DataBridges ID or prepare your data in a CSV of Excel file format
+2. Update the `config.py` file to contextualize the data quality checks (e.g. thresholds for a suspiciously low/high FCS).
+3. Run the `HFC.py` script: `python HFC.py`
 
-The script will generate a report in the `Reports` directory, containing the FCS checks and flags for each household in the dataset.
-
+The script will generate a report in the `reports` directory, containing the FCS checks and flags for each household in the dataset.
 
 ## Data Quality checks
 The reposity checks both outcome indicator data quality  and enumerator performance. 
 
 ### Food Consumption score
-
-The FCS checks follow a hierarchical structure, with sequential and independent checks applied to the data. The decision logic is illustrated in the following diagram:
-
-<div style="text-align:center">
-    <iframe src="Hierarchies/FCS.drawio.html" style="width:100%; height:600px; border:none;"></iframe>
-</div>
+The FCS checks follow a hierarchical structure, with sequential and independent checks applied to the data. The decision logic is available in ```docs```.
 
 The diagram highlights the following key aspects:
 
@@ -39,6 +44,16 @@ The diagram highlights the following key aspects:
 - **Flag Values**: In the generated report, each flag can be either equal to 0 (Condition Not Met), 1 (Condition Met), or NONE (Check did not execute).
 
 This structured approach ensures that data quality issues are systematically identified and flagged, facilitating effective data management and analysis.
+
+### rCSI
+Documentation to be added
+
+### Demographics
+Documentation to be added
+
+### HHDS
+Documentation to be added
+
 
 ## Contributing
 
