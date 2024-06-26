@@ -50,7 +50,7 @@ class rCSI(BaseIndicator):
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_Acceptable_FCS_and_High_rCSI'] = \
         ((self.df[fcs_cat_column] == 'Poor') & (self.df['rCSI'] >  self.high_rcsi)).astype(int)
 
-    def calculate_rCSI(self):
+    def calculate_indicators(self):
         print("Calculating rCSI...")
         self.df['rCSI'] = sum(self.df[col] * weight for col, weight in zip(self.cols, self.weights))
         pass

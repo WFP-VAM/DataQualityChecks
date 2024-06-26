@@ -38,7 +38,7 @@ class HDDS(BaseIndicator):
             "Cond": ("FCSCond", "HDDSCond")
         }
         
-    def calculate_hdds(self):
+    def calculate_indicators(self):
         print("Calculating HDDS...")
         self.df['HDDS'] = 0
         
