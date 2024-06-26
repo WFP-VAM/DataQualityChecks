@@ -9,8 +9,7 @@ To use the data quality functionalities, follow these steps:
 1. Clone the repository: `git clone https://github.com/your-repo/fcs-checks.git`
 2. Install the required dependencies: `pip install -r requirements.txt`
 
-
-# Usage
+## Usage
 
 To run the data checks on your data, follow these steps:
 
@@ -43,6 +42,11 @@ This structured approach ensures that data quality issues are systematically ide
 ## Contributing
 
 Contributions to this project are welcome. If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
+
+
+## Authors
+- (Ali Assi)[https://github.com/AssiALi16]
+- (Alessandra Gherardelli)[[https://github.com/AlexGherardelli]]
 
 ## License
 
