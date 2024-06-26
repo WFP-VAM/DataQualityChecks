@@ -8,16 +8,17 @@ hdds_cols = ['HDDSStapCer', 'HDDSStapRoot', 'HDDSPulse', 'HDDSDairy', 'HDDSPrMea
 # Flags related to HDDS
 hdds_flags = {
     'Flag_HDDS_Missing_Values': "Missing value(s) in the consumption of the food groups",
-    'Flag_HDDS_Erroneous_Values': "Erroneous value(s) (negative or above 7)",
+    'Flag_HDDS_Erroneous_Values': "Erroneous value(s) (not 1 or 0)",
+    'Flag_HDDS_Identical_Values': "0 values across the food groups",
     'Flag_HDDS_Stap_mismatch': "Mismatch between FCSStap and HDDSStapCer/HDDSStapRoot",
-    'Flag_HDDS_Pulse_mismatch': "Mismatch between FCSPulse and HDDSPulse",
-    'Flag_HDDS_Dairy_mismatch': "Mismatch between FCSDairy and HDDSDairy",
-    'Flag_HDDS_Pr_mismatch': "Mismatch between FCSPr and HDDSPrMeatF/HDDSPrMeatO/HDDSPrFish/HDDSPrEggs",
-    'Flag_HDDS_Veg_mismatch': "Mismatch between FCSVeg and HDDSVeg",
-    'Flag_HDDS_Fruit_mismatch': "Mismatch between FCSFruit and HDDSFruit",
-    'Flag_HDDS_Fat_mismatch': "Mismatch between FCSFat and HDDSFat",
-    'Flag_HDDS_Sugar_mismatch': "Mismatch between FCSSugar and HDDSSugar",
-    'Flag_HDDS_Cond_mismatch': "Mismatch between FCSCond and HDDSCond"
+    # 'Flag_HDDS_Pulse_mismatch': "Mismatch between FCSPulse and HDDSPulse",
+    # 'Flag_HDDS_Dairy_mismatch': "Mismatch between FCSDairy and HDDSDairy",
+    # 'Flag_HDDS_Pr_mismatch': "Mismatch between FCSPr and HDDSPrMeatF/HDDSPrMeatO/HDDSPrFish/HDDSPrEggs",
+    # 'Flag_HDDS_Veg_mismatch': "Mismatch between FCSVeg and HDDSVeg",
+    # 'Flag_HDDS_Fruit_mismatch': "Mismatch between FCSFruit and HDDSFruit",
+    # 'Flag_HDDS_Fat_mismatch': "Mismatch between FCSFat and HDDSFat",
+    # 'Flag_HDDS_Sugar_mismatch': "Mismatch between FCSSugar and HDDSSugar",
+    # 'Flag_HDDS_Cond_mismatch': "Mismatch between FCSCond and HDDSCond"
 }
 
 class HDDS(BaseIndicator):
@@ -49,11 +50,21 @@ class HDDS(BaseIndicator):
         self.df['HDDS'] = self.df['HDDS'].fillna(0)
 
         # Create HDDS categories
-        bins = [0, 2, 4, self.df['HDDS'].max()]
+        bins = [0, 2, 4, self.df['HDDS'].max() + 1]  # Define the bin edges
         labels = ['0-2 food groups (phase 4 to 5)', '3-4 food groups (phase 3)', '5-12 food groups (phase 1 to 2)']
+
         self.df['HDDSCat_IPC'] = pd.cut(self.df['HDDS'], bins=bins, labels=labels, include_lowest=True)
 
     def custom_flag_logic(self):
         print("Custom flag logic for HDDS...")
+
         for col in hdds_flags.keys():
-            self.df[col] = 1
+            self.df[col] = 0
+
+        # Identical Values (All 0's)
+        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_Identical_Values'] = \
+        (self.df[hdds_cols].sum(axis=1) == 0).astype(int)
+        
+
+        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_Stap_mismatch'] = \
+        ((self.df["FCSStap"] == 7) & (self.df['HDDSStapCer'] == 0)).astype(int)
