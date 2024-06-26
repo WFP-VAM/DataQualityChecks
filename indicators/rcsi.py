@@ -23,6 +23,7 @@ rcsi_flags = {
     'Flag_rCSI_Abnormal_Identical': "The values of all reduced coping strategies are identical",
     'Flag_rCSI_Poor_FCS_and_Zero_rCSI': "The food consumption is poor with no coping (rCSI=0)",
     'Flag_rCSI_Acceptable_FCS_and_High_rCSI': "FCS is high and rCSI is high",
+    'Flag_rCSI_MealAdult_with_No_Children': "Adults recuded their number of meals with no children"
 }
 
 class rCSI(BaseIndicator):
@@ -49,6 +50,10 @@ class rCSI(BaseIndicator):
         # Acceptable FCS and High rCSI
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_Acceptable_FCS_and_High_rCSI'] = \
         ((self.df[fcs_cat_column] == 'Poor') & (self.df['rCSI'] >  self.high_rcsi)).astype(int)
+        
+        # Adults Reducing Meals For Children But There are No Children
+        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_MealAdult_with_No_Children'] = \
+        ((self.df['rCSIMealAdult'] > 0) & (self.df['Sum_children'] == 0)).astype(int)
 
     def calculate_indicators(self):
         print("Calculating rCSI...")

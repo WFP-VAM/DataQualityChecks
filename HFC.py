@@ -11,9 +11,9 @@ from config import config
 
 # List of Indicator Classes
 indicators = [
+    (Demo, 'Demo'),
     (FCS, 'FCS'),
     (rCSI, 'rCSI'),
-    (Demo, 'Demo'),
     # (HDDS, 'HDDS'),
     (FEXP_7D, 'FEXP_7D'),
     (NFEXP_1M, 'NFEXP_1M'),
