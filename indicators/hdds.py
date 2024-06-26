@@ -27,16 +27,16 @@ class HDDS(BaseIndicator):
         self.low_erroneous = low_erroneous
         self.high_erroneous = high_erroneous
         
-        self.column_pairs = {
-            "Stap": ("FCSStap", "HDDSStapCer", "HDDSStapRoot"),
-            "Pulse": ("FCSPulse", "HDDSPulse"),
-            "Dairy": ("FCSDairy", "HDDSDairy"),
-            "Pr": ("FCSPr", "HDDSPrMeatF", "HDDSPrMeatO", "HDDSPrFish", "HDDSPrEggs"),
-            "Veg": ("FCSVeg", "HDDSVeg"),
-            "Fruit": ("FCSFruit", "HDDSFruit"),
-            "Fat": ("FCSFat", "HDDSFat"),
-            "Sugar": ("FCSSugar", "HDDSSugar"),
-            "Cond": ("FCSCond", "HDDSCond")
+        self.FCS_HDDS_pairs = {
+            "FCSStap": ("HDDSStapCer", "HDDSStapRoot"),
+            "FCSPulse": ("HDDSPulse"),
+            "FCSDairy": ("HDDSDairy"),
+            "FCSPr": ("HDDSPrMeatF", "HDDSPrMeatO", "HDDSPrFish", "HDDSPrEggs"),
+            "FCSVeg": ("HDDSVeg"),
+            "FCSFruit": ("HDDSFruit"),
+            "FCSFat": ("HDDSFat"),
+            "FCSSugar": ("HDDSSugar"),
+            "FCSCond": ("HDDSCond")
         }
         
     def calculate_hdds(self):
@@ -100,17 +100,22 @@ class HDDS(BaseIndicator):
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_Cond_mismatch'] = \
         ((self.df["FCSCond"] == 7) & (self.df['HDDSCond'] == 0)).astype(int)
 
+    # def generate_mismatch_flag(self, fcs_col, hdds_cols):
+        # fcs_poor_condition = (self.df[fcs_col] == 7)
+        # hdds_zero_condition = np.any([self.df[hdds_col] == 0 for hdds_col in hdds_cols], axis=0)
+        # mismatch_flag = f'Flag_{self.indicator_name}_{fcs_col.replace("FCS", "")}_mismatch'
+        # self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, mismatch_flag] = \
+        #     (fcs_poor_condition & hdds_zero_condition).astype(int)
 
+    # def custom_flag_logic(self):
+    #     print("Custom flag logic for HDDS...")
 
+    #     for col in hdds_flags.keys():
+    #         self.df[col] = 0
 
-        # self.FCS_HDDS_pairs = {
-        #     "FCSStap": ("HDDSStapCer", "HDDSStapRoot"),
-        #     "FCSPulse": ("HDDSPulse"),
-        #     "FCSDairy": ("HDDSDairy"),
-        #     "FCSPr": ("HDDSPrMeatF", "HDDSPrMeatO", "HDDSPrFish", "HDDSPrEggs"),
-        #     "FCSVeg": ("HDDSVeg"),
-        #     "FCSFruit": ("HDDSFruit"),
-        #     "FCSFat": ("HDDSFat"),
-        #     "FCSSugar": ("HDDSSugar"),
-        #     "FCSCond": ("HDDSCond")
-        # }
+    #     # Identical Values (All 0's)
+    #     self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_Identical_Values'] = \
+    #     (self.df[hdds_cols].sum(axis=1) == 0).astype(int)
+
+    #     for fcs_col, hdds_cols in self.FCS_HDDS_pairs.items():
+    #         self.generate_mismatch_flag(fcs_col, hdds_cols)
