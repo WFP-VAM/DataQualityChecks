@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from helpers.base_indicator import BaseIndicator
+from .helpers.base_indicator import BaseIndicator
 
 nfexp_1m_purch_cols = ['HHExpNFHyg_Purch_MN_1M',
                         'HHExpNFTransp_Purch_MN_1M',

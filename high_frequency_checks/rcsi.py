@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from helpers.base_indicator import BaseIndicator
+from .helpers.base_indicator import BaseIndicator
 
 # Columns of food groups related to rCSI
 rcsi_cols = ['rCSILessQlty',
