@@ -1,10 +1,7 @@
 import pandas as pd
 from indicators.fcs import FCS
 from indicators.rcsi import rCSI
-<<<<<<< HEAD
-=======
 from indicators.demographics import Demo
->>>>>>> HFC
 from indicators.hdds import HDDS
 from config import (high_fcs, 
                     low_fcs,

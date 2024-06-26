@@ -25,4 +25,15 @@ high_hhsize = 40
 
 # Set thresholds for HDDS Erroneous Values
 hdds_low_erroneous = 0
-hdds_high_erroneous = 7
+hdds_high_erroneous = 1
+
+
+# Set thresholds for survey completion
+total_surveys = 500
+surveys_by_admin2 = {
+    "Brazzaville": 100,
+    "Bouenza": 100,
+    "Cuvette": 100,
+    "Cuvette-Ouest": 100,
+    "Kouilou": 100
+}

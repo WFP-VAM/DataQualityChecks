@@ -64,6 +64,6 @@ class BaseIndicator:
 
         hh_summary = self.df[hh_summary_cols]
 
-        with pd.ExcelWriter(f'{output_dir}/{self.indicator_name}_Report.xlsx') as writer:
+        with pd.ExcelWriter(f'{output_dir}/{today}_{self.indicator_name}_report.xlsx') as writer:
             hh_summary.to_excel(writer, sheet_name='HH_Report', index=False)
 
