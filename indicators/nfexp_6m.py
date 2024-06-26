@@ -44,4 +44,7 @@ class NFEXP_6M(BaseIndicator):
         self.df[nfexp_6m_cols] = self.df[nfexp_6m_cols].fillna(0)
         
         # Calculating Monthly Non-Food Expenditures 6M        
-        self.df['HHNExpF_6M_1M'] = sum(self.df[col] for col in nfexp_6m_cols)
+        self.df['HHNExpNF_6M_1M'] = sum(self.df[col] for col in nfexp_6m_cols) / 6
+        
+        # Calculating Total Monthly Expenditures
+        self.df['HHNExp_1M'] = self.df['HHNExpF_1M'] + self.df['HHNExpNF_1M_1M'] + self.df['HHNExpNF_6M_1M']

@@ -52,6 +52,7 @@ fexp_7d_cols = fexp_7d_purch_cols + fexp_7d_giftaid_cols + fexp_7d_own_cols
 fexp_7d_flags = {
     'Flag_FEXP_7D_Missing_Values': "Missing value(s) in the Food Expenditures 7D Module",
     'Flag_FEXP_7D_Erroneous_Values': "Erroneous value(s) in the Food Expenditures 7D Module",
+    'Flag_FEXP_7D_Zero_FEXP': "No Food Purchases/GiftAid/OwnProduction Reported in the last 7 days"
 }
 
 class FEXP_7D(BaseIndicator):
@@ -63,6 +64,8 @@ class FEXP_7D(BaseIndicator):
     def custom_flag_logic(self):
         # Custom flag logic specific to Food Expenditures 7D
         print(f"Custom flag logic for {self.indicator_name}...")
+        self.df.loc[self.df[f'Flag_{self.indicator_name}_Missing_Values'] == 0, f'Flag_{self.indicator_name}_Zero_FEXP'] = \
+            (self.df['HHExpF_1M'] == 0).astype(int)
 
     def calculate_indicators(self):
         print(f"Calculating indicators for {self.indicator_name}...")
