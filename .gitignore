@@ -170,12 +170,14 @@ DataBridgesKnots-main
 
 # code
 EGCO_Sudanese_24_HFC.do
-HFC_FCS.py
+HFC_FCS
 
 # data
 *.xlsx
 *.csv
 
-# config files 
-*.yaml
+# other files
+NOTES.md
 
+# config files 
+data_bridges_api_config.yaml

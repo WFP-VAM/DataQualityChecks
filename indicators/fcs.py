@@ -30,7 +30,6 @@ fcs_flags = {
     'Flag_FCS_Low_Staple': "Low staple consumption (below 4)",
     'Flag_FCS_Low_FCS': "Low FCS",
     'Flag_FCS_High_FCS': "High FCS",
-    'Flag_FCS': "One or more FCS flag(s) triggered"
 }
 
 class FCS(BaseIndicator):
@@ -42,9 +41,10 @@ class FCS(BaseIndicator):
         self.high_erroneous = high_erroneous
         self.high_sugar_oil_consumption = high_sugar_oil_consumption
 
-    def calculate_fcs(self):
+    def calculate_indicators(self):
         print("Calculating FCS...")
         self.df['FCS'] = sum(self.df[col] * weight for col, weight in zip(self.cols, self.weights))
+        self.calculate_fcg()
 
     def custom_flag_logic(self):
         print("Custom flag logic for FCS...")
