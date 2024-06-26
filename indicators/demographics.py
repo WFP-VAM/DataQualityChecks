@@ -74,7 +74,7 @@ class Demo(BaseIndicator):
         
         self.calculate_hh_size()
         self.calculate_total_adults()
-        self.calculate_total_children
+        self.calculate_total_children()
         self.calculate_total_plw_range()
 
     def calculate_hh_size(self):
