@@ -33,6 +33,8 @@ hdds_flags = {
     'Flag_HDDS_FCSCond_mismatch': "Mismatch between FCSCond and HDDSCond"
 }
 
+
+
 class HDDS(BaseIndicator):
     def __init__(self, df, low_erroneous, high_erroneous):
         super().__init__(df, 'HDDS', hdds_cols, hdds_flags)
@@ -40,7 +42,7 @@ class HDDS(BaseIndicator):
         self.high_erroneous = high_erroneous
         self.hdds_cols = hdds_cols  # Make hdds_cols a class attribute
 
-        self.FCS_HDDS_pairs = {
+        self.FCS_HDDS_PAIRS = {
             "FCSStap": ("HDDSStapCer", "HDDSStapRoot"),
             "FCSPulse": ("HDDSPulse"),
             "FCSDairy": ("HDDSDairy"),
@@ -51,6 +53,8 @@ class HDDS(BaseIndicator):
             "FCSSugar": ("HDDSSugar"),
             "FCSCond": ("HDDSCond")
         }
+
+        
         
     def calculate_indicators(self):
         print("Calculating HDDS...")
@@ -72,42 +76,22 @@ class HDDS(BaseIndicator):
         """
 
         # Identical Values (All 0's)
-        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_Identical_Values'] = \
+        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_Identical_Values'] = \
         (self.df[self.hdds_cols].sum(axis=1) == 0).astype(int)
 
-        # Check mismatch on Staple foods
-        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_FCSStap_mismatch'] = \
-        ((self.df["FCSStap"] == 7) & ((self.df['HDDSStapCer'] == 0) & (self.df['HDDSStapRoot'] == 0))).astype(int)
 
-        # Check mismatch on Pulses
-        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_FCSPulse_mismatch'] = \
-        ((self.df["FCSPulse"] == 7) & (self.df['HDDSPulse'] == 0)).astype(int)
+        for fcs_col, hdds_cols in self.FCS_HDDS_PAIRS.items():
+            if type(hdds_cols) == tuple:
+                for hdds_col in hdds_cols:
+                    try:
+                        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_{fcs_col}_mismatch'] = \
+                            ((self.df[fcs_col] == 0) & (self.df[hdds_col] == 1)).astype(int) | \
+                            ((self.df[fcs_col] == 7) & (self.df[hdds_col] == 0)).astype(int)
+                    except KeyError:
+                        print(f"KeyError on {fcs_col} and {hdds_col}")
+                        continue
+            else:
+                self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_{fcs_col}_mismatch'] = \
+                            ((self.df[fcs_col] == 0) & (self.df[hdds_cols] == 1)).astype(int) | \
+                            ((self.df[fcs_col] == 7) & (self.df[hdds_cols] == 0)).astype(int)
 
-        # Check mismatch on Dairy
-        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_FCSDairy_mismatch'] = \
-        ((self.df["FCSDairy"] == 7) & (self.df['HDDSDairy'] == 0)).astype(int)
-
-        # Check mismatch on Proteins
-        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_FCSPr_mismatch'] = \
-        ((self.df["FCSPr"] == 7) & ((self.df['HDDSPrMeatF'] == 0) & (self.df['HDDSPrMeatO'] == 0) & (self.df['HDDSPrFish'] == 0) & (self.df['HDDSPrEggs'] == 0))).astype(int)
-
-        # Check mismatch on Vegetables
-        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_FCSVeg_mismatch'] = \
-        ((self.df["FCSVeg"] == 7) & (self.df['HDDSVeg'] == 0)).astype(int)
-
-        # Check mismatch on Fruits
-        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_FCSFruit_mismatch'] = \
-        ((self.df["FCSFruit"] == 7) & (self.df['HDDSFruit'] == 0)).astype(int)
-
-        # Check mismatch on Fats
-        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_FCSFat_mismatch'] = \
-        ((self.df["FCSFat"] == 7) & (self.df['HDDSFat'] == 0)).astype(int)
-
-        # Check mismatch on Sugar
-        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_FCSSugar_mismatch'] = \
-        ((self.df["FCSSugar"] == 7) & (self.df['HDDSSugar'] == 0)).astype(int)
-
-        # Check mismatch on Condiments
-        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_FCSCond_mismatch'] = \
-
-        ((self.df["FCSCond"] == 7) & (self.df['HDDSCond'] == 0)).astype(int)

@@ -4,12 +4,13 @@
 
 
 ### Indicator checks
-- [ ] FCS
-- [ ] rCSI
-- [ ] HDDS
-- [ ] Demographics
-- [ ] Food Expenditures
-- [ ] Non-food Expenditures
+- [X] FCS
+- [X] rCSI
+- [X] HDDS
+  - [ ] Non-sequential check
+- [X] Demographics
+- [X] Food Expenditures
+- [X] Non-food Expenditures
 - [ ] LCS
 - [ ] HHS
 
