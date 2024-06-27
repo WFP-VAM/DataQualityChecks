@@ -74,8 +74,9 @@ class HDDS(BaseIndicator):
         FCS == 0 -> HDDS == 1
         FCS == 7 -> HDDS == 0 (or HDDS == NaN)
         """
+
         # Identical Values (All 0's)
-        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_Identical_Values'] = \
+        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_Identical_Values'] = \
         (self.df[self.hdds_cols].sum(axis=1) == 0).astype(int)
 
 
@@ -93,3 +94,4 @@ class HDDS(BaseIndicator):
                 self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_{fcs_col}_mismatch'] = \
                             ((self.df[fcs_col] == 0) & (self.df[hdds_cols] == 1)).astype(int) | \
                             ((self.df[fcs_col] == 7) & (self.df[hdds_cols] == 0)).astype(int)
+
