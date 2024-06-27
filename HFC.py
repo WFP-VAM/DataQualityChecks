@@ -44,7 +44,7 @@ def process_indicator(instance, writer):
 if __name__ == "__main__":
     df = read_data()
     output_dir = './reports'
-    report_path = f'{output_dir}/{today}_All_Indicators_Report.xlsx'
+    report_path = f'{output_dir}/{today}_HFC_Report.xlsx'
 
     with pd.ExcelWriter(report_path) as writer:
         current_df = df.copy()

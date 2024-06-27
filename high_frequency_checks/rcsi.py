@@ -41,7 +41,6 @@ class rCSI(BaseIndicator):
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_Abnormal_Identical'] = \
         ((self.df[self.cols].nunique(axis=1) == 1) & (self.df[self.cols].sum(axis=1) != 0)).astype(int)
 
-        
         # No Coping With Poor Consumption
         fcs_cat_column = 'FCSCat28' if self.high_sugar_oil_consumption else 'FCSCat21'
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_Poor_FCS_and_Zero_rCSI'] = \
