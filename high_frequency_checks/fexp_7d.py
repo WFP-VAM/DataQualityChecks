@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from .helpers.base_indicator import BaseIndicator
+from helpers.base_indicator import BaseIndicator
 
 fexp_7d_purch_cols = ['HHExpFCer_Purch_MN_7D',
                         'HHExpFTub_Purch_MN_7D',
@@ -57,21 +57,27 @@ fexp_7d_flags = {
 
 class FEXP_7D(BaseIndicator):
     def __init__(self, df, low_erroneous, high_erroneous):
-        super().__init__(df, 'FEXP_7D', fexp_7d_cols, fexp_7d_flags)
+        super().__init__(df, 'FEXP_7D', fexp_7d_cols, fexp_7d_flags, exclude_missing_check=fexp_7d_cols)
         self.low_erroneous = low_erroneous
         self.high_erroneous = high_erroneous
 
     def custom_flag_logic(self):
         # Custom flag logic specific to Food Expenditures 7D
         print(f"Custom flag logic for {self.indicator_name}...")
+        
+        # Custom Missing Values Logic for FEXP_7D
+        for col in fexp_7d_cols:
+            base_col = col.replace('_MN', '')
+            self.df[f'Flag_{self.indicator_name}_Missing_Values'] = (
+                (self.df[base_col] == 1) & self.df[col].isnull()
+            ).astype(int)
+        
+        # Total Food Expenditures 7D is zero
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Missing_Values'] == 0, f'Flag_{self.indicator_name}_Zero_FEXP'] = \
             (self.df['HHExpF_1M'] == 0).astype(int)
 
     def calculate_indicators(self):
         print(f"Calculating indicators for {self.indicator_name}...")
-        
-        # Fill NaN values in Food Expenditures with 0
-        self.df[fexp_7d_cols] = self.df[fexp_7d_cols].fillna(0)
-        
+
         # Calculating Monthly Food Expenditure        
         self.df['HHExpF_1M'] = sum(self.df[col] for col in fexp_7d_cols) / 7 * 30
