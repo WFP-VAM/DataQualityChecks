@@ -14,7 +14,7 @@ indicators = [
     (Demo, 'Demo'),
     (FCS, 'FCS'),
     (rCSI, 'rCSI'),
-    # (HDDS, 'HDDS'),
+    (HDDS, 'HDDS'),
     (FEXP_7D, 'FEXP_7D'),
     (NFEXP_1M, 'NFEXP_1M'),
     (NFEXP_6M, 'NFEXP_6M')
@@ -29,7 +29,7 @@ def process_indicator(instance, writer):
 if __name__ == "__main__":
     df = pd.read_csv('data/congo.csv')
     output_dir = './Reports'
-    report_path = f'{output_dir}/All_Indicators_Report.xlsx'
+    report_path = f'{output_dir}/HFC_Report.xlsx'
 
     with pd.ExcelWriter(report_path) as writer:
         current_df = df.copy()
