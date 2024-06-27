@@ -7,7 +7,6 @@
 - [X] FCS
 - [X] rCSI
 - [X] HDDS
-  - [ ] Non-sequential check
 - [X] Demographics
 - [X] Food Expenditures
 - [X] Non-food Expenditures
