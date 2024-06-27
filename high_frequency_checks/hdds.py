@@ -3,7 +3,19 @@ import numpy as np
 from .helpers.base_indicator import BaseIndicator
 
 # Columns of food groups related to HDDS
-hdds_cols = ['HDDSStapCer', 'HDDSStapRoot', 'HDDSPulse', 'HDDSDairy', 'HDDSPrMeatF', 'HDDSPrMeatO', 'HDDSPrFish', 'HDDSPrEggs', 'HDDSVeg', 'HDDSFruit', 'HDDSFat', 'HDDSSugar', 'HDDSCond']
+hdds_cols = ['HDDSStapCer',
+             'HDDSStapRoot',
+             'HDDSPulse',
+             'HDDSDairy',
+             'HDDSPrMeatF',
+             'HDDSPrMeatO',
+             'HDDSPrFish',
+             'HDDSPrEggs',
+             'HDDSVeg',
+             'HDDSFruit',
+             'HDDSFat',
+             'HDDSSugar',
+             'HDDSCond']
 
 # Flags related to HDDS
 hdds_flags = {
@@ -43,23 +55,14 @@ class HDDS(BaseIndicator):
     def calculate_indicators(self):
         print("Calculating HDDS...")
 
-        self.df['HDDS'] = (self.df['HDDSStapCer'] + self.df['HDDSStapRoot'] + self.df['HDDSVeg'] + self.df['HDDSFruit'] +
-                        self.df['HDDSPrMeatF'] + self.df['HDDSPrMeatO'] + self.df['HDDSPrFish'] + self.df['HDDSPulse'] +
-                        self.df['HDDSDairy'] + self.df['HDDSFat'] + self.df['HDDSSugar'] + self.df['HDDSCond'])
-
-        # Replace NaN values with 0 if present
-        self.df['HDDS'] = self.df['HDDS'].fillna(0)
+        self.df['HDDS'] = sum(self.df[col] for col in hdds_cols)
 
         # Create HDDS categories
-        bins = [0, 2, 4, self.df['HDDS'].max() + 1]  # Define the bin edges
+        bins = [0, 2, 4, self.df['HDDS'].max() + 1]
         labels = ['0-2 food groups (phase 4 to 5)', '3-4 food groups (phase 3)', '5-12 food groups (phase 1 to 2)']
-
         self.df['HDDSCat_IPC'] = pd.cut(self.df['HDDS'], bins=bins, labels=labels, include_lowest=True)
 
     def custom_flag_logic(self):
-
-        for col in hdds_flags.keys():
-            self.df[col] = 0
 
         # Identical Values (All 0's)
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_Identical_Values'] = \
@@ -100,24 +103,3 @@ class HDDS(BaseIndicator):
         # Check mismatch on Condiments
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_FCSCond_mismatch'] = \
         ((self.df["FCSCond"] == 7) & (self.df['HDDSCond'] == 0)).astype(int)
-
-    def custom_flag_logic_old(self):
-        for col in hdds_flags.keys():
-            self.df[col] = 0
-
-        # Identical Values (All 0's)
-        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_Identical_Values'] = \
-        (self.df[self.hdds_cols].sum(axis=1) == 0).astype(int)
-
-        # Check mismatches between FCS and HDDS columns
-        for fcs_col, hdds_cols in self.FCS_HDDS_pairs.items():
-            if isinstance(hdds_cols, str):
-                hdds_cols = [hdds_cols]
-
-            mismatch_condition = ((self.df[fcs_col] == 7) & (self.df[list(hdds_cols)].sum(axis=1) == 0))
-            flag_name = f'Flag_HDDS_{fcs_col}_mismatch'
-            self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, flag_name] = mismatch_condition.astype(int)
-        
-        # Compare flags for each row
-        flags_equal = self.df[hdds_flags.keys()].apply(lambda row: row.eq(self.df[hdds_flags.keys()].shift(1)), axis=1).all(axis=1)
-        print(f"Number of rows where flags are different: {(~flags_equal).sum()}")

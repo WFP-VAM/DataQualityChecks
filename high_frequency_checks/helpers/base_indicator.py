@@ -2,12 +2,13 @@ import numpy as np
 
 
 class BaseIndicator:
-    def __init__(self, df, indicator_name, cols, flags, weights=None):
+    def __init__(self, df, indicator_name, cols, flags, weights=None, exclude_missing_check=None):
         self.df = df
         self.cols = cols
         self.flags = flags
         self.weights = weights
         self.indicator_name = indicator_name
+        self.exclude_missing_check = exclude_missing_check if exclude_missing_check else []
         self._validate_columns()
         self.df[f'Flag_{self.indicator_name}'] = np.nan  # Overall flag initialization
         self.df[f'Flag_{self.indicator_name}_Narrative'] = ''   # Narrative flag initialization
@@ -28,7 +29,8 @@ class BaseIndicator:
             self.df[f'Flag_{self.indicator_name}_{flag}'] = np.nan
 
         # Missing Values
-        self.df[f'Flag_{self.indicator_name}_Missing_Values'] = self.df[self.cols].isnull().any(axis=1).astype(int)
+        check_cols = [col for col in self.cols if col not in self.exclude_missing_check]
+        self.df[f'Flag_{self.indicator_name}_Missing_Values'] = self.df[check_cols].isnull().any(axis=1).astype(int)
 
         # Erroneous Values
         print(f"Erroneous value parameters for {self.indicator_name}: low = {self.low_erroneous}, high = {self.high_erroneous}")

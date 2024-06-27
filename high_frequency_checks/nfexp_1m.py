@@ -33,19 +33,23 @@ nfexp_1m_flags = {
 
 class NFEXP_1M(BaseIndicator):
     def __init__(self, df, low_erroneous, high_erroneous):
-        super().__init__(df, 'NFEXP_1M', nfexp_1m_cols, nfexp_1m_flags)
+        super().__init__(df, 'NFEXP_1M', nfexp_1m_cols, nfexp_1m_flags, exclude_missing_check=nfexp_1m_cols)
         self.low_erroneous = low_erroneous
         self.high_erroneous = high_erroneous
 
     def custom_flag_logic(self):
         # Custom flag logic specific to Non-Food Expenditures 1M
         print(f"Custom flag logic for {self.indicator_name}...")
+        
+        # Custom Missing Values Logic for NFEXP_1M
+        for col in nfexp_1m_cols:
+            base_col = col.replace('_MN', '')
+            self.df[f'Flag_{self.indicator_name}_Missing_Values'] = (
+                (self.df[base_col] == 1) & self.df[col].isnull()
+            ).astype(int)
 
     def calculate_indicators(self):
         print(f"Calculating indicators for {self.indicator_name}...")
-        
-        # Fill NaN values in Non-Food Expenditures 1M with 0
-        self.df[nfexp_1m_cols] = self.df[nfexp_1m_cols].fillna(0)
         
         # Calculating Monthly Non-Food Expenditure 1M
         self.df['HHExpNF_1M_1M'] = sum(self.df[col] for col in nfexp_1m_cols)

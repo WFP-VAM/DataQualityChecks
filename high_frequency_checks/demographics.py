@@ -41,7 +41,7 @@ demo_flags = {
 
 class Demo(BaseIndicator):
     def __init__(self, df, high_hhsize, low_erroneous, high_erroneous):
-        super().__init__(df, 'Demo', ['HHSize', 'HHPregLactNb'] + male_cols + female_cols , demo_flags)
+        super().__init__(df, 'Demo', ['HHSize', 'HHPregLactNb'] + male_cols + female_cols , demo_flags, exclude_missing_check=['HHPregLactNb'])
         self.low_erroneous = low_erroneous
         self.high_erroneous = high_erroneous
         self.high_hhsize = high_hhsize
@@ -50,6 +50,12 @@ class Demo(BaseIndicator):
         # Custom flag logic specific to Demographics
         print(f"Custom flag logic for {self.indicator_name}...")
 
+        # Custom Missing value Logic for HHPregLactNb if there are females between 12 and 59
+        self.df.loc[
+            (self.df['in_plw_range'] > 0) & (self.df['HHPregLactNb'].isnull()), 
+            f'Flag_{self.indicator_name}_Missing_Values'
+        ] = 1
+        
         # High Household Size
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_Demo_High_HHSize'] = \
             (self.df['HHSize'] > self.high_hhsize).astype(int)
@@ -68,9 +74,6 @@ class Demo(BaseIndicator):
 
     def calculate_indicators(self):
         print(f"Calculating indicators for {self.indicator_name}...")
-        
-        # Fill NaN values in HHPregLactNb with 0
-        self.df['HHPregLactNb'].fillna(0, inplace=True)
         
         self.calculate_hh_size()
         self.calculate_total_adults()
