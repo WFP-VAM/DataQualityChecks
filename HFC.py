@@ -1,18 +1,27 @@
 import pandas as pd
+from data_bridges_knots import DataBridgesShapes
 from high_frequency_checks import FCS, rCSI, Demo, HDDS, FEXP_7D, NFEXP_1M, NFEXP_6M, LCS, MasterSheet
 from config import config
 from datetime import datetime
 from pathlib import Path
 
 today = datetime.now().strftime("%Y%m%d")  
+CONFIG_PATH = r"data_bridges_api_config.yaml"
 
-# Get the master sheet
-def read_data():
-    if config["DEBUG"] == True:
+client = DataBridgesShapes(CONFIG_PATH)
+
+
+# Get data
+def read_data(testing = False):
+    if testing == True:
+        print("Read data from local file")
         return pd.read_csv('data/congo.csv')
     else:
         print("Read data from DataBridges")
-        pass
+        df =  client.get_household_survey(survey_id=config["DataBridgesIDs"]['dataset'], access_type='full', page_size=800)
+        print(f"Retrieved data for dataset #{config["DataBridgesIDs"]['dataset']}")
+        print("\n --------------------------------------------------------- \n") # BUG 
+        return df
 
 # List of Indicator Classes
 indicators = [
