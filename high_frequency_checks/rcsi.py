@@ -22,7 +22,7 @@ rcsi_flags = {
     'Flag_rCSI_Erroneous_Values': "Erroneous value(s) (negative or above 7) in the reduced coping strategies",
     'Flag_rCSI_Abnormal_Identical': "The values of all reduced coping strategies are identical",
     'Flag_rCSI_Poor_FCS_and_Zero_rCSI': "The food consumption is poor with no coping (rCSI=0)",
-    'Flag_rCSI_Acceptable_FCS_and_High_rCSI': "FCS is high and rCSI is high",
+    'Flag_rCSI_Acceptable_FCS_and_High_rCSI': "The food consumption is acceptable and rCSI is high",
     'Flag_rCSI_MealAdult_with_No_Children': "Adults reduced their meal intake for children with no children in HH"
 }
 

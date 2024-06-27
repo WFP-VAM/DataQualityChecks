@@ -1,5 +1,5 @@
 import pandas as pd
-from high_frequency_checks import FCS, rCSI, Demo, HDDS, FEXP_7D, NFEXP_1M, NFEXP_6M, MasterSheet
+from high_frequency_checks import FCS, rCSI, Demo, HDDS, FEXP_7D, NFEXP_1M, NFEXP_6M, LCS, MasterSheet
 from config import config
 from datetime import datetime
 from pathlib import Path
@@ -11,6 +11,7 @@ indicators = [
     (Demo, 'Demo'),
     (FCS, 'FCS'),
     (rCSI, 'rCSI'),
+    (LCS, 'LCS'),
     (HDDS, 'HDDS'),
     (FEXP_7D, 'FEXP_7D'),
     (NFEXP_1M, 'NFEXP_1M'),

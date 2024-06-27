@@ -43,6 +43,11 @@ config = {
     "SURVEYS": {
         "total_surveys": 1000,
         "surveys_admin2": {}
+    },
+    
+    'LCS': {
+        'low_erroneous': None,
+        'high_erroneous': None
     }
 
 }
