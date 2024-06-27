@@ -58,12 +58,19 @@ class HDDS(BaseIndicator):
 
     def custom_flag_logic(self):
 
-        # for col in hdds_flags.keys():
-        #     self.df[col] = 0
+        """
+        For HHDS, the missing value check should not be sequential (i.e. if HDDS is missing,  then the other checks are not performed)
+        
+        Custom logic:
+            - if FCS == 0 -> HDDS == 0 (or HDDS == NaN, if constrained)
+            - if FCS == 7 -> HDDS == 1
+        """
 
         # Identical Values (All 0's)
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_Identical_Values'] = \
         (self.df[self.hdds_cols].sum(axis=1) == 0).astype(int)
+
+        # WARNING: Ugly code ahead!
 
         # Check mismatch on Staple foods
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_FCSStap_mismatch'] = \
@@ -101,23 +108,25 @@ class HDDS(BaseIndicator):
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_FCSCond_mismatch'] = \
         ((self.df["FCSCond"] == 7) & (self.df['HDDSCond'] == 0)).astype(int)
 
-    def custom_flag_logic_old(self):
-        for col in hdds_flags.keys():
-            self.df[col] = 0
+    # def custom_flag_logic_old(self):
+    #     for col in hdds_flags.keys():
+    #         self.df[col] = 0
 
-        # Identical Values (All 0's)
-        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_Identical_Values'] = \
-        (self.df[self.hdds_cols].sum(axis=1) == 0).astype(int)
+    #     # Identical Values (All 0's)
+    #     self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_Identical_Values'] = \
+    #     (self.df[self.hdds_cols].sum(axis=1) == 0).astype(int)
 
-        # Check mismatches between FCS and HDDS columns
-        for fcs_col, hdds_cols in self.FCS_HDDS_pairs.items():
-            if isinstance(hdds_cols, str):
-                hdds_cols = [hdds_cols]
+    #     # Check mismatches between FCS and HDDS columns
+    #     for fcs_col, hdds_cols in self.FCS_HDDS_pairs.items():
+    #         if isinstance(hdds_cols, str):
+    #             hdds_cols = [hdds_cols]
 
-            mismatch_condition = ((self.df[fcs_col] == 7) & (self.df[list(hdds_cols)].sum(axis=1) == 0))
-            flag_name = f'Flag_HDDS_{fcs_col}_mismatch'
-            self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, flag_name] = mismatch_condition.astype(int)
+    #         mismatch_condition = ((self.df[fcs_col] == 7) & (self.df[list(hdds_cols)].sum(axis=1) == 0))
+    #         flag_name = f'Flag_HDDS_{fcs_col}_mismatch'
+    #         self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, flag_name] = mismatch_condition.astype(int)
         
-        # Compare flags for each row
-        flags_equal = self.df[hdds_flags.keys()].apply(lambda row: row.eq(self.df[hdds_flags.keys()].shift(1)), axis=1).all(axis=1)
-        print(f"Number of rows where flags are different: {(~flags_equal).sum()}")
+    #     # Compare flags for each row
+    #     flags_equal = self.df[hdds_flags.keys()].apply(lambda row: row.eq(self.df[hdds_flags.keys()].shift(1)), axis=1).all(axis=1)
+    #     print(f"Number of rows where flags are different: {(~flags_equal).sum()}")
+
+
