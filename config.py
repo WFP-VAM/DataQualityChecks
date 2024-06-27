@@ -39,14 +39,10 @@ config = {
     'NFEXP_6M': {
         'low_erroneous': 0, # IF any value in the non-food expenditures 6M is below low_erroneous, trigger Erroneous_Values
         'high_erroneous': 1000000 # IF any value in the non-food expenditures 6M is above high_erroneous, trigger Erroneous_Values
-<<<<<<< HEAD
     }, 
     "SURVEYS": {
         "total_surveys": 1000,
         "surveys_admin2": {}
     }
 
-=======
-    }
->>>>>>> HFC
 }
