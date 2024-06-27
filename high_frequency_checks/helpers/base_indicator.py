@@ -11,7 +11,7 @@ class BaseIndicator:
         self.exclude_missing_check = exclude_missing_check if exclude_missing_check else []
         self.exclude_erroneous_check = exclude_erroneous_check if exclude_erroneous_check else []
         self.df[f'Flag_{self.indicator_name}'] = np.nan  # Overall flag initialization
-        self.df[f'Flag_{self.indicator_name}_Narrative'] = ''   # Narrative flag initialization
+        self.df[f'Flag_{self.indicator_name}_Narrative'] = ''   # Narrative 
 
     def _validate_columns(self):
         required_columns = ['EnuName', 'ID02'] + self.cols

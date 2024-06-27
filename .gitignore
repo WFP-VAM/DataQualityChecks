@@ -179,6 +179,7 @@ HFC_FCS
 *.csv
 
 # other files
+ROADMAP.md
 NOTES.md
 
 
