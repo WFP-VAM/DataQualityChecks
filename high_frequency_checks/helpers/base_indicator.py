@@ -1,5 +1,5 @@
-import pandas as pd
 import numpy as np
+
 
 class BaseIndicator:
     def __init__(self, df, indicator_name, cols, flags, weights=None, exclude_missing_check=None, exclude_erroneous_check=None):

@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from helpers.base_indicator import BaseIndicator
+from .helpers.base_indicator import BaseIndicator
 
 male_cols = ['HHSize01M',
              'HHSize24M',

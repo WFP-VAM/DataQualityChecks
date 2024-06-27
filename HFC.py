@@ -1,14 +1,10 @@
 import pandas as pd
-from indicators.demographics import Demo
-from indicators.fcs import FCS
-from indicators.rcsi import rCSI
-from indicators.lcs import LCS
-from indicators.hdds import HDDS
-from indicators.fexp_7d import FEXP_7D
-from indicators.nfexp_1m import NFEXP_1M
-from indicators.nfexp_6m import NFEXP_6M
-from mastersheet.mastersheet import MasterSheet
+from high_frequency_checks import FCS, rCSI, Demo, HDDS, FEXP_7D, NFEXP_1M, NFEXP_6M, LCS, MasterSheet
 from config import config
+from datetime import datetime
+from pathlib import Path
+
+today = datetime.now().strftime("%Y%m%d")  
 
 # List of Indicator Classes
 indicators = [
@@ -30,8 +26,8 @@ def process_indicator(instance, writer):
 
 if __name__ == "__main__":
     df = pd.read_csv('data/congo.csv')
-    output_dir = './Reports'
-    report_path = f'{output_dir}/HFC_Report.xlsx'
+    output_dir = './reports'
+    report_path = f'{output_dir}/{today}_All_Indicators_Report.xlsx'
 
     with pd.ExcelWriter(report_path) as writer:
         current_df = df.copy()

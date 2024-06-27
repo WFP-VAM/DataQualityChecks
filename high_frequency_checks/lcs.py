@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from helpers.base_indicator import BaseIndicator
+from .helpers.base_indicator import BaseIndicator
 
 lcs_stress_cols = ['LcsR_stress_Animals',
                     'Lcs_stress_Saving',
