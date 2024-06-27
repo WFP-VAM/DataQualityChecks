@@ -1,7 +1,8 @@
 import pandas as pd
+from indicators.demographics import Demo
 from indicators.fcs import FCS
 from indicators.rcsi import rCSI
-from indicators.demographics import Demo
+from indicators.lcs import LCS
 from indicators.hdds import HDDS
 from indicators.fexp_7d import FEXP_7D
 from indicators.nfexp_1m import NFEXP_1M
@@ -14,6 +15,7 @@ indicators = [
     (Demo, 'Demo'),
     (FCS, 'FCS'),
     (rCSI, 'rCSI'),
+    (LCS, 'LCS'),
     (HDDS, 'HDDS'),
     (FEXP_7D, 'FEXP_7D'),
     (NFEXP_1M, 'NFEXP_1M'),
