@@ -6,6 +6,14 @@ from pathlib import Path
 
 today = datetime.now().strftime("%Y%m%d")  
 
+# Get the master sheet
+def read_data():
+    if config["DEBUG"] == True:
+        return pd.read_csv('data/congo.csv')
+    else:
+        print("Read data from DataBridges")
+        pass
+
 # List of Indicator Classes
 indicators = [
     (Demo, 'Demo'),
@@ -25,7 +33,7 @@ def process_indicator(instance, writer):
     instance.generate_report(writer)
 
 if __name__ == "__main__":
-    df = pd.read_csv('data/congo.csv')
+    df = read_data()
     output_dir = './reports'
     report_path = f'{output_dir}/{today}_All_Indicators_Report.xlsx'
 

@@ -1,4 +1,5 @@
 config = {
+    'DEBUG': True,
     
     'FCS': {
         'low_fcs': 10, # If FCS below low_fcs, trigger LOW_FCS
