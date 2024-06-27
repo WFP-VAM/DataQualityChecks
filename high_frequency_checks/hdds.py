@@ -109,4 +109,5 @@ class HDDS(BaseIndicator):
 
         # Check mismatch on Condiments
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_FCSCond_mismatch'] = \
+
         ((self.df["FCSCond"] == 7) & (self.df['HDDSCond'] == 0)).astype(int)
