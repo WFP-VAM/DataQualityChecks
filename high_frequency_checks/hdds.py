@@ -48,7 +48,7 @@ class HDDS(BaseIndicator):
                         self.df['HDDSDairy'] + self.df['HDDSFat'] + self.df['HDDSSugar'] + self.df['HDDSCond'])
 
         # Replace NaN values with 0 if present
-        self.df['HDDS'] = self.df['HDDS'].fillna(0)
+        # self.df['HDDS'] = self.df['HDDS'].fillna(0)
 
         # Create HDDS categories
         bins = [0, 2, 4, self.df['HDDS'].max() + 1]  # Define the bin edges
@@ -58,8 +58,8 @@ class HDDS(BaseIndicator):
 
     def custom_flag_logic(self):
 
-        for col in hdds_flags.keys():
-            self.df[col] = 0
+        # for col in hdds_flags.keys():
+        #     self.df[col] = 0
 
         # Identical Values (All 0's)
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_Identical_Values'] = \
