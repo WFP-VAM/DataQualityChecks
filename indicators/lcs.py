@@ -42,13 +42,16 @@ lcs_children_cols = ['Lcs_stress_LessSchool',
                     'Lcs_em_ChildMigration',
                     'Lcs_em_Marriage']
 
+lcs_non_exhaustive_cols = ['Lcs_em_Begged', 'Lcs_em_IllegalAct', 'Lcs_stress_BorrowCash']
+
 lcs_options = [10, 20, 30, 9999]
 
 # Flags related to rCSI
 lcs_flags = {
     'Flag_LCS_Missing_Values': "Missing value(s) in the livelihood coping strategies",
     'Flag_LCS_Erroneous_Values': "Erroneous value(s) in the livelihood coping strategies",
-    'Flag_LCS_ChildrenStrategies_with_No_Children': "HH Applied strategies related to children with no children"
+    'Flag_LCS_ChildrenStrategies_with_No_Children': "HH Applied strategies related to children with no children",
+    'Flag_LCS_NonExhaustive_Strategies_NA': "HH Reported Begging or Illegal activities as Not Applicable"
 }
 
 class LCS(BaseIndicator):
@@ -81,7 +84,20 @@ class LCS(BaseIndicator):
         else:
             self.df[f'Flag_{self.indicator_name}_ChildrenStrategies_with_No_Children'] = 0
             
-
+       # Flag for three or More N/A in Strategies
+        self.df[f'Flag_{self.indicator_name}_Three_or_More_NA'] = (
+            (self.df[self.lcs_cols] == 9999).sum(axis=1) >= 3
+        ).astype(int)
+        
+        # Flag if specific strategies that can't be exhausted (Begging, Illegal activities, and bororwing cash) are reported as not applicable
+        non_exhaustive_cols_present = [col for col in lcs_non_exhaustive_cols if col in self.df.columns]
+        if non_exhaustive_cols_present:
+            self.df[f'Flag_{self.indicator_name}_NonExhaustive_Strategies_NA'] = (
+                (self.df[lcs_non_exhaustive_cols].isin([30, 9999])).any(axis=1)
+            ).astype(int)
+        else:
+           self.df[f'Flag_{self.indicator_name}_NonExhaustive_Strategies_NA'] = 0 
+        
     def calculate_indicators(self):
         pass
     
