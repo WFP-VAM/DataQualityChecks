@@ -63,6 +63,13 @@ class HDDS(BaseIndicator):
         self.df['HDDSCat_IPC'] = pd.cut(self.df['HDDS'], bins=bins, labels=labels, include_lowest=True)
 
     def custom_flag_logic(self):
+        """
+        HDDS checks: not sequentials
+
+        Flags:
+        FCS == 0 -> HDDS == 1
+        FCS == 7 -> HDDS == 0 (or HDDS == NaN)
+        """
 
         # Identical Values (All 0's)
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, 'Flag_HDDS_Identical_Values'] = \
