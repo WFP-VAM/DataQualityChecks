@@ -42,7 +42,7 @@ def process_indicator(instance, writer):
     instance.generate_report(writer)
 
 if __name__ == "__main__":
-    df = read_data()
+    df = read_data(testing=True)
     output_dir = './reports'
     report_path = f'{output_dir}/{today}_HFC_Report.xlsx'
 
