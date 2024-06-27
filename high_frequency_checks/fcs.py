@@ -48,6 +48,7 @@ class FCS(BaseIndicator):
 
     def custom_flag_logic(self):
         print("Custom flag logic for FCS...")
+        
         # Identical Values
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_Abnormal_Identical'] = \
             (self.df[self.cols].nunique(axis=1) == 1).astype(int)

@@ -42,7 +42,7 @@ lcs_children_cols = ['Lcs_stress_LessSchool',
                     'Lcs_em_ChildMigration',
                     'Lcs_em_Marriage']
 
-lcs_non_exhaustive_cols = ['Lcs_em_Begged', 'Lcs_em_IllegalAct', 'Lcs_stress_BorrowCash']
+lcs_non_exhaustive_cols = ['Lcs_em_Begged', 'Lcs_em_IllegalAct', 'Lcs_stress_BorrowCash', 'LcsR_crisis_ImmCrops']
 
 lcs_options = [10, 20, 30, 9999]
 
@@ -51,7 +51,8 @@ lcs_flags = {
     'Flag_LCS_Missing_Values': "Missing value(s) in the livelihood coping strategies",
     'Flag_LCS_Erroneous_Values': "Erroneous value(s) in the livelihood coping strategies",
     'Flag_LCS_ChildrenStrategies_with_No_Children': "HH Applied strategies related to children with no children",
-    'Flag_LCS_NonExhaustive_Strategies_NA': "HH Reported Begging or Illegal activities as Not Applicable"
+    'Flag_LCS_Three_or_More_NA': "Three or more livelihood coping strategies reported as NA",
+    'Flag_LCS_NonExhaustive_Strategies_NA': "HH Reported activities that can't be exhausted as exhausted or Not Applicable"
 }
 
 class LCS(BaseIndicator):
@@ -70,33 +71,33 @@ class LCS(BaseIndicator):
         print("Custom flag logic for LCS...")
 
         # Custom Erroneous value Logic for LCS Columns
-        self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] = (
+        self.df.loc[self.df[f'Flag_{self.indicator_name}_Missing_Values'] == 0, f'Flag_{self.indicator_name}_Erroneous_Values'] = (
             ~self.df[self.lcs_cols].isin(self.lcs_options).all(axis=1)
-        ).astype(int)
+            ).astype(int)
         
         # HH Applying livelihood strategies related to children But There are No Children
         children_cols_present = [col for col in lcs_children_cols if col in self.df.columns]
         if children_cols_present:
-            self.df[f'Flag_{self.indicator_name}_ChildrenStrategies_with_No_Children'] = (
+            self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_ChildrenStrategies_with_No_Children'] = (
                 (self.df['Sum_children'] == 0) & 
                 self.df[children_cols_present].isin([20, 30]).any(axis=1)
             ).astype(int)
         else:
-            self.df[f'Flag_{self.indicator_name}_ChildrenStrategies_with_No_Children'] = 0
+            self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_ChildrenStrategies_with_No_Children'] = 0
             
-       # Flag for three or More N/A in Strategies
-        self.df[f'Flag_{self.indicator_name}_Three_or_More_NA'] = (
+        # Flag for three or More N/A in Strategies
+        self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_Three_or_More_NA'] = (
             (self.df[self.lcs_cols] == 9999).sum(axis=1) >= 3
         ).astype(int)
         
-        # Flag if specific strategies that can't be exhausted (Begging, Illegal activities, and bororwing cash) are reported as not applicable
+        # Flag if specific strategies that can't be exhausted or NA (Begging, Borrowing Money, and Illegal activities) are reported as exhausted or not applicable
         non_exhaustive_cols_present = [col for col in lcs_non_exhaustive_cols if col in self.df.columns]
         if non_exhaustive_cols_present:
-            self.df[f'Flag_{self.indicator_name}_NonExhaustive_Strategies_NA'] = (
-                (self.df[lcs_non_exhaustive_cols].isin([30, 9999])).any(axis=1)
+            self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_NonExhaustive_Strategies_NA'] = (
+                self.df[non_exhaustive_cols_present].isin([30, 9999]).any(axis=1)
             ).astype(int)
         else:
-           self.df[f'Flag_{self.indicator_name}_NonExhaustive_Strategies_NA'] = 0 
+            self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_NonExhaustive_Strategies_NA'] = 0
         
     def calculate_indicators(self):
         pass
