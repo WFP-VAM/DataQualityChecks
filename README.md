@@ -60,8 +60,8 @@ Contributions to this project are welcome. If you find any issues or have sugges
 
 
 ## Authors
-- (Ali Assi)[https://github.com/AssiALi16]
-- (Alessandra Gherardelli)[[https://github.com/AlexGherardelli]]
+- [Ali Assi](https://github.com/AssiALi16)
+- [Alessandra Gherardelli](https://github.com/AlexGherardelli)
 
 ## License
 
