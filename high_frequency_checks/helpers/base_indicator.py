@@ -16,6 +16,7 @@ class BaseIndicator:
     def _validate_columns(self):
         required_columns = ['EnuName', 'ID02'] + self.cols
         missing_columns = [col for col in required_columns if col not in self.df.columns]
+
         if missing_columns:
             raise KeyError(f"The following required columns are missing from the DataFrame: {', '.join(missing_columns)}")
 

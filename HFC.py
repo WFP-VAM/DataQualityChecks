@@ -3,13 +3,10 @@ from data_bridges_knots import DataBridgesShapes
 from high_frequency_checks import FCS, rCSI, Demo, HDDS, FEXP_7D, NFEXP_1M, NFEXP_6M, LCS, MasterSheet
 from config import config
 from datetime import datetime
-from pathlib import Path
 
-today = datetime.now().strftime("%Y%m%d")  
 CONFIG_PATH = r"data_bridges_api_config.yaml"
 
 client = DataBridgesShapes(CONFIG_PATH)
-
 
 # Get data
 def read_data(testing = False):
@@ -20,31 +17,31 @@ def read_data(testing = False):
         print("Read data from DataBridges")
         df =  client.get_household_survey(survey_id=config["DataBridgesIDs"]['dataset'], access_type='full', page_size=800)
         print(f"Retrieved data for dataset #{config["DataBridgesIDs"]['dataset']}")
-        print("\n --------------------------------------------------------- \n") # BUG 
+        print("\n --------------------------------------------------------- \n")
         return df
 
 # List of Indicator Classes
 indicators = [
     (Demo, 'Demo'),
-    (FCS, 'FCS'),
-    (rCSI, 'rCSI'),
-    (LCS, 'LCS'),
-    (HDDS, 'HDDS'),
-    (FEXP_7D, 'FEXP_7D'),
-    (NFEXP_1M, 'NFEXP_1M'),
-    (NFEXP_6M, 'NFEXP_6M')
+    # (FCS, 'FCS'),
+    # (rCSI, 'rCSI'),
+    # (LCS, 'LCS'),
+    # (HDDS, 'HDDS'),
+    # (FEXP_7D, 'FEXP_7D'),
+    # (NFEXP_1M, 'NFEXP_1M'),
+    # (NFEXP_6M, 'NFEXP_6M')
 ]
 
 def process_indicator(instance, writer):
     """Process the indicator instance."""
-    instance.calculate_indicators()
+    instance.calculate_indicators() # drops after this one.
     instance.generate_flags()
     instance.generate_report(writer)
 
 if __name__ == "__main__":
-    df = read_data(testing=True)
+    df = read_data(testing=False)
     output_dir = './reports'
-    report_path = f'{output_dir}/{today}_HFC_Report.xlsx'
+    report_path = f'{output_dir}/All_Indicators_Report.xlsx'
 
     with pd.ExcelWriter(report_path) as writer:
         current_df = df.copy()
