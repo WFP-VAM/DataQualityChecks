@@ -173,7 +173,6 @@ EGCO_Sudanese_24_HFC.do
 HFC_FCS
 *.ipynb
 
-
 # data
 *.xlsx
 *.csv
@@ -182,6 +181,7 @@ HFC_FCS
 ROADMAP.md
 NOTES.md
 
-
 # config files 
 data_bridges_api_config.yaml
+.env
+*.log
