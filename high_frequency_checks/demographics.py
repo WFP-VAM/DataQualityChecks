@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from .helpers.base_indicator import BaseIndicator
+from .helpers.parsing import as_numeric
 
 male_cols = ['HHSize01M',
              'HHSize24M',
@@ -41,10 +42,11 @@ demo_flags = {
 
 class Demo(BaseIndicator):
     def __init__(self, df, high_hhsize, low_erroneous, high_erroneous):
-        super().__init__(df, 'Demo', ['HHSize', 'HHPregLactNb'] + male_cols + female_cols , demo_flags, exclude_missing_check=['HHPregLactNb'])
+        super().__init__(df, 'Demo', ['HHSize', 'HHPregLactNb'] + male_cols + female_cols , demo_flags, exclude_missing_check=['HHPregLactNb'], exclude_erroneous_check=male_cols + female_cols + children_cols + adult_cols)
         self.low_erroneous = low_erroneous
         self.high_erroneous = high_erroneous
         self.high_hhsize = high_hhsize
+        
 
     def custom_flag_logic(self):
         # Custom flag logic specific to Demographics
@@ -74,6 +76,8 @@ class Demo(BaseIndicator):
 
     def calculate_indicators(self):
         print(f"Calculating indicators for {self.indicator_name}...")
+        
+        self.df = as_numeric(self.df,col_list=['HHSize', 'HHPregLactNb'] + male_cols+female_cols+children_cols+adult_cols)
         
         self.calculate_hh_size()
         self.calculate_total_adults()
