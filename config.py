@@ -1,5 +1,10 @@
 config = {
     
+    "DataBridgesIDs": {
+        'questionnaire': 1509,
+        'dataset': 3094
+    },
+    
     'FCS': {
         'low_fcs': 10, # If FCS below low_fcs, trigger LOW_FCS
         'high_fcs': 90, # IF FCS above high_fcs, trigger High_FCS

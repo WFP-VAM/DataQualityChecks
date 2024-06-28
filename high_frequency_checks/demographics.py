@@ -1,7 +1,6 @@
-import pandas as pd
-import numpy as np
 from .helpers.base_indicator import BaseIndicator
 from .helpers.standard.demographics import male_cols, female_cols, adult_cols, children_cols
+from .helpers.parsing import as_numeric
 
 
 class Demo(BaseIndicator):

@@ -9,7 +9,6 @@ class BaseIndicator:
                  indicator_name: str,
                  cols: list,
                  flags: dict, 
-                 weights: list = None,
                  exclude_missing_check: list = None, 
                  exclude_erroneous_check: list = None):
         
@@ -18,11 +17,11 @@ class BaseIndicator:
         self.cols = cols
         self.base_cols = base_cols
         self.flags = flags
-        self.weights = weights or []
         self.exclude_missing_check = exclude_missing_check or []
         self.exclude_erroneous_check = exclude_erroneous_check or []
 
         self.initialize_flags()
+        self.parse_columns()
 
     def initialize_flags(self):
         self.df[f'Flag_{self.indicator_name}_Overall'] = np.nan
@@ -33,7 +32,12 @@ class BaseIndicator:
         missing_columns = [col for col in required_columns if col not in self.df.columns]
         if missing_columns:
             raise KeyError(f"Missing columns: {', '.join(missing_columns)}")
-
+    
+    def parse_columns(self):
+        for col in self.cols:
+            self.df[col] =  pd.to_numeric(self.df[col], errors='ignore')
+        pass
+    
     def generate_flags(self):
         print(f"Generating flags for {self.indicator_name}")
         self.initialize_individual_flags()

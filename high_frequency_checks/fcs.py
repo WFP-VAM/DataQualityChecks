@@ -26,7 +26,7 @@ class FCS(BaseIndicator):
                          'FCS',
                          fcs_cols,
                          FCS.flags,
-                         fcs_weights)
+                         )
         
         self.cols = fcs_cols
         self.weights = fcs_weights

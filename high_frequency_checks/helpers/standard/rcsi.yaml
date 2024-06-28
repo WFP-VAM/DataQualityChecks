@@ -1,0 +1,13 @@
+columns:
+  rCSILessQlty: int
+  rCSIBorrow: int
+  rCSIMealSize: int
+  rCSIMealAdult: int
+  rCSIMealNb: int
+
+weights:
+  rCSILessQlty: 1
+  rCSIBorrow: 2
+  rCSIMealSize: 1
+  rCSIMealAdult: 3
+  rCSIMealNb: 1
