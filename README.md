@@ -1,37 +1,17 @@
-m
+# High Frenquency Checks for WFP Food Security Assessments
 
 This repository supports WFP Country Offices in checking the quality of the data collected in needs assessment surveys. 
 
 
-> This package is under development, and we expect to release new versions and bug fixes frequently. 
-
 ## Features
-This package checks data quality for the main indicators used in WFP needs assessments:
 
-- **Food Consumption Score (FCS) Checks**:
-  - Flag missing values in food groups
-  - Flag all groups are identical
-  - Flag very low (FCS <= 10) or very high (FCS >= 90/100) 
-  - Flag low staple consumption
-  - Low FCS with no coping (rCSI = 0)
-  - High FCS with rCSI > 50
-  - <0 or >7 score for all food groups
-- **Reduced Coping Strategy Index (rCSI) Checks**:
-  -  Missing values
-  -  Out-of-range values
-  -  High food-based coping (rCSI) with high consumption (FCS)
-- **Demographic Checks**: 
-  - Checks for erroneous values
-  - Flags households with extremely large household sizes.
-- **Household Dietary Diversity Score (HDDS) Checks**: 
-  - Missing values
-  - Out-of-range values
-  - Inconsistencies with FCS (FCS == 7 -> HHDS == 0; FCS == 0  -> HHDS == 1)
+- **Food Consumption Score (FCS) Checks**: Performs a series of checks on the FCS data, including missing values, erroneous values, abnormal patterns (e.g., all zeros, all sevens, identical values), low staple consumption, and low/high FCS scores.
+- **Reduced Coping Strategy Index (rCSI) Checks**: Validates the rCSI data by checking for missing values, erroneous values, and high rCSI scores.
+- **Demographic Checks**: Checks for erroneous values in age groups and flags households with extremely large household sizes.
+- **Household Dietary Diversity Score (HDDS) Checks**: Validates the HDDS data by checking for missing values and erroneous values.
 - **Food Expenditure Checks**: Checks for erroneous values in food expenditure data for 7 days, 1 month, and 6 months.
 - **Enumerator Performance Evaluation**: Generates reports summarizing the data quality issues at the enumerator level, including the total number of records and error percentages.
 - **Mastersheet Generation**: Consolidates all indicator checks into a single mastersheet, providing an overview of data quality across all indicators.
-
-The package is customizable by each Country Office by creating contextual configurations in the ```config.py` file.
 
 ## Installation
 
