@@ -1,0 +1,45 @@
+FCS:
+  low_fcs: 10
+  high_fcs: 90
+  low_erroneous: 0
+  high_erroneous: 7
+  high_sugar_oil_consumption: true
+
+rCSI:
+  high_rcsi: 50
+  low_erroneous: 0
+  high_erroneous: 7
+  high_sugar_oil_consumption: true
+
+Demo:
+  low_erroneous: 0
+  high_erroneous: 30
+  high_hhsize: 40
+
+Housing:
+  low_erroneous: null
+  high_erroneous: null
+
+HDDS:
+  low_erroneous: 0
+  high_erroneous: 1
+
+FEXP_7D:
+  low_erroneous: 0
+  high_erroneous: 100000
+
+NFEXP_1M:
+  low_erroneous: 0
+  high_erroneous: 500000
+
+NFEXP_6M:
+  low_erroneous: 0
+  high_erroneous: 1000000
+
+SURVEYS:
+  total_surveys: 1000
+  surveys_admin2: {}
+
+LCS:
+  low_erroneous: null
+  high_erroneous: null
