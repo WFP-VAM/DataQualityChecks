@@ -1,26 +1,8 @@
 import pandas as pd
 import numpy as np
 from .helpers.base_indicator import BaseIndicator
+from .helpers.standard.nfexp_6m import nfexp_6m_cols
 
-nfexp_6m_purch_cols = ['HHExpNFMedServ_Purch_MN_6M',
-                        'HHExpNFMedGood_Purch_MN_6M',
-                        'HHExpNFCloth_Purch_MN_6M',
-                        'HHExpNFEduFee_Purch_MN_6M',
-                        'HHExpNFEduGood_Purch_MN_6M',
-                        'HHExpNFRent_Purch_MN_6M',
-                        'HHExpNFHHSoft_Purch_MN_6M',
-                        'HHExpNFHHMaint_Purch_MN_6M']
-
-nfexp_6m_giftaid_cols = ['HHExpNFMedServ_GiftAid_MN_6M',
-                        'HHExpNFMedGood_GiftAid_MN_6M',
-                        'HHExpNFCloth_GiftAid_MN_6M',
-                        'HHExpNFEduFee_GiftAid_MN_6M',
-                        'HHExpNFEduGood_GiftAid_MN_6M',
-                        'HHExpNFRent_GiftAid_MN_6M',
-                        'HHExpNFHHSoft_GiftAid_MN_6M',
-                        'HHExpNFHHMaint_GiftAid_MN_6M']
-
-nfexp_6m_cols = nfexp_6m_purch_cols + nfexp_6m_giftaid_cols
 
 nfexp_6m_flags = {
     'Flag_NFEXP_6M_Missing_Values': "Missing value(s) in the Non-Food Expenditures 6M Module",
@@ -28,8 +10,18 @@ nfexp_6m_flags = {
 }
 
 class NFEXP_6M(BaseIndicator):
-    def __init__(self, df, low_erroneous, high_erroneous):
-        super().__init__(df, 'NFEXP_6M', nfexp_6m_cols, nfexp_6m_flags, exclude_missing_check=nfexp_6m_cols)
+    def __init__(self, 
+                 df,
+                 low_erroneous,
+                 high_erroneous):
+        
+        super().__init__(df,
+                         'NFEXP_6M',
+                         nfexp_6m_cols,
+                         nfexp_6m_flags,
+                         exclude_missing_check=nfexp_6m_cols)
+        
+        self.cols = nfexp_6m_cols
         self.low_erroneous = low_erroneous
         self.high_erroneous = high_erroneous
 
@@ -38,7 +30,7 @@ class NFEXP_6M(BaseIndicator):
         print(f"Custom flag logic for {self.indicator_name}...")
         
         # Custom Missing Values Logic for NFEXP_1M
-        for col in nfexp_6m_cols:
+        for col in self.cols:
             base_col = col.replace('_MN', '')
             self.df[f'Flag_{self.indicator_name}_Missing_Values'] = (
                 (self.df[base_col] == 1) & self.df[col].isnull()
@@ -48,7 +40,7 @@ class NFEXP_6M(BaseIndicator):
         print(f"Calculating indicators for {self.indicator_name}...")
         
         # Calculating Monthly Non-Food Expenditures 6M        
-        self.df['HHExpNF_6M_1M'] = sum(self.df[col] for col in nfexp_6m_cols) / 6
+        self.df['HHExpNF_6M_1M'] = sum(self.df[col] for col in self.cols) / 6
         
         # Calculating Total Monthly Expenditures
         self.df['HHExp_1M'] = self.df['HHExpF_1M'] + self.df['HHExpNF_1M_1M'] + self.df['HHExpNF_6M_1M']

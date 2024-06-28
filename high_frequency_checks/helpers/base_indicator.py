@@ -1,67 +1,79 @@
 import numpy as np
-
+import pandas as pd
+from .standard.base_indicator import base_cols
 
 class BaseIndicator:
-    def __init__(self, df, indicator_name, cols, flags, weights=None, exclude_missing_check=None, exclude_erroneous_check=None):
+    
+    def __init__(self, 
+                 df: pd.DataFrame,
+                 indicator_name: str,
+                 cols: list,
+                 flags: dict, 
+                 weights: list = None,
+                 exclude_missing_check: list = None, 
+                 exclude_erroneous_check: list = None):
+        
         self.df = df
-        self.cols = cols
-        self.flags = flags
-        self.weights = weights
         self.indicator_name = indicator_name
-        self.exclude_missing_check = exclude_missing_check if exclude_missing_check else []
-        self.exclude_erroneous_check = exclude_erroneous_check if exclude_erroneous_check else []
-        self.df[f'Flag_{self.indicator_name}'] = np.nan  # Overall flag initialization
-        self.df[f'Flag_{self.indicator_name}_Narrative'] = ''   # Narrative flag initialization
+        self.cols = cols
+        self.base_cols = base_cols
+        self.flags = flags
+        self.weights = weights or []
+        self.exclude_missing_check = exclude_missing_check or []
+        self.exclude_erroneous_check = exclude_erroneous_check or []
 
-    def _validate_columns(self):
-        required_columns = ['EnuName', 'ID02'] + self.cols
+        self.initialize_flags()
+
+    def initialize_flags(self):
+        self.df[f'Flag_{self.indicator_name}_Overall'] = np.nan
+        self.df[f'Flag_{self.indicator_name}_Narrative'] = ''
+
+    def validate_columns(self):
+        required_columns = self.base_cols + self.cols
         missing_columns = [col for col in required_columns if col not in self.df.columns]
         if missing_columns:
-            raise KeyError(f"The following required columns are missing from the DataFrame: {', '.join(missing_columns)}")
-
-    def custom_flag_logic(self):
-        # Placeholder for custom flag logic, to be implemented in derived classes
-        pass
+            raise KeyError(f"Missing columns: {', '.join(missing_columns)}")
 
     def generate_flags(self):
         print(f"Generating flags for {self.indicator_name}")
-        for flag in self.flags.keys():
-            self.df[f'Flag_{self.indicator_name}_{flag}'] = np.nan
+        self.initialize_individual_flags()
+        self.generate_missing_value_flags()
+        self.generate_erroneous_value_flags()
+        self.custom_flag_logic()
+        self.generate_overall_flag()
+        self.generate_narrative_flag()
 
-        # Missing Values
+    def initialize_individual_flags(self):
+        for flag in self.flags:
+            self.df[flag] = np.nan
+
+    def generate_missing_value_flags(self):
         check_cols = [col for col in self.cols if col not in self.exclude_missing_check]
         self.df[f'Flag_{self.indicator_name}_Missing_Values'] = self.df[check_cols].isnull().any(axis=1).astype(int)
 
-        # Erroneous Values
+    def generate_erroneous_value_flags(self):
         check_cols = [col for col in self.cols if col not in self.exclude_erroneous_check]
-        print(f"Erroneous value parameters for {self.indicator_name}: low = {self.low_erroneous}, high = {self.high_erroneous}")
         erroneous_condition = (self.df[check_cols] < self.low_erroneous) | (self.df[check_cols] > self.high_erroneous)
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Missing_Values'] == 0, f'Flag_{self.indicator_name}_Erroneous_Values'] = erroneous_condition.any(axis=1).astype(int)
 
-        self.custom_flag_logic()
+    def custom_flag_logic(self):
+        pass
 
-        # Overall Flag
-        base_flags = [f'Flag_{self.indicator_name}_{flag}' for flag in self.flags.keys() if not flag.startswith('Flag_FCS_')]
-        custom_flags = [col for col in self.df.columns if col.startswith(f'Flag_{self.indicator_name}_')]
-        overall_flag = self.df[base_flags + custom_flags].any(axis=1)
+    def generate_overall_flag(self):
+        overall_flag = self.df[self.flags.keys()].any(axis=1)
         self.df[f'Flag_{self.indicator_name}_Overall'] = overall_flag.astype(int)
 
-        # Generate Narrative Flags
-        self.generate_narrative_flags()
-
-    def generate_narrative_flags(self):
+    def generate_narrative_flag(self):
         print(f"Generating narrative flags for {self.indicator_name}")
         narrative_flags = list(self.flags.keys())
-
+        
         self.df[f'Flag_{self.indicator_name}_Narrative'] = self.df[narrative_flags].apply(
             lambda row: " & ".join([self.flags[flag] for flag in narrative_flags if row[flag] == 1]), axis=1
         )
-                        
-    def generate_report(self, writer):
+
+    def generate_report(self, writer: pd.ExcelWriter):
         print(f"Generating report for {self.indicator_name}")
-        hh_summary_cols = ['_uuid', 'EnuName', 'EnuSupervisorName', 'ID01', 'ID02', 'ID03', 'ID04'] + self.cols + list(self.flags.keys()) + [f'Flag_{self.indicator_name}_Overall', f'Flag_{self.indicator_name}_Narrative']
+        hh_summary_cols = self.base_cols + self.cols + list(self.flags.keys()) + [f'Flag_{self.indicator_name}_Overall', f'Flag_{self.indicator_name}_Narrative']
         hh_summary = self.df[hh_summary_cols]
-        
-        # Filtering the Summary Dataset to include only Household with triggered flags
         hh_filtered = hh_summary[hh_summary[f'Flag_{self.indicator_name}_Overall'] == 1]
-        hh_filtered.to_excel(writer, sheet_name=self.indicator_name, index=False)           
+        hh_filtered.to_excel(writer, sheet_name=self.indicator_name, index=False)
