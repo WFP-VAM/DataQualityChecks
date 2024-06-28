@@ -1,7 +1,24 @@
 import pandas as pd
 from high_frequency_checks import Demo, Housing, FCS, rCSI, LCS, HDDS, FEXP_7D, NFEXP_1M, NFEXP_6M, MasterSheet
 from config import config
+from data_bridges_knots import DataBridgesShapes
 
+
+CONFIG_PATH = r"data_bridges_api_config.yaml"
+
+client = DataBridgesShapes(CONFIG_PATH)
+
+# Get data
+def read_data(testing = False):
+    if testing == True:
+        print("Read data from local file")
+        return pd.read_csv('data/congo.csv')
+    else:
+        print("Read data from DataBridges")
+        df =  client.get_household_survey(survey_id=config["DataBridgesIDs"]['dataset'], access_type='full', page_size=800)
+        print(f"Retrieved data for dataset #{config["DataBridgesIDs"]['dataset']}")
+        print("\n --------------------------------------------------------- \n")
+        return df
 
 # List of Indicator Classes
 indicators = [
@@ -10,7 +27,7 @@ indicators = [
     (FCS, 'FCS'),
     (rCSI, 'rCSI'),
     (LCS, 'LCS'),
-    (HDDS, 'HDDS'),
+    # (HDDS, 'HDDS'),
     (FEXP_7D, 'FEXP_7D'),
     (NFEXP_1M, 'NFEXP_1M'),
     (NFEXP_6M, 'NFEXP_6M')
@@ -23,8 +40,8 @@ def process_indicator(instance, writer):
     instance.generate_report(writer)
 
 if __name__ == "__main__":
-    df = pd.read_csv('data/congo.csv')
-    output_dir = './Reports'
+    df = read_data(testing=False)
+    output_dir = './reports'
     report_all_indicators_path = f'{output_dir}/HFC_All_Indicators_Report.xlsx'
     report_mastersheet_path = f'{output_dir}/HFC_MasterSheet_Report.xlsx'
 
