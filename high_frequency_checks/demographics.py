@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from .helpers.base_indicator import BaseIndicator
-from .helpers.standard.demo import male_cols, female_cols, adult_cols, children_cols
+from .helpers.standard.demographics import male_cols, female_cols, adult_cols, children_cols
 
 
 class Demo(BaseIndicator):
@@ -24,7 +24,8 @@ class Demo(BaseIndicator):
         
         super().__init__(df, 
                          'Demo',
-                         ['HHSize', 'HHPregLactNb'] + male_cols + female_cols , Demo.flags,
+                         ['HHSize', 'HHPregLactNb'] + male_cols + female_cols ,
+                         Demo.flags,
                          exclude_missing_check=['HHPregLactNb'])
         
         self.male_cols = male_cols

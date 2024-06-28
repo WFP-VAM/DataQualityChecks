@@ -1,11 +1,12 @@
 import pandas as pd
-from high_frequency_checks import FCS, rCSI, Demo, HDDS, FEXP_7D, NFEXP_1M, NFEXP_6M, LCS, MasterSheet
+from high_frequency_checks import Demo, Housing, FCS, rCSI, LCS, HDDS, FEXP_7D, NFEXP_1M, NFEXP_6M, MasterSheet
 from config import config
 
 
 # List of Indicator Classes
 indicators = [
     (Demo, 'Demo'),
+    (Housing, 'Housing'),
     (FCS, 'FCS'),
     (rCSI, 'rCSI'),
     (LCS, 'LCS'),

@@ -2,7 +2,7 @@ config = {
     
     'FCS': {
         'low_fcs': 10, # If FCS below low_fcs, trigger LOW_FCS
-        'high_fcs': 100, # IF FCS above high_fcs, trigger High_FCS
+        'high_fcs': 90, # IF FCS above high_fcs, trigger High_FCS
         'low_erroneous': 0, # IF any value in the 8 food groups is below low_erroneous, trigger Erroneous_Values
         'high_erroneous': 7, # IF any value in the 8 food groups is above high_erroneous, trigger Erroneous_Values
         'high_sugar_oil_consumption': True # if True, use Cat28, if false use Cat21
@@ -19,6 +19,11 @@ config = {
         'low_erroneous': 0, # IF any value in the age groups is below low_erroneous, trigger Erroneous_Values
         'high_erroneous': 30, # IF any value in the age groups is above high_erroneous, trigger Erroneous_Values
         'high_hhsize': 40 # If household size above high_hhsize, trigger Flag
+    },
+    
+    'Housing': {
+        'low_erroneous': None,
+        'high_erroneous': None
     },
     
     'HDDS': {
