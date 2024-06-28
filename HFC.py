@@ -68,7 +68,7 @@ if __name__ == "__main__":
 
     master_table_name = f"DQ_Mastersheet_{config["CountryName"]}"
 
-    df = read_data(testing=True)
+    df = read_data(testing=False)
     output_dir = './reports'
     report_all_indicators_path = f'{output_dir}/{config["CountryName"]}_HFC_All_Indicators_Report.xlsx'
     report_mastersheet_path = f'{output_dir}/{config["CountryName"]}_HFC_MasterSheet_Report.xlsx'
