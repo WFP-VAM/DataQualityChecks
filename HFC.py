@@ -49,7 +49,11 @@ def write_to_excel():
         current_df = df.copy()
         for indicator_class, config_key in indicators:
             config_values = config[config_key]
-            instance = indicator_class(current_df, **config_values)
+            try:
+                instance = indicator_class(current_df, **config_values)
+            except KeyError as err:
+                print(f"{err}\n Indicator not found, skipping\n\n")
+                continue
             process_indicator(instance, writer)
             current_df = instance.df.copy()
 
@@ -68,7 +72,7 @@ if __name__ == "__main__":
 
     master_table_name = f"DQ_Mastersheet_{config["CountryName"]}"
 
-    df = read_data(testing=False)
+    df = read_data()
     output_dir = './reports'
     report_all_indicators_path = f'{output_dir}/{config["CountryName"]}_HFC_All_Indicators_Report.xlsx'
     report_mastersheet_path = f'{output_dir}/{config["CountryName"]}_HFC_MasterSheet_Report.xlsx'

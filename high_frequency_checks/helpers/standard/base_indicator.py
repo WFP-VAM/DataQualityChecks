@@ -1,2 +1,2 @@
-base_cols = ['_uuid', 'EnuName', 'EnuSupervisorName', 'ID01', 'ID02', 'ID03', 'ID04']
+base_cols = ['_uuid', 'EnuName', 'EnuSupervisorName', 'ID01', 'ID02', 'ID03', 'ID04LABEL'] #TODO change ID01-ID04 to standardized versions (Admin1, Admin2)
 review_cols = ['Reviewed', 'Review_Date', 'Reviewed_By', 'Action_Taken']
