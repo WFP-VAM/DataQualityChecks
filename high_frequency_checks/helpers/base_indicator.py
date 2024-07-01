@@ -205,7 +205,7 @@ class BaseIndicator:
             self.generate_narrative_flag()
             self.generate_report(writer)
         else:
-            self.logger.error(f"The Module {self.indicator_name} enabled in the main config file does not exist in the incoming data")
+            self.logger.warning(f"The Module {self.indicator_name} is enabled in the main config file but does not exist in the incoming data")
 
     def _process_specific(self):
         raise NotImplementedError("Subclasses should implement this method.")
