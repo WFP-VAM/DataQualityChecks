@@ -1,0 +1,44 @@
+# indicators_config.yaml
+Indicators:
+  Demo: True
+  Housing: True
+  FCS: True
+  rCSI: True
+  LCS_FS: True
+  LCS_FS_R: True
+  LCS_EN: True
+  HHEXPF_7D: True
+  HHEXPNF_1M: False
+  HHEXPNF_6M: False
+
+Mappings:
+  Demo:
+    class_name: Demo
+    config_file: demo.yaml
+  Housing:
+    class_name: Housing
+    config_file: housing.yaml
+  FCS:
+    class_name: FCS
+    config_file: fcs.yaml
+  rCSI:
+    class_name: rCSI
+    config_file: rcsi.yaml
+  LCS_FS:
+    class_name: LCS_FS
+    config_file: lcs_fs.yaml
+  LCS_FS_R:
+    class_name: LCS_FS_R
+    config_file: lcs_fs_r.yaml
+  LCS_EN:
+    class_name: LCS_EN
+    config_file: lcs_en.yaml
+  HHEXPF_7D:
+    class_name: HHEXPF_7D
+    config_file: hhexpf_7d.yaml
+  HHEXPNF_1M:
+    class_name: HHEXPNF_1M
+    config_file: hhexpnf_1m.yaml
+  HHEXPNF_6M:
+    class_name: HHEXPNF_6M
+    config_file: hhexpnf_6m.yaml

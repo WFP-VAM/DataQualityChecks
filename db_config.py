@@ -1,4 +1,4 @@
-config = {
+db_config = {
     
     "DataBridgesIDs": {
         'questionnaire': 1713,

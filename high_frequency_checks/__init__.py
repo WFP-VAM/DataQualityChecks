@@ -10,6 +10,7 @@ from .lcs_fs_r import LCS_FS_R
 from .lcs_en import LCS_EN
 from .housing import Housing
 from .mastersheet.mastersheet import MasterSheet
+from .config.config_handler import ConfigHandler
 
 __all__ = [
     'Demo',
@@ -23,5 +24,6 @@ __all__ = [
     'HHEXPF_7D',
     'HHEXPNF_1M',
     'HHEXPNF_6M',
-    'MasterSheet'
+    'MasterSheet',
+    'ConfigHandler'
 ]
