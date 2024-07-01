@@ -3,7 +3,6 @@ import numpy as np
 import logging
 from high_frequency_checks.helpers.base_indicator import BaseIndicator
     
-class FCS(BaseIndicator):
 """
     The `FCS` class is a subclass of `BaseIndicator` and is responsible for processing and analyzing the Food Consumption Score (FCS) indicator. It performs the following tasks:
     
@@ -12,7 +11,9 @@ class FCS(BaseIndicator):
     - Checks for low staple consumption, low FCS, and high FCS, and sets corresponding flags.
     
     The class takes in a DataFrame, base columns, review columns, standard configuration, configurable configuration, and a flags dictionary as input. It then performs the specific processing for the FCS indicator, including calculating the FCS and FCG, and setting the various flags based on the input data and configuration.
-    """
+    """    
+    
+class FCS(BaseIndicator):
         
     flags = {
         'Flag_FCS_Missing': "Missing value(s) in the consumption of the 8 main food groups",
