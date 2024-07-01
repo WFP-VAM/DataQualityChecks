@@ -39,7 +39,8 @@ class BaseIndicator:
                 except Exception as e:
                     self.logger.error(f"Error converting column '{col}' to type {expected_type}: {e}")
             else:
-                self.logger.warning(f"Column '{col}' not found in the DataFrame.")
+                self.logger.warning(f"Column '{col}' not found in the DataFrame. an empty column will be created.")
+                self.df[col] = np.nan
                 
     def check_missing_values(self):
         self.logger.info(f'Checking missing values for {self.indicator_name}')
@@ -76,32 +77,35 @@ class BaseIndicator:
                 unconditional_cols = self.cols
                     
             # Initialize the missing flag column
-            self.df[f'Flag_{self.indicator_name}_Missing'] = 0
+            missing_flag_col = pd.Series(0, index=self.df.index, name=f'Flag_{self.indicator_name}_Missing')
 
             # Check missing values for unconditional columns
             if unconditional_cols:
-                self.df.loc[self.df[unconditional_cols].isnull().any(axis=1), f'Flag_{self.indicator_name}_Missing'] = 1
+                missing_condition = self.df[unconditional_cols].isnull().any(axis=1)
+                missing_flag_col[missing_condition] = 1
                 self.logger.info(f"Generated missing value flags for unconditional columns: {unconditional_cols}")
 
             # Check missing values conditionally for conditional columns that are integer
             if conditional_cols_integer:
                 for col in conditional_cols_integer:
                     pair_cols = self.standard_config['conditional_pairs_integer'].get(col)
-                    # Create a boolean mask where any pair column is > 0
                     condition_mask = self.df[pair_cols].gt(0).any(axis=1)
-                    # Set the flag to 1 if condition is met and the column value is null
-                    self.df.loc[condition_mask & self.df[col].isnull(), f'Flag_{self.indicator_name}_Missing'] = 1
+                    missing_condition = condition_mask & self.df[col].isnull()
+                    missing_flag_col[missing_condition] = 1
                 self.logger.info(f"Generated missing value flags for conditional columns: {conditional_cols_integer}")
 
             # Check missing values conditionally for conditional columns that are categorical
             if conditional_cols_categorical:
                 for col in conditional_cols_categorical:
                     pair_cols = self.standard_config['conditional_pairs_categorical'].get(col)
-                    # Create a boolean mask where any pair column is equal to 1
                     condition_mask = self.df[pair_cols].eq('1').any(axis=1)
-                    # Set the flag to 1 if condition is met and the column value is null
-                    self.df.loc[condition_mask & self.df[col].isnull(), f'Flag_{self.indicator_name}_Missing'] = 1
+                    missing_condition = condition_mask & self.df[col].isnull()
+                    missing_flag_col[missing_condition] = 1
                 self.logger.info(f"Generated missing value flags for conditional columns: {conditional_cols_categorical}")
+
+            # Concatenate missing_flag_col to self.df
+            self.df = pd.concat([self.df, missing_flag_col], axis=1)
+
 
         except Exception as e:
             self.logger.error(f"Error in check_missing_values method: {e}")
@@ -123,27 +127,29 @@ class BaseIndicator:
                 int_cols = self.cols
                 
             # Initialize the erroneous flag column
-            self.df[f'Flag_{self.indicator_name}_Erroneous'] = np.nan
-            mask = (self.df[f'Flag_{self.indicator_name}_Missing'] == 0) 
-            
+            erroneous_flag_col = pd.Series(np.nan, index=self.df.index, name=f'Flag_{self.indicator_name}_Erroneous')
+            mask = self.df[f'Flag_{self.indicator_name}_Missing'] == 0
+
             # Check erroneous values for categorical columns
             if categorical_cols:
                 for col in categorical_cols:
                     choices = self.standard_config['choices_lists'].get(col, [])
                     if choices:
                         erroneous_condition = (~self.df[col].isin(choices)).astype(int)
-                        self.df.loc[mask & (self.df[f'Flag_{self.indicator_name}_Erroneous'] != 1), f'Flag_{self.indicator_name}_Erroneous'] = erroneous_condition
+                        erroneous_flag_col[mask & (erroneous_flag_col != 1)] = erroneous_condition
                         self.logger.info(f"Generated erroneous value flags for categorical column: {col}")
                     else:
                         self.logger.warning(f"No choices defined for column '{col}' in choices_lists.")
-            
+
             # Check erroneous values for integer columns
             if int_cols:
-                erroneous_condition = ((self.df[int_cols] < self.low_erroneous) | 
-                                    (self.df[int_cols] > self.high_erroneous))
+                erroneous_condition = ((self.df[int_cols] < self.low_erroneous) | (self.df[int_cols] > self.high_erroneous))
                 erroneous_condition = erroneous_condition.any(axis=1).astype(int)
-                self.df.loc[mask & (self.df[f'Flag_{self.indicator_name}_Erroneous'] != 1), f'Flag_{self.indicator_name}_Erroneous'] = erroneous_condition
+                erroneous_flag_col[mask & (erroneous_flag_col != 1)] = erroneous_condition
                 self.logger.info(f"Generated erroneous value flags for integer columns: {int_cols}")
+
+            # Concatenate erroneous_flag_col to self.df
+            self.df = pd.concat([self.df, erroneous_flag_col], axis=1)
 
         except Exception as e:
             self.logger.error(f"Error in check_erroneous_values method: {e}")

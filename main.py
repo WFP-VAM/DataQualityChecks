@@ -15,7 +15,8 @@ import yaml
 import logging
 import pandas as pd
 from datetime import datetime
-from high_frequency_checks import Demo, Housing, FCS, rCSI, LCS, HHEXPF_7D, HHEXPNF_1M, HHEXPNF_6M
+from high_frequency_checks import Demo, Housing, FCS, rCSI, LCS, HHEXPF_7D, HHEXPNF_1M, HHEXPNF_6M, MasterSheet
+from high_frequency_checks.helpers.customize import rename_columns
 from data_bridges_knots import DataBridgesShapes
 import logging
 from config import config
@@ -70,8 +71,8 @@ if __name__ == "__main__":
     # Read configurations for base indicator
     base_config_path = os.path.join('high_frequency_checks', 'config', 'configurable', 'base_indicator.yaml')
     base_config = read_yaml(base_config_path)
-    base_cols = base_config['base_cols']
-    review_cols = base_config['review_cols']
+    base_cols = list(base_config.get('base_cols', []))
+    review_cols = list(base_config.get('review_cols', []))
     
     # Read configurations for indicators
     standard_config_dir = os.path.join('high_frequency_checks', 'config', 'standard')
@@ -102,10 +103,13 @@ if __name__ == "__main__":
 
     output_dir = './reports'
     report_all_indicators_path = os.path.join(output_dir, 'HFC_All_Indicators_Report.xlsx')
+    report_mastersheet_path = os.path.join(output_dir, 'HFC_MasterSheet_Report.xlsx')
 
     # Generate All Indicators Report
     with pd.ExcelWriter(report_all_indicators_path) as writer:
         current_df = read_data()
+        # Specifically for DRC Since it is not standardized
+        current_df = rename_columns(current_df)
         for indicator_class, config_file in indicators:
             standard_config_path = os.path.join(standard_config_dir, config_file)
             configurable_config_path = os.path.join(configurable_config_dir, config_file)
@@ -129,3 +133,12 @@ if __name__ == "__main__":
         print(f"Data processing completed with {error_count} errors.")
     else:
         print("Data processing completed successfully with no errors.")
+
+    # Generate MasterSheet Report
+    mastersheet = MasterSheet(current_df, base_cols, review_cols)
+    new_mastersheet_df = mastersheet.generate_dataframe()
+
+    final_mastersheet_df = MasterSheet.merge_with_existing_report(new_mastersheet_df, report_mastersheet_path)
+
+    with pd.ExcelWriter(report_mastersheet_path) as writer:
+        final_mastersheet_df.to_excel(writer, sheet_name='MasterSheet', index=False)

@@ -1,3 +1,4 @@
+import pandas as pd
 import logging
 from high_frequency_checks.helpers.base_indicator import BaseIndicator
     
@@ -27,7 +28,9 @@ class HHEXPF_7D(BaseIndicator):
     def calculate_monthly_hhexpf_7d(self, mask):
         self.logger.info("Calculating Monthly Expenditures for HHExpF_7D")
         try:
-            self.df.loc[mask, 'HHExpF_1M_Monthly'] = (self.df.loc[mask, self.hhexpf_7d_cols].sum(axis=1)) / 7 * 30
+            newframe = pd.DataFrame()
+            newframe['HHExpF_1M_Monthly'] = (self.df.loc[mask, self.hhexpf_7d_cols].sum(axis=1)) / 7 * 30
+            self.df = pd.concat([self.df, newframe], axis=1)
             self.logger.info("Monthly Expenditures for HHExpF_7D calculated successfully")
         except Exception as e:
             self.logger.error(f"Error calculating Monthly Expenditures for HHExpF_7D: {e}")
@@ -35,7 +38,9 @@ class HHEXPF_7D(BaseIndicator):
     def check_monthly_hhexpf_7d_zero(self, mask):
         self.logger.info(f"Checking if Monthly Expenditures for HHExpF_7D is Zero")
         try:
-            self.df.loc[mask, 'Flag_HHEXPF_7D_Zero_FEXP'] = (self.df.loc[mask, 'HHExpF_1M_Monthly'] == 0).astype(int)
+            newframe = pd.DataFrame()
+            newframe['Flag_HHEXPF_7D_Zero_FEXP'] = (self.df.loc[mask, 'HHExpF_1M_Monthly'] == 0).astype(int)
+            self.df = pd.concat([self.df, newframe], axis=1)
             self.logger.info(f"Generated Monthly Expenditures for HHExpF_7D is Zero flag")
         except Exception as e:
             self.logger.error(f"Error Checking if Monthly Expenditures for HHExpF_7D is Zero: {e}")

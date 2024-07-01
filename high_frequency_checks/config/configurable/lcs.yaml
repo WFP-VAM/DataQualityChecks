@@ -1,0 +1,11 @@
+used_strategies:
+  - 'LcsR_stress_Animals'
+  - 'LcsR_stress_DomAsset'
+  - 'LcsR_stress_EatOut'
+  - 'LcsR_stress_Saving'
+  - 'LcsR_crisis_ImmCrops'
+  - 'LcsR_crisis_AgriCare'
+  - 'LcsR_crisis_Seed'
+  - 'LcsR_em_FemAnimal'
+  - 'LcsR_em_ResAsset'
+  - 'LcsR_em_Begged'
