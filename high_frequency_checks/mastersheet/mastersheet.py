@@ -1,15 +1,7 @@
-from ..helpers.standard.base_indicator import base_cols, review_cols
 import pandas as pd
-import logging
 
-logname = "logs/HFC.log"
-
-logging.basicConfig(filename=logname,
-                    filemode='a',
-                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
-                    datefmt='%H:%M:%S',
-                    level=logging.DEBUG)
-
+base_cols = []
+review_cols = []
 class MasterSheet:
 
     def __init__(self, df):
@@ -40,7 +32,7 @@ class MasterSheet:
         flag_narrative_cols = [col for col in self.df.columns if col.startswith('Flag_') and col.endswith('_Narrative')]
         self.df['Flag_All_Indicators'] = self.df[flag_overall_cols].any(axis=1).astype(int)
 
-        logging.info(f"Generating MasterSheet")
+        print(f"Generating MasterSheet")
         hh_summary_cols = base_cols + flag_overall_cols + ['Flag_All_Indicators'] + flag_narrative_cols + review_cols
         hh_summary = self.df[hh_summary_cols]
         

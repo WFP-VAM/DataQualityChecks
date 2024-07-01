@@ -1,6 +1,7 @@
 # High Frenquency Checks for WFP Food Security Assessments - ROADMAP
 
-## v0.1.0 (Enumerator Training)
+## v0.1.0 Stable
+
 
 ### Indicator checks
 - [X] FCS
@@ -9,18 +10,7 @@
 - [X] Demographics
 - [X] Food Expenditures
 - [X] Non-food Expenditures
-- [X] LCS
-
-### Data connector
-- [X] Get data from DataBridges
-- [ ] Parse data as int 
-
-### Visualization
-- [ ] Output master report in DB
-- [ ] Output master report in Tableau
-
-## v.0.2.0
-### Indicator checks
+- [ ] LCS
 - [ ] HHS
 
 ### Enumerator performance
@@ -29,27 +19,28 @@
 - [ ] Average daily completion by enumerator
 - [ ] Survey duration too short
 - [ ] Survey duration too long
-- [ ] Flag invalid survey with interview less than 5 minutes
-- [ ] Flag short survey 
-- [ ] Flag long survey 
+- [ ] 
+-	Enumerator completion (overall number by day and scatter hours of the day if real-time submission is possible)
+-	Flag invalid survey with interview less than 5 minutes
+-	Flag short survey (<45 minutes)
+-	Flag long survey (>150 minutes)
+-	nombre_autre > 5
+-	nombre_pnpr > 5
+-	nombre_nsp > 
 
 ### Logbook 
-- [ ] Create issue log in Excel
+- [ ] Create issue log with format ```uuid | issue | action | old.value | new.value```
+
+### Data connector
+- [ ] Get data from DataBridges
 
 ### Deployment
 - [ ] Run code on a schedule from HPC
+- [ ] Output report in Sharepoint
 
-## Future releases (1.0.0)
-- [ ] Additional checks
+## Future releases
+
+- [ ] Dashboard (TBC)
 - [ ] Make config.py something usable with no knowledge of Python (CSV input)
-- [ ] Optimize output (e.g. Excel vs CSV vs other format)
-- [ ] Dashboard
+- [ ] Make the output less ugly
 - [ ] Optimize code (e.g. not running everything on all the dataset, but just on the data that have been collected the day before)
-- [ ] Endpoint through Core Engine
-
-
-## Issues
-- Running wrong CO 
-- Full vs Base
-- Where to export the report
-  - DB -> Tableau

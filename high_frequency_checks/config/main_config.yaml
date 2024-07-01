@@ -1,0 +1,14 @@
+base_indicator:
+  base_config_path: "high_frequency_checks/config/configurable/base_indicator.yaml"
+
+indicators:
+  standard_config_dir: "high_frequency_checks/config/standard"
+  configurable_config_dir: "high_frequency_checks/config/configurable"
+
+indicators:
+  - name: Demo
+    config_file: "demo.yaml"
+  - name: FCS
+    config_file: "fcs.yaml"
+  - name: rCSI
+    config_file: "rcsi.yaml"

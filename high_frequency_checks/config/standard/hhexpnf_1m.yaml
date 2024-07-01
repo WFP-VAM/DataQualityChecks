@@ -1,0 +1,169 @@
+columns_type:
+  HHExpNFHyg_Purch_MN_1M: 'float'
+  HHExpNFTransp_Purch_MN_1M: 'float'
+  HHExpNFFuel_Purch_MN_1M: 'float'
+  HHExpNFWat_Purch_MN_1M: 'float'
+  HHExpNFElec_Purch_MN_1M: 'float'
+  HHExpNFEnerg_Purch_MN_1M: 'float'
+  HHExpNFDwelSer_Purch_MN_1M: 'float'
+  HHExpNFPhone_Purch_MN_1M: 'float'
+  HHExpNFRecr_Purch_MN_1M: 'float'
+  HHExpNFAlcTobac_Purch_MN_1M: 'float'
+  HHExpNFHyg_GiftAid_MN_1M: 'float'
+  HHExpNFTransp_GiftAid_MN_1M: 'float'
+  HHExpNFFuel_GiftAid_MN_1M: 'float'
+  HHExpNFWat_GiftAid_MN_1M: 'float'
+  HHExpNFElec_GiftAid_MN_1M: 'float'
+  HHExpNFEnerg_GiftAid_MN_1M: 'float'
+  HHExpNFDwelSer_GiftAid_MN_1M: 'float'
+  HHExpNFPhone_GiftAid_MN_1M: 'float'
+  HHExpNFRecr_GiftAid_MN_1M: 'float'
+  HHExpNFAlcTobac_GiftAid_MN_1M: 'float'
+  HHExpNFHyg_Purch_1M: 'str'
+  HHExpNFTransp_Purch_1M: 'str'
+  HHExpNFFuel_Purch_1M: 'str'
+  HHExpNFWat_Purch_1M: 'str'
+  HHExpNFElec_Purch_1M: 'str'
+  HHExpNFEnerg_Purch_1M: 'str'
+  HHExpNFDwelSer_Purch_1M: 'str'
+  HHExpNFPhone_Purch_1M: 'str'
+  HHExpNFRecr_Purch_1M: 'str'
+  HHExpNFAlcTobac_Purch_1M: 'str'
+  HHExpNFHyg_GiftAid_1M: 'str'
+  HHExpNFTransp_GiftAid_1M: 'str'
+  HHExpNFFuel_GiftAid_1M: 'str'
+  HHExpNFWat_GiftAid_1M: 'str'
+  HHExpNFElec_GiftAid_1M: 'str'
+  HHExpNFEnerg_GiftAid_1M: 'str'
+  HHExpNFDwelSer_GiftAid_1M: 'str'
+  HHExpNFPhone_GiftAid_1M: 'str'
+  HHExpNFRecr_GiftAid_1M: 'str'
+  HHExpNFAlcTobac_GiftAid_1M: 'str'
+
+conditional_pairs_categorical:
+  HHExpNFHyg_Purch_MN_1M:
+    - 'HHExpNFHyg_Purch_1M'
+  HHExpNFTransp_Purch_MN_1M:
+    - 'HHExpNFTransp_Purch_1M'
+  HHExpNFFuel_Purch_MN_1M:
+    - 'HHExpNFFuel_Purch_1M'
+  HHExpNFWat_Purch_MN_1M:
+    - 'HHExpNFWat_Purch_1M'
+  HHExpNFElec_Purch_MN_1M:
+    - 'HHExpNFElec_Purch_1M'
+  HHExpNFEnerg_Purch_MN_1M:
+    - 'HHExpNFEnerg_Purch_1M'
+  HHExpNFDwelSer_Purch_MN_1M:
+    - 'HHExpNFDwelSer_Purch_1M'
+  HHExpNFPhone_Purch_MN_1M:
+    - 'HHExpNFPhone_Purch_1M'
+  HHExpNFRecr_Purch_MN_1M:
+    - 'HHExpNFRecr_Purch_1M'
+  HHExpNFAlcTobac_Purch_MN_1M:
+    - 'HHExpNFAlcTobac_Purch_1M'
+  HHExpNFHyg_GiftAid_MN_1M:
+    - 'HHExpNFHyg_GiftAid_1M'
+  HHExpNFTransp_GiftAid_MN_1M:
+    - 'HHExpNFTransp_GiftAid_1M'
+  HHExpNFFuel_GiftAid_MN_1M:
+    - 'HHExpNFFuel_GiftAid_1M'
+  HHExpNFWat_GiftAid_MN_1M:
+    - 'HHExpNFWat_GiftAid_1M'
+  HHExpNFElec_GiftAid_MN_1M:
+    - 'HHExpNFElec_GiftAid_1M'
+  HHExpNFEnerg_GiftAid_MN_1M:
+    - 'HHExpNFEnerg_GiftAid_1M'
+  HHExpNFDwelSer_GiftAid_MN_1M:
+    - 'HHExpNFDwelSer_GiftAid_1M'
+  HHExpNFPhone_GiftAid_MN_1M:
+    - 'HHExpNFPhone_GiftAid_1M'
+  HHExpNFRecr_GiftAid_MN_1M:
+    - 'HHExpNFRecr_GiftAid_1M'
+  HHExpNFAlcTobac_GiftAid_MN_1M:
+    - 'HHExpNFAlcTobac_GiftAid_1M'
+
+hhexpnf_1m_purch_cols:
+  - 'HHExpNFHyg_Purch_MN_1M'
+  - 'HHExpNFTransp_Purch_MN_1M'
+  - 'HHExpNFFuel_Purch_MN_1M'
+  - 'HHExpNFWat_Purch_MN_1M'
+  - 'HHExpNFElec_Purch_MN_1M'
+  - 'HHExpNFEnerg_Purch_MN_1M'
+  - 'HHExpNFDwelSer_Purch_MN_1M'
+  - 'HHExpNFPhone_Purch_MN_1M'
+  - 'HHExpNFRecr_Purch_MN_1M'
+  - 'HHExpNFAlcTobac_Purch_MN_1M'
+
+hhexpnf_1m_giftaid_cols:
+  - 'HHExpNFHyg_GiftAid_MN_1M'
+  - 'HHExpNFTransp_GiftAid_MN_1M'
+  - 'HHExpNFFuel_GiftAid_MN_1M'
+  - 'HHExpNFWat_GiftAid_MN_1M'
+  - 'HHExpNFElec_GiftAid_MN_1M'
+  - 'HHExpNFEnerg_GiftAid_MN_1M'
+  - 'HHExpNFDwelSer_GiftAid_MN_1M'
+  - 'HHExpNFPhone_GiftAid_MN_1M'
+  - 'HHExpNFRecr_GiftAid_MN_1M'
+  - 'HHExpNFAlcTobac_GiftAid_MN_1M'
+
+choices_lists:
+  HHExpNFHyg_Purch_1M:
+    - '0'
+    - '1'
+  HHExpNFTransp_Purch_1M:
+    - '0'
+    - '1'
+  HHExpNFFuel_Purch_1M:
+    - '0'
+    - '1'
+  HHExpNFWat_Purch_1M:
+    - '0'
+    - '1'
+  HHExpNFElec_Purch_1M:
+    - '0'
+    - '1'
+  HHExpNFEnerg_Purch_1M:
+    - '0'
+    - '1'
+  HHExpNFDwelSer_Purch_1M:
+    - '0'
+    - '1'
+  HHExpNFPhone_Purch_1M:
+    - '0'
+    - '1'
+  HHExpNFRecr_Purch_1M:
+    - '0'
+    - '1'
+  HHExpNFAlcTobac_Purch_1M:
+    - '0'
+    - '1'
+  HHExpNFHyg_GiftAid_1M:
+    - '0'
+    - '1'
+  HHExpNFTransp_GiftAid_1M:
+    - '0'
+    - '1'
+  HHExpNFFuel_GiftAid_1M:
+    - '0'
+    - '1'
+  HHExpNFWat_GiftAid_1M:
+    - '0'
+    - '1'
+  HHExpNFElec_GiftAid_1M:
+    - '0'
+    - '1'
+  HHExpNFEnerg_GiftAid_1M:
+    - '0'
+    - '1'
+  HHExpNFDwelSer_GiftAid_1M:
+    - '0'
+    - '1'
+  HHExpNFPhone_GiftAid_1M:
+    - '0'
+    - '1'
+  HHExpNFRecr_GiftAid_1M:
+    - '0'
+    - '1'
+  HHExpNFAlcTobac_GiftAid_1M:
+    - '0'
+    - '1'
