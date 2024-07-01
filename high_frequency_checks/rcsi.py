@@ -5,18 +5,6 @@ from high_frequency_checks.helpers.base_indicator import BaseIndicator
     
     
 class rCSI(BaseIndicator):
-"""
-    The `rCSI` class is a subclass of `BaseIndicator` and is responsible for processing and calculating the Reduced Coping Strategies Index (rCSI) for a given dataset.
-    
-    The class has several methods that perform the following tasks:
-    - `calculate_rcsi`: Calculates the rCSI based on the provided weights and the values in the dataset.
-    - `check_identical_values`: Checks if the values of all reduced coping strategies are identical.
-    - `check_poor_fcg_no_coping`: Checks if the food consumption is poor with no reduced coping.
-    - `check_acceptable_fcg_high_coping`: Checks if the food consumption is acceptable and the rCSI is high.
-    - `check_meal_adult_no_children`: Checks if adults reduced their meal intake for children with no children in the household.
-    
-    The class also has several flags that are used to indicate the different types of issues that can be found in the dataset.
-    """
         
     flags = {
         'Flag_rCSI_Missing': "Missing value(s) in the reduced coping strategies",

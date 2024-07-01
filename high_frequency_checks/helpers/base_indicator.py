@@ -2,32 +2,6 @@ import logging
 import pandas as pd
 import numpy as np
 
-"""
-    Initializes a BaseIndicator object with the provided DataFrame, column configurations, and flags.
-    
-    Args:
-        df (pandas.DataFrame): The input DataFrame.
-        base_cols (list): The list of base columns.
-        review_cols (list): The list of review columns.
-        standard_config (dict): The standard configuration for the indicator.
-        configurable_config (dict): The configurable configuration for the indicator.
-        flags (dict): The flags for the indicator.
-    
-    Attributes:
-        df (pandas.DataFrame): The input DataFrame.
-        base_cols (list): The list of base columns.
-        review_cols (list): The list of review columns.
-        standard_config (dict): The standard configuration for the indicator.
-        configurable_config (dict): The configurable configuration for the indicator.
-        cols_type (dict): The expected data types for the columns.
-        cols (list): The list of columns.
-        indicator_name (str): The name of the indicator.
-        flags (dict): The flags for the indicator.
-        low_erroneous (float): The low erroneous threshold.
-        high_erroneous (float): The high erroneous threshold.
-        logger (logging.Logger): The logger for the indicator.
-    """
-        
 # Configure logging
 logging.basicConfig(filename='data_processing_log.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 

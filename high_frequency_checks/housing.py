@@ -3,13 +3,6 @@ from high_frequency_checks.helpers.base_indicator import BaseIndicator
     
     
 class Housing(BaseIndicator):
-"""
-    Implements the Housing indicator, which checks for missing or erroneous values in the Housing module, as well as whether households that are displaced also own a residential property.
-    
-    The `Housing` class inherits from the `BaseIndicator` class and overrides the `_process_specific()` method to perform the specific checks for the Housing indicator.
-    
-    The `check_displaced_owner()` method checks whether displaced households (with a household status of '1' or '2') also own a residential property (with a household tenure type of '1'). The results are stored in the `Flag_Housing_Displaced_Owner` column of the input dataframe.
-    """
         
     flags = {
         'Flag_Housing_Missing': "Missing value(s) in the Housing Module",

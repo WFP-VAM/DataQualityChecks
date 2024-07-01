@@ -36,16 +36,7 @@ hdds_flags = {
 
 
 class HDDS(BaseIndicator):
-"""
-    Calculates the Household Dietary Diversity Score (HDDS) and related flags based on the provided DataFrame.
-    
-    The HDDS is calculated as the sum of the binary indicators for the 13 food groups. Flags are created to identify various issues with the HDDS data, such as missing values, erroneous values, identical values, and mismatches between the HDDS and Food Consumption Score (FCS) indicators.
-    
-    The `custom_flag_logic()` method implements the specific HDDS-related flag checks, including:
-    - Identical Values (All 0's): Checks if all HDDS food group indicators are 0.
-    - FCS-HDDS Mismatches: Checks for mismatches between the FCS and HDDS indicators, such as when FCS is 0 but HDDS is 1, or when FCS is 7 but HDDS is 0.
-    """
-        def __init__(self, df, low_erroneous, high_erroneous):
+    def __init__(self, df, low_erroneous, high_erroneous):
         super().__init__(df, 'HDDS', hdds_cols, hdds_flags)
         self.low_erroneous = low_erroneous
         self.high_erroneous = high_erroneous

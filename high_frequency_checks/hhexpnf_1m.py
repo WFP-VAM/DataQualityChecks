@@ -3,11 +3,6 @@ from high_frequency_checks.helpers.base_indicator import BaseIndicator
     
     
 class HHEXPNF_1M(BaseIndicator):
-"""
-    The HHEXPNF_1M class is a subclass of the BaseIndicator class and is responsible for processing and calculating the monthly non-food expenditures for a household. It defines two flags, 'Flag_HHEXPNF_1M_Missing' and 'Flag_HHEXPNF_1M_Erroneous', to indicate missing or erroneous values in the non-food expenditures 1M module.
-    
-    The class initializes by setting up the necessary configuration parameters, including the columns for purchase and gift aid expenditures. The _process_specific method is responsible for the main processing logic, which involves calculating the monthly non-food expenditures and storing the result in the 'HHExpNF_1M_Monthly' column of the DataFrame.
-    """
         
     flags = {
         'Flag_HHEXPNF_1M_Missing': "Missing value(s) in the Non-Food Expenditures 1M Module",
