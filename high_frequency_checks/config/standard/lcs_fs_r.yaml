@@ -41,6 +41,90 @@ columns_type:
   LcsR_crisis_DomMigration: 'str'
   LcsR_stress_Edu: 'str'
 
+conditional_pairs_categorical:
+  LcsR_stress_Animals:
+    - 'Rural'
+  LcsR_stress_BorrowCash:
+    - 'Rural'
+  LcsR_stress_Pawn:
+    - 'Rural'
+  LcsR_stress_DomAsset:
+    - 'Rural'
+  LcsR_stress_EatOut:
+    - 'Rural'
+  LcsR_stress_LessSchool:
+    - 'Rural'
+  LcsR_stress_Saving:
+    - 'Rural'
+  LcsR_stress_HHSeparation:
+    - 'Rural'
+  LcsR_stress_ConsActive:
+    - 'Rural'
+  LcsR_stress_SellFoodRation:
+    - 'Rural'
+  LcsR_stress_DomMigration:
+    - 'Rural'
+  LcsR_stress_Housing:
+    - 'Rural'
+  LcsR_crisis_Animals:
+    - 'Rural'
+  LcsR_crisis_ImmCrops:
+    - 'Rural'
+  LcsR_crisis_AgriCare:
+    - 'Rural'
+  LcsR_crisis_Health:
+    - 'Rural'
+  LcsR_crisis_Seed:
+    - 'Rural'
+  LcsR_crisis_Edu:
+    - 'Rural'
+  LcsR_crisis_ProdAssets:
+    - 'Rural'
+  LcsR_crisis_Housing:
+    - 'Rural'
+  LcsR_crisis_HHSeparation:
+    - 'Rural'
+  LcsR_crisis_Barter:
+    - 'Rural'
+  LcsR_crisis_Migration:
+    - 'Rural'
+  LcsR_crisis_ChildWork:
+    - 'Rural'
+  LcsR_crisis_Marriage:
+    - 'Rural'
+  LcsR_crisis_ConsActive:
+    - 'Rural'
+  LcsR_crisis_OutSchool:
+    - 'Rural'
+  LcsR_em_Seed:
+    - 'Rural'
+  LcsR_em_FemAnimal:
+    - 'Rural'
+  LcsR_em_OutSchool:
+    - 'Rural'
+  LcsR_em_Migration:
+    - 'Rural'
+  LcsR_em_ChildWork:
+    - 'Rural'
+  LcsR_em_Marriage:
+    - 'Rural'
+  LcsR_em_ResAsset:
+    - 'Rural'
+  LcsR_em_Begged:
+    - 'Rural'
+  LcsR_em_IllegalAct:
+    - 'Rural'
+  LcsR_em_ChildMigration:
+    - 'Rural'
+  LcsR_em_WildFood:
+    - 'Rural'
+  LcsR_stress_SellNFIRation:
+    - 'Rural'
+  LcsR_crisis_DomMigration:
+    - 'Rural'
+  LcsR_stress_Edu:
+    - 'Rural'
+
 choices_lists:
   LcsR_stress_Animals:
     - '10'

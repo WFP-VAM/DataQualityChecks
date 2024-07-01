@@ -20,3 +20,21 @@ def rename_columns(df):
     
     df = df.rename(columns=column_mapping)
     return df
+
+def create_urban_rural(df):
+    """
+    Creates 2 columns in the DataFrame "Urban" and "Rural".
+    
+    Parameters:
+    df (pd.DataFrame): The DataFrame.
+    
+    Returns:
+    pd.DataFrame: The DataFrame with renamed columns.
+    """
+    df['Urban'] = df['ID06'].apply(lambda x: '1' if x == '1' else '0')
+    df['Rural'] = df['ID06'].apply(lambda x: '1' if x == '2' else '0')
+    
+    # Optionally, you can drop the original ID06 column if needed
+    # df.drop('ID06', axis=1, inplace=True)
+    
+    return df

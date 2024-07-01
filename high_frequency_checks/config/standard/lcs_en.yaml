@@ -33,7 +33,75 @@ columns_type:
   LcsEN_em_IllegalAct: 'str'
   LcsEN_em_ChildMigration: 'str'
   
-choices_lists:
+conditional_pairs_categorical:
+  LcsEN_stress_DomAsset:
+    - 'Urban'
+  LcsEN_stress_Saving:
+    - 'Urban'
+  LcsEN_stress_BorrowCash:
+    - 'Urban'
+  LcsEN_stress_Pawn:
+    - 'Urban'
+  LcsEN_stress_Housing:
+    - 'Urban'
+  LcsEN_stress_LessSchool:
+    - 'Urban'
+  LcsEN_stress_HHSeparation:
+    - 'Urban'
+  LcsEN_stress_SellRation:
+    - 'Urban'
+  LcsEN_stress_DomMigration:
+    - 'Urban'
+  LcsEN_stress_Utilities:
+    - 'Urban'
+  LcsEN_stress_Edu:
+    - 'Urban'
+  LcsEN_stress_ConsActive:
+    - 'Urban'
+  LcsEN_crisis_ProdAssets:
+    - 'Urban'
+  LcsEN_crisis_Health:
+    - 'Urban'
+  LcsEN_crisis_Edu:
+    - 'Urban'
+  LcsEN_crisis_Housing:
+    - 'Urban'
+  LcsEN_crisis_HHSeparation:
+    - 'Urban'
+  LcsEN_crisis_OutSchool:
+    - 'Urban'
+  LcsEN_crisis_Marriage:
+    - 'Urban'
+  LcsEN_crisis_Migration:
+    - 'Urban'
+  LcsEN_crisis_ChildWork:
+    - 'Urban'
+  LcsEN_crisis_ConsActive:
+    - 'Urban'
+  LcsEN_crisis_Utilities:
+    - 'Urban'
+  LcsEN_crisis_DomMigration:
+    - 'Urban'
+  LcsEN_crisis_Barter:
+    - 'Urban'
+  LcsEN_em_OutSchool:
+    - 'Urban'
+  LcsEN_em_Migration:
+    - 'Urban'
+  LcsEN_em_ChildWork:
+    - 'Urban'
+  LcsEN_em_Marriage:
+    - 'Urban'
+  LcsEN_em_ResAsset:
+    - 'Urban'
+  LcsEN_em_Begged:
+    - 'Urban'
+  LcsEN_em_IllegalAct:
+    - 'Urban'
+  LcsEN_em_ChildMigration:
+    - 'Urban'
+  
+  choices_lists:
   LcsEN_stress_DomAsset:
     - '10'
     - '20'

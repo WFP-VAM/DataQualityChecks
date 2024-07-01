@@ -13,7 +13,7 @@ The main steps are:
 import os
 import pandas as pd
 from high_frequency_checks import MasterSheet, ConfigHandler
-from high_frequency_checks.helpers.customize import rename_columns
+from high_frequency_checks.helpers.customize import rename_columns, create_urban_rural
 from data_bridges_knots import DataBridgesShapes
 from logging_config import LoggingHandler
 from db_config import db_config
@@ -61,6 +61,7 @@ if __name__ == "__main__":
         current_df = read_data()
         # Specifically for DRC Since it is not standardized
         current_df = rename_columns(current_df)
+        current_df = create_urban_rural(current_df)
         for indicator_class, config_file in indicators:
             standard_config, configurable_config = config_handler.get_indicator_config(config_file)
             instance = indicator_class(df=current_df, base_cols=base_cols, review_cols=review_cols, 
