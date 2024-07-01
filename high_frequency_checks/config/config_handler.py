@@ -32,11 +32,11 @@ class ConfigHandler:
         return standard_config, configurable_config
     
     def get_indicators(self):
-        indicators_config_path = os.path.join(self.base_dir, 'indicators_config.yaml')
-        indicators_config = self.read_yaml(indicators_config_path)
+        main_config_path = os.path.join(self.base_dir, 'main_config.yaml')
+        main_config = self.read_yaml(main_config_path)
         
-        enabled_indicators = [key for key, value in indicators_config['Indicators'].items() if value]
-        mappings = indicators_config['Mappings']
+        enabled_indicators = [key for key, value in main_config['Indicators'].items() if value]
+        mappings = main_config['Mappings']
         
         indicators = []
         for indicator_name in enabled_indicators:
