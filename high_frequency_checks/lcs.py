@@ -2,8 +2,15 @@ import pandas as pd
 import numpy as np
 from .helpers.base_indicator import BaseIndicator
 from .helpers.standard.lcs import lcs_stress_cols, lcs_crisis_cols, lcs_em_cols, lcs_children_cols, lcs_non_exhaustive_cols, lcs_options
+import logging
 
+logname = "logs/HFC.log"
 
+logging.basicConfig(filename=logname,
+                    filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S',
+                    level=logging.DEBUG)
 
 
 class LCS(BaseIndicator):
@@ -38,7 +45,7 @@ class LCS(BaseIndicator):
 
         
     def custom_flag_logic(self):
-        print("Custom flag logic for LCS...")
+        logging.info("Custom flag logic for LCS...")
 
         # Custom Erroneous value Logic for LCS Columns
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Missing_Values'] == 0, f'Flag_{self.indicator_name}_Erroneous_Values'] = (

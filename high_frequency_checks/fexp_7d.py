@@ -2,7 +2,15 @@ import pandas as pd
 import numpy as np
 from .helpers.base_indicator import BaseIndicator
 from .helpers.standard.fexp_7d import fexp_7d_cols
+import logging
 
+logname = "logs/HFC.log"
+
+logging.basicConfig(filename=logname,
+                    filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S',
+                    level=logging.DEBUG)
 
 fexp_7d_flags = {
     'Flag_FEXP_7D_Missing_Values': "Missing value(s) in the Food Expenditures 7D Module",
@@ -28,7 +36,7 @@ class FEXP_7D(BaseIndicator):
 
     def custom_flag_logic(self):
         # Custom flag logic specific to Food Expenditures 7D
-        print(f"Custom flag logic for {self.indicator_name}...")
+        logging.info(f"Custom flag logic for {self.indicator_name}...")
         
         # Custom Missing Values Logic for FEXP_7D
         for col in self.cols:
@@ -42,7 +50,7 @@ class FEXP_7D(BaseIndicator):
             (self.df['HHExpF_1M'] == 0).astype(int)
 
     def calculate_indicators(self):
-        print(f"Calculating indicators for {self.indicator_name}...")
+        logging.info(f"Calculating indicators for {self.indicator_name}...")
 
         # Calculating Monthly Food Expenditure        
         self.df['HHExpF_1M'] = sum(self.df[col] for col in self.cols) / 7 * 30

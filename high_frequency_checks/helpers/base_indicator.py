@@ -1,6 +1,16 @@
 import numpy as np
 import pandas as pd
 from .standard.base_indicator import base_cols
+import logging
+
+logname = "logs/HFC.log"
+
+logging.basicConfig(filename=logname,
+                    filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S',
+                    level=logging.DEBUG)
+
 
 class BaseIndicator:
     
@@ -40,7 +50,7 @@ class BaseIndicator:
         pass
     
     def generate_flags(self):
-        print(f"Generating flags for {self.indicator_name}")
+        logging.info(f"Generating flags for {self.indicator_name}")
         self.initialize_individual_flags()
         self.generate_missing_value_flags()
         self.generate_erroneous_value_flags()
@@ -69,7 +79,7 @@ class BaseIndicator:
         self.df[f'Flag_{self.indicator_name}_Overall'] = overall_flag.astype(int)
 
     def generate_narrative_flag(self):
-        print(f"Generating narrative flags for {self.indicator_name}")
+        logging.info(f"Generating narrative flags for {self.indicator_name}")
         narrative_flags = list(self.flags.keys())
         
         self.df[f'Flag_{self.indicator_name}_Narrative'] = self.df[narrative_flags].apply(
@@ -77,7 +87,7 @@ class BaseIndicator:
         )
 
     def generate_report(self, writer: pd.ExcelWriter):
-        print(f"Generating report for {self.indicator_name}")
+        logging.info(f"Generating report for {self.indicator_name}")
         hh_summary_cols = self.base_cols + self.cols + list(self.flags.keys()) + [f'Flag_{self.indicator_name}_Overall', f'Flag_{self.indicator_name}_Narrative']
         hh_summary = self.df[hh_summary_cols]
         hh_filtered = hh_summary[hh_summary[f'Flag_{self.indicator_name}_Overall'] == 1]

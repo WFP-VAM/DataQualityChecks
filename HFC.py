@@ -7,6 +7,14 @@ from config import config
 from datetime import datetime
 import logging
 
+logname = "logs/HFC.log"
+
+logging.basicConfig(filename=logname,
+                    filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S',
+                    level=logging.DEBUG)
+
 CONFIG_PATH = r"data_bridges_api_config.yaml"
 
 client = DataBridgesShapes(CONFIG_PATH)
@@ -14,13 +22,13 @@ client = DataBridgesShapes(CONFIG_PATH)
 # Get data
 def read_data(testing = False):
     if testing == True:
-        print("Read data from local file")
+        logging.info("Read data from local file")
         return pd.read_csv('data/congo.csv')
     else:
-        print("Read data from DataBridges")
+        logging.info("Read data from DataBridges")
         df =  client.get_household_survey(survey_id=config["DataBridgesIDs"]['dataset'], access_type='full', page_size=800)
-        print(f"Retrieved data for dataset #{config["DataBridgesIDs"]['dataset']}")
-        print("\n --------------------------------------------------------- \n")
+        logging.info(f"Retrieved data for dataset #{config["DataBridgesIDs"]['dataset']}")
+        logging.info("\n --------------------------------------------------------- \n")
         return df
 
 # List of Indicator Classes
@@ -52,7 +60,7 @@ def write_to_excel():
             try:
                 instance = indicator_class(current_df, **config_values)
             except KeyError as err:
-                print(f"{err}\n Indicator not found, skipping\n\n")
+                logging.error(f"{err}\n Indicator not found, skipping\n\n")
                 continue
             process_indicator(instance, writer)
             current_df = instance.df.copy()
@@ -65,6 +73,7 @@ def write_to_excel():
 
     with pd.ExcelWriter(report_mastersheet_path) as writer:
         final_mastersheet_df.to_excel(writer, sheet_name='MasterSheet', index=False)
+    logging.info(f"Code run successfully. Generated reports for {config['CountryName']} at {datetime.now()}")
     print(f"Generated reports for {config['CountryName']} at {datetime.now()}")
 
 

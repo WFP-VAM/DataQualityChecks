@@ -2,7 +2,15 @@ import pandas as pd
 import numpy as np
 from .helpers.base_indicator import BaseIndicator
 from .helpers.standard.rcsi import rcsi_cols, rcsi_weights
+import logging
 
+logname = "logs/HFC.log"
+
+logging.basicConfig(filename=logname,
+                    filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S',
+                    level=logging.DEBUG)
 
 class rCSI(BaseIndicator):
     
@@ -36,7 +44,7 @@ class rCSI(BaseIndicator):
         self.high_sugar_oil_consumption = high_sugar_oil_consumption
 
     def custom_flag_logic(self):
-        print("Custom flag logic for rCSI...")
+        logging.info("Custom flag logic for rCSI...")
         mask = self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0
         
         # Identical Values (Except for 0's)
@@ -57,6 +65,6 @@ class rCSI(BaseIndicator):
         ((self.df['rCSIMealAdult'] > 0) & (self.df['Sum_children'] == 0)).astype(int)
 
     def calculate_indicators(self):
-        print("Calculating rCSI...")
+        logging.info("Calculating rCSI...")
         self.df['rCSI'] = sum(self.df[col] * weight for col, weight in zip(self.cols, self.weights))
         pass

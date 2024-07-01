@@ -1,7 +1,15 @@
 import pandas as pd
 import numpy as np
 from .helpers.base_indicator import BaseIndicator
+import logging
 
+logname = "logs/HFC.log"
+
+logging.basicConfig(filename=logname,
+                    filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S',
+                    level=logging.DEBUG)
 # Columns of food groups related to HDDS
 hdds_cols = ['HDDSStapCer',
              'HDDSStapRoot',
@@ -56,7 +64,7 @@ class HDDS(BaseIndicator):
         
         
     def calculate_indicators(self):
-        print("Calculating HDDS...")
+        logging.info("Calculating HDDS...")
 
         self.df['HDDS'] = sum(self.df[col] for col in hdds_cols)
 
@@ -86,7 +94,7 @@ class HDDS(BaseIndicator):
                             ((self.df[fcs_col] == 0) & (self.df[hdds_col] == 1)).astype(int) | \
                             ((self.df[fcs_col] == 7) & (self.df[hdds_col] == 0)).astype(int)
                     except KeyError:
-                        print(f"KeyError on {fcs_col} and {hdds_col}")
+                        logging.error(f"KeyError on {fcs_col} and {hdds_col}")
                         continue
             else:
                 self.df.loc[self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0, f'Flag_{self.indicator_name}_{fcs_col}_mismatch'] = \

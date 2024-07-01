@@ -2,7 +2,15 @@ import pandas as pd
 import numpy as np
 from .helpers.base_indicator import BaseIndicator
 from .helpers.standard.fcs import fcs_cols, fcs_weights
+import logging
 
+logname = "logs/HFC.log"
+
+logging.basicConfig(filename=logname,
+                    filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S',
+                    level=logging.DEBUG)
 
 class FCS(BaseIndicator):
     
@@ -37,12 +45,12 @@ class FCS(BaseIndicator):
         self.high_sugar_oil_consumption = high_sugar_oil_consumption
 
     def calculate_indicators(self):
-        print("Calculating FCS...")
+        logging.info("Calculating FCS...")
         self.df['FCS'] = sum(self.df[col] * weight for col, weight in zip(self.cols, self.weights))
         self.calculate_fcg()
 
     def custom_flag_logic(self):
-        print("Custom flag logic for FCS...")
+        logging.info("Custom flag logic for FCS...")
         mask = self.df[f'Flag_{self.indicator_name}_Erroneous_Values'] == 0
         
         # Identical Values
@@ -58,7 +66,7 @@ class FCS(BaseIndicator):
         self.df.loc[mask, f'Flag_FCS_High_FCS'] = (self.df['FCS'] > self.high_fcs).astype(int)
 
     def calculate_fcg(self):
-        print("Calculating FCG...")
+        logging.info("Calculating FCG...")
         if self.high_sugar_oil_consumption:
             self.df['FCSCat28'] = pd.cut(self.df['FCS'], bins=[0, 28.5, 42.5, float('inf')], labels=['Poor', 'Borderline', 'Acceptable'], right=False)
         else:

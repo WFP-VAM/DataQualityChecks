@@ -2,7 +2,15 @@ import pandas as pd
 import numpy as np
 from .helpers.base_indicator import BaseIndicator
 from .helpers.standard.housing import housing_cols, HHDwellType_options, HHTenureType_options, HHWallType_options, HHRoofType_options, HHFloorType_options
+import logging
 
+logname = "logs/HFC.log"
+
+logging.basicConfig(filename=logname,
+                    filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S',
+                    level=logging.DEBUG)
 
 class Housing(BaseIndicator):
     
@@ -34,7 +42,7 @@ class Housing(BaseIndicator):
 
     def custom_flag_logic(self):
         # Custom flag logic specific to Demographics
-        print(f"Custom flag logic for {self.indicator_name}...")
+        logging.info(f"Custom flag logic for {self.indicator_name}...")
         
         # Custom Erroneous value Logic for Housing Columns
         self.df.loc[self.df[f'Flag_{self.indicator_name}_Missing_Values'] == 0, f'Flag_{self.indicator_name}_Erroneous_Values'] = (
@@ -53,6 +61,6 @@ class Housing(BaseIndicator):
         ).astype(int)
                         
     def calculate_indicators(self):
-        print(f"Calculating indicators for {self.indicator_name}...")
+        logging.info(f"Calculating indicators for {self.indicator_name}...")
         
         pass

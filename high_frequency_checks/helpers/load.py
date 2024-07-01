@@ -5,13 +5,16 @@ from dotenv import load_dotenv
 import logging
 import yaml
 from datetime import date
+import logging 
 
-# load_dotenv()  # take environment variables from .env.
+logname = "logs/HFC.log"
 
-# SERVER = os.getenv("SERVER")
-# DATABASE = os.getenv("DB_NAME")
-# USERNAME = os.getenv("DB_USERNAME")
-# PASSWORD = os.getenv("DB_PASSWORD")
+logging.basicConfig(filename=logname,
+                    filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S',
+                    level=logging.DEBUG)
+
 
 CONFIG_PATH = r"data_bridges_api_config.yaml"
 class ExcelExportError(Exception):
@@ -35,9 +38,9 @@ def load_data(path, sheet_name, table_name):
     df = pd.read_excel(path, sheet_name=sheet_name)
     try:
         df.to_sql(name=table_name, con=engine, if_exists='replace')
-        print(f"Loaded to {table_name}")
+        logging.info(f"Loaded to {table_name}")
     except Exception as e:
-        print(f"Error {e} when populating {table_name}")
+        logging.error(f"Error {e} when populating {table_name}")
 
 # def load_all_to_db(data: tuple, table_names = None):
 #     try: 
