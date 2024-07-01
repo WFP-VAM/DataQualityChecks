@@ -89,7 +89,8 @@ if __name__ == "__main__":
             return df
 
     output_dir = './reports'
-    report_all_indicators_path = os.path.join(output_dir, 'HFC_All_Indicators_Report.xlsx')
+    report_all_indicators = f"{config["CountryName"]}_HFC_All_Indicators_Report.xlsx"
+    report_all_indicators_path = os.path.join(output_dir, report_all_indicators)
 
     # Generate All Indicators Report
     with pd.ExcelWriter(report_all_indicators_path) as writer:
