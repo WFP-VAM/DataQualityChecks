@@ -22,7 +22,7 @@ class BaseIndicator:
         
         if self.indicator_name in ['LCS_FS', 'LCS_FS_R', 'LCS_EN']:
             used_strategies = self.configurable_config.get('used_strategies', [])
-            self.cols = [col for col in self.cols_type.keys() if col in used_strategies]
+            self.cols = [col for col in self.cols_type.keys() if col in used_strategies and col in self.df.columns]
         else:
             self.cols = list(self.cols_type.keys())
 
@@ -44,8 +44,11 @@ class BaseIndicator:
                 except Exception as e:
                     self.logger.error(f"Error converting column '{col}' to type {expected_type}: {e}")
             else:
-                self.logger.warning(f"Column '{col}' not found in the DataFrame. an empty column will be created.")
-                self.df[col] = np.nan
+                if self.indicator_name in ['HHEXPF_7D', 'HHEXPNF_1M', 'HHEXPNF_6M']:
+                    self.logger.warning(f"Column '{col}' not found in the DataFrame. an empty column for {col} will be created.")
+                    self.df[col] = np.nan
+                else:
+                    self.logger.warning(f"Column '{col}' not found in the DataFrame")
                 
     def check_missing_values(self):
         self.logger.info(f'Checking missing values for {self.indicator_name}')
@@ -193,13 +196,18 @@ class BaseIndicator:
             self.logger.error(f"Error generating report for {self.indicator_name}: {e}")
 
     def process(self, writer):
-        self.parse_columns()
-        self.check_missing_values()
-        self.check_erroneous_values()
-        self._process_specific()
-        self.generate_overall_flag()
-        self.generate_narrative_flag()
-        self.generate_report(writer)
+        if len(self.cols) > 0:
+            self.parse_columns()
+            if self.indicator_name in ['LCS_FS', 'LCS_FS_R', 'LCS_EN']:
+                self.df[f'Flag_{self.indicator_name}_Missing'] = 0
+                self.df[f'Flag_{self.indicator_name}_Erroneous'] = 0
+            else:
+                self.check_missing_values()
+                self.check_erroneous_values()
+            self._process_specific()
+            self.generate_overall_flag()
+            self.generate_narrative_flag()
+            self.generate_report(writer)
 
     def _process_specific(self):
         raise NotImplementedError("Subclasses should implement this method.")

@@ -15,7 +15,7 @@ import yaml
 import logging
 import pandas as pd
 from datetime import datetime
-from high_frequency_checks import Demo, Housing, FCS, rCSI, LCS_FS, LCS_FS_R, HHEXPF_7D, HHEXPNF_1M, HHEXPNF_6M, MasterSheet
+from high_frequency_checks import Demo, Housing, FCS, rCSI, LCS_FS, LCS_FS_R, LCS_EN, HHEXPF_7D, HHEXPNF_1M, HHEXPNF_6M, MasterSheet
 from high_frequency_checks.helpers.customize import rename_columns
 from data_bridges_knots import DataBridgesShapes
 import logging
@@ -84,7 +84,8 @@ if __name__ == "__main__":
         (FCS, 'fcs.yaml'),
         (rCSI, 'rcsi.yaml'),
         (LCS_FS, 'lcs_fs.yaml'),
-        # (LCS_FS_R, 'lcs_fs_r.yaml'),
+        (LCS_FS_R, 'lcs_fs_r.yaml'),
+        (LCS_EN, 'lcs_en.yaml'),
         (HHEXPF_7D, 'hhexpf_7d.yaml'),
         (HHEXPNF_1M, 'hhexpnf_1m.yaml'),
         (HHEXPNF_6M, 'hhexpnf_6m.yaml'),
