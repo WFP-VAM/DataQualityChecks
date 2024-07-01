@@ -1,19 +1,10 @@
 config = {
     
     "DataBridgesIDs": {
-        'questionnaire': 1713,
-        'dataset': 3582
+        'questionnaire': 1509,
+        'dataset': 3094
     },
     
-    "CountryName": "DRC",
+    "CountryName": "COG",
 
 }
-
-
-
-# # }
-
-# DRC_CFSVA = {
-#         'questionnaire': 3582,
-#         'dataset': 1713
-#     }
