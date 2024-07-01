@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from .helpers.base_indicator import BaseIndicator
+from high_frequency_checks.helpers.base_indicator import BaseIndicator
 
 # Columns of food groups related to HDDS
 hdds_cols = ['HDDSStapCer',

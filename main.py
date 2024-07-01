@@ -78,7 +78,6 @@ if __name__ == "__main__":
         
     # Terminal: Print if there were any errors
     error_count = error_handler.error_count
-    if error_count > 0:
-        print(f"Data processing completed with {error_count} errors.")
-    else:
-        print("Data processing completed successfully with no errors.")
+    warning_count = error_handler.warning_count
+    print(f"Data processing completed with {error_count} errors and {warning_count} warnings.")
+    

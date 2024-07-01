@@ -29,26 +29,27 @@ class BaseIndicator:
     def parse_columns(self):
         self.logger.info(f"Parsing columns with standard_config: {self.cols_type}")
         for col, expected_type in self.cols_type.items():
-            if col in self.df.columns and col in self.cols:
-                try:
-                    if expected_type == 'int':
-                        # Convert to Int64Dtype which supports NaN
-                        self.df[col] = pd.to_numeric(self.df[col], errors='coerce').astype(pd.Int64Dtype())
-                    elif expected_type == 'float':
-                        self.df[col] = pd.to_numeric(self.df[col], errors='coerce').astype(float)
-                    elif expected_type == 'str':
-                        self.df[col] = self.df[col].astype(object)
-                    else:
-                        self.logger.warning(f"Column '{col}' has an unexpected type: {self.df[col].dtype}")
-                    self.logger.info(f"Column '{col}' converted to type {expected_type}. Current type: {self.df[col].dtype}")
-                except Exception as e:
-                    self.logger.error(f"Error converting column '{col}' to type {expected_type}: {e}")
-            else:
-                if self.indicator_name in ['HHEXPF_7D', 'HHEXPNF_1M', 'HHEXPNF_6M']:
-                    self.logger.warning(f"Column '{col}' not found in the DataFrame. an empty column for {col} will be created.")
-                    self.df[col] = np.nan
+            if col in self.cols:
+                if col in self.df.columns:
+                    try:
+                        if expected_type == 'int':
+                            # Convert to Int64Dtype which supports NaN
+                            self.df[col] = pd.to_numeric(self.df[col], errors='coerce').astype(pd.Int64Dtype())
+                        elif expected_type == 'float':
+                            self.df[col] = pd.to_numeric(self.df[col], errors='coerce').astype(float)
+                        elif expected_type == 'str':
+                            self.df[col] = self.df[col].astype(object)
+                        else:
+                            self.logger.warning(f"Column '{col}' has an unexpected type: {self.df[col].dtype}")
+                        self.logger.info(f"Column '{col}' converted to type {expected_type}. Current type: {self.df[col].dtype}")
+                    except Exception as e:
+                        self.logger.error(f"Error converting column '{col}' to type {expected_type}: {e}")
                 else:
-                    self.logger.warning(f"Column '{col}' not found in the DataFrame")
+                    if self.indicator_name in ['HHEXPF_7D', 'HHEXPNF_1M', 'HHEXPNF_6M']:
+                        self.logger.warning(f"Column '{col}' not found in the DataFrame. an empty column for {col} will be created.")
+                        self.df[col] = np.nan
+                    else:
+                        self.logger.warning(f"Column '{col}' not found in the DataFrame")
                 
     def check_missing_values(self):
         self.logger.info(f'Checking missing values for {self.indicator_name}')

@@ -25,9 +25,9 @@ class LoggingHandler:
         file_handler.setFormatter(formatter)
         self.logger.addHandler(file_handler)
 
-        # Stream handler for console output (errors only)
+        # Stream handler for console output (errors and warnings)
         stream_handler = logging.StreamHandler()
-        stream_handler.setLevel(logging.ERROR)
+        stream_handler.setLevel(logging.CRITICAL + 1)
         stream_handler.setFormatter(formatter)
         self.logger.addHandler(stream_handler)
 
@@ -38,10 +38,16 @@ class LoggingHandler:
         def __init__(self):
             super().__init__()
             self.error_count = 0
+            self.warning_count = 0
 
         def emit(self, record):
             if record.levelno >= logging.ERROR:
                 self.error_count += 1
+            elif record.levelno >= logging.WARNING:
+                self.warning_count += 1
 
     def get_error_count(self):
         return self.error_handler.error_count
+
+    def get_warning_count(self):
+        return self.error_handler.warning_count
