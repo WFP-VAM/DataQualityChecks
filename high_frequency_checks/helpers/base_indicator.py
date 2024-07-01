@@ -14,17 +14,22 @@ class BaseIndicator:
         self.standard_config = standard_config
         self.configurable_config = configurable_config
         self.cols_type = self.standard_config.get('columns_type', {})
-        self.cols = list(self.cols_type.keys())
         self.indicator_name = self.__class__.__name__
         self.flags = flags
         self.low_erroneous = self.configurable_config.get('low_erroneous', None) if configurable_config else None
         self.high_erroneous = self.configurable_config.get('high_erroneous', None) if configurable_config else None
         self.logger = logging.getLogger(__name__)
+        
+        if self.indicator_name in ['LCS_FS', 'LCS_FS_R', 'LCS_EN']:
+            used_strategies = self.configurable_config.get('used_strategies', [])
+            self.cols = [col for col in self.cols_type.keys() if col in used_strategies]
+        else:
+            self.cols = list(self.cols_type.keys())
 
     def parse_columns(self):
         self.logger.info(f"Parsing columns with standard_config: {self.cols_type}")
         for col, expected_type in self.cols_type.items():
-            if col in self.df.columns:
+            if col in self.df.columns and col in self.cols:
                 try:
                     if expected_type == 'int':
                         # Convert to Int64Dtype which supports NaN

@@ -5,7 +5,8 @@ from .hhexpf_7d import HHEXPF_7D
 from .hdds import HDDS
 from .hhexpnf_1m import HHEXPNF_1M
 from .hhexpnf_6m import HHEXPNF_6M
-from .lcs import LCS
+from .lcs_fs import LCS_FS
+from .lcs_fs_r import LCS_FS_R
 from .housing import Housing
 from .mastersheet.mastersheet import MasterSheet
 
@@ -14,7 +15,8 @@ __all__ = [
     'Housing',
     'FCS',
     'rCSI',
-    'LCS',
+    'LCS_FS',
+    'LCS_FS_R',
     'HDDS',
     'HHEXPF_7D',
     'HHEXPNF_1M',
