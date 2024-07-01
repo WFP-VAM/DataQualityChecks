@@ -198,16 +198,14 @@ class BaseIndicator:
     def process(self, writer):
         if len(self.cols) > 0:
             self.parse_columns()
-            if self.indicator_name in ['LCS_FS', 'LCS_FS_R', 'LCS_EN']:
-                self.df[f'Flag_{self.indicator_name}_Missing'] = 0
-                self.df[f'Flag_{self.indicator_name}_Erroneous'] = 0
-            else:
-                self.check_missing_values()
-                self.check_erroneous_values()
+            self.check_missing_values()
+            self.check_erroneous_values() 
             self._process_specific()
             self.generate_overall_flag()
             self.generate_narrative_flag()
             self.generate_report(writer)
+        else:
+            self.logger.error(f"The Module {self.indicator_name} enabled in the main config file does not exist in the incoming data")
 
     def _process_specific(self):
         raise NotImplementedError("Subclasses should implement this method.")

@@ -5,7 +5,7 @@ Indicators:
   rCSI: True
   LCS_FS: True
   LCS_FS_R: True
-  LCS_EN: True
+  LCS_EN: False
   HHEXPF_7D: True
   HHEXPNF_1M: True
   HHEXPNF_6M: True
