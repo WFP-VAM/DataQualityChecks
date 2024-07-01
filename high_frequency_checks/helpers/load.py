@@ -1,22 +1,12 @@
-import os
 import pandas as pd
 from sqlalchemy import create_engine 
-from dotenv import load_dotenv
 import logging
 import yaml
 from datetime import date
 import logging 
 
-logname = "logs/HFC.log"
-
-logging.basicConfig(filename=logname,
-                    filemode='a',
-                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
-                    datefmt='%H:%M:%S',
-                    level=logging.DEBUG)
-
-
 CONFIG_PATH = r"data_bridges_api_config.yaml"
+
 class ExcelExportError(Exception):
     pass
 

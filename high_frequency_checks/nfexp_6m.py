@@ -18,7 +18,18 @@ nfexp_6m_flags = {
 }
 
 class NFEXP_6M(BaseIndicator):
-    def __init__(self, 
+"""
+    Calculates the Non-Food Expenditures 6M indicators for a given DataFrame.
+    
+    The `NFEXP_6M` class is a subclass of `BaseIndicator` and is responsible for calculating the Non-Food Expenditures 6M indicators. It takes a DataFrame, low and high erroneous values, and performs the following tasks:
+    
+    1. Initializes the base indicator properties using the `BaseIndicator` class.
+    2. Implements custom flag logic to identify missing values in the Non-Food Expenditures 6M module.
+    3. Calculates the monthly Non-Food Expenditures 6M and the total monthly expenditures.
+    
+    The class uses the `nfexp_6m_cols` and `nfexp_6m_flags` constants defined in the `helpers.standard.nfexp_6m` module.
+    """
+        def __init__(self, 
                  df,
                  low_erroneous,
                  high_erroneous):

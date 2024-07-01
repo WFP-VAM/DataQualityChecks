@@ -19,7 +19,14 @@ fexp_7d_flags = {
 }
 
 class FEXP_7D(BaseIndicator):
-    def __init__(self,
+"""
+    The FEXP_7D class is a subclass of the BaseIndicator class and is responsible for handling the logic related to the Food Expenditures 7D module. It performs the following tasks:
+    
+    1. Initializes the class with the input DataFrame, low and high erroneous values, and sets up the necessary attributes.
+    2. Implements the custom_flag_logic method to handle the custom missing values logic for the FEXP_7D module and calculate the total food expenditures for the last 7 days.
+    3. Implements the calculate_indicators method to calculate the monthly food expenditure based on the 7-day food expenditures.
+    """
+        def __init__(self,
                  df,
                  low_erroneous,
                  high_erroneous):

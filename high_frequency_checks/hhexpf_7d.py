@@ -3,7 +3,16 @@ from high_frequency_checks.helpers.base_indicator import BaseIndicator
     
     
 class HHEXPF_7D(BaseIndicator):
+"""
+    Implements the HHEXPF_7D indicator, which calculates the monthly food expenditures based on the 7-day food expenditures module.
     
+    The indicator performs the following steps:
+    1. Calculates the monthly food expenditures by summing the purchase, gift aid, and own production columns and scaling to a monthly basis.
+    2. Checks if the monthly food expenditures is zero and sets a corresponding flag.
+    
+    The indicator uses several configuration parameters to identify the relevant columns for the calculations.
+    """
+        
     flags = {
         'Flag_HHEXPF_7D_Missing': "Missing value(s) in the Food Expenditures 7D Module",
         'Flag_HHEXPF_7D_Erroneous': "Erroneous value(s) in the Food Expenditures 7D Module",

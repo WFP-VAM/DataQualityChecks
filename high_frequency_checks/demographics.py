@@ -12,7 +12,17 @@ logging.basicConfig(filename=logname,
                     level=logging.DEBUG)
 
 class Demo(BaseIndicator):
+"""
+    The `Demo` class is a subclass of `BaseIndicator` and is responsible for performing demographic-specific checks and calculations on a given DataFrame. It defines several flags that can be set to indicate various issues or anomalies in the data, such as missing values, erroneous values, and inconsistencies in household size and composition.
     
+    The class has the following methods:
+    
+    - `__init__(self, df, high_hhsize, low_erroneous, high_erroneous)`: Initializes the `Demo` instance with the input DataFrame and various thresholds for identifying high household size and erroneous values.
+    - `custom_flag_logic(self)`: Implements custom flag logic specific to the Demographics module, such as checking for missing values in the `HHPregLactNb` column, ensuring the number of pregnant and lactating women does not exceed the number of adult females, and identifying households with high or inconsistent sizes.
+    - `calculate_indicators(self)`: Calculates various demographic indicators, such as household size, total adults, total children, and the number of women/girls between 12 and 59 years old.
+    - `calculate_hh_size(self)`, `calculate_total_adults(self)`, `calculate_total_children(self)`, and `calculate_total_plw_range(self)`: Helper methods that perform the calculations for the corresponding demographic indicators.
+    """
+        
     flags = {
         'Flag_Demo_Missing_Values': "Missing value(s) in the Demographics Module",
         'Flag_Demo_Erroneous_Values': "Erroneous value(s) in the Demographics Module",

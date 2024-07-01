@@ -1,3 +1,15 @@
+"""
+This is the main entry point for the high frequency checks (HFC) application. It sets up logging, reads configuration files, and generates a report containing all the HFC indicators.
+
+The main steps are:
+1. Set up logging with file and stream handlers.
+2. Read base indicator configuration from a YAML file.
+3. Read configurations for each HFC indicator from YAML files.
+4. Get data from DataBridges or a local file (for testing).
+5. Generate an Excel report containing all the HFC indicators.
+6. Check if there were any errors during data processing and print the error count.
+"""
+
 import os
 import yaml
 import logging

@@ -18,7 +18,14 @@ nfexp_1m_flags = {
 }
 
 class NFEXP_1M(BaseIndicator):
-    def __init__(self,
+"""
+    Implements the NFEXP_1M (Non-Food Expenditures 1M) indicator, which calculates the monthly non-food expenditure for a given dataset.
+    
+    The NFEXP_1M class inherits from the BaseIndicator class and implements the custom flag logic and indicator calculation for the Non-Food Expenditures 1M module.
+    
+    The class takes a DataFrame, low and high erroneous values as input, and calculates the monthly non-food expenditure by summing the relevant columns from the input DataFrame.
+    """
+        def __init__(self,
                  df,
                  low_erroneous,
                  high_erroneous):
