@@ -1,7 +1,6 @@
 # High Frenquency Checks for WFP Food Security Assessments
 
 This repository supports WFP Country Offices in checking the quality of the data collected in needs assessment surveys. 
-![GitHub Tag](https://img.shields.io/github/v/tag/https%3A%2F%2Fgithub.com%2FWFP-VAM%2F/https%3A%2F%2Fgithub.com%2FWFP-VAM%2FDataQualityChecks%2F)
 
 ## Features
 
