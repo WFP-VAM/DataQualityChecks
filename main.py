@@ -14,16 +14,21 @@ import os
 import pandas as pd
 from high_frequency_checks import MasterSheet, ConfigHandler
 from high_frequency_checks.helpers.dataframe_customizer import DataFrameCustomizer
-from data_bridges_knots import DataBridgesShapes
+from high_frequency_checks.helpers.get_data import read_data
 from high_frequency_checks.helpers.logging_config import LoggingHandler
 from db_config import db_config
 
+from data_bridges_knots import DataBridgesShapes
 
-CONFIG_PATH = r"data_bridges_api_config.yaml"
 
-client = DataBridgesShapes(CONFIG_PATH)
+
+def main():
+    pass
+
 
 if __name__ == "__main__":
+    CONFIG_PATH = r"data_bridges_api_config.yaml"
+
     # Set up Logging
     logging_handler = LoggingHandler()
     logger = logging_handler.logger
@@ -34,24 +39,6 @@ if __name__ == "__main__":
     indicators = config_handler.get_indicators()
     base_cols, review_cols = config_handler.get_base_config()
 
-    # Get data
-    def read_data_from_local():
-        print("Read data from local file")
-        return pd.read_csv('data/congo.csv')
-
-    def read_data_from_databridges(client, survey_id):
-        print("Read data from DataBridges")
-        df = client.get_household_survey(survey_id=survey_id, access_type='full', page_size=800)
-        print(f"Retrieved data for dataset #{survey_id}")
-        print("\n --------------------------------------------------------- \n")
-        return df
-
-    def read_data(testing=False):
-        if testing:
-            return read_data_from_local()
-        else:
-            return read_data_from_databridges(client, db_config["DataBridgesIDs"]['dataset'])
-
     reports_folder = './reports'
     os.makedirs(reports_folder, exist_ok=True)
     report_all_indicators_path = os.path.join(reports_folder, f'{db_config["CountryName"]}_HFC_All_Indicators_Report.xlsx')
@@ -59,7 +46,7 @@ if __name__ == "__main__":
 
     # Generate All Indicators Report
     with pd.ExcelWriter(report_all_indicators_path) as writer:
-        current_df = read_data()
+        current_df = read_data(survey_id=db_config['DataBridgesIDs']['dataset'], config_path=CONFIG_PATH)
         # Specifically for DRC
         df_customizer = DataFrameCustomizer(current_df)
         current_df = df_customizer.rename_columns()
