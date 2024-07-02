@@ -1,25 +1,25 @@
 """
-This is the main entry point for the high frequency checks (HFC) application. It sets up logging, reads configuration files, and generates a report containing all the HFC indicators.
+The main entry point of the application. This script is responsible for the following tasks:
 
-The main steps are:
-1. Set up logging with file and stream handlers.
-2. Read base indicator configuration from a YAML file.
-3. Read configurations for each HFC indicator from YAML files.
-4. Get data from DataBridges or a local file (for testing).
-5. Generate an Excel report containing all the HFC indicators.
-6. Check if there were any errors during data processing and print the error count.
+1. Set up logging configuration.
+2. Read indicator configurations from a YAML file.
+3. Create necessary directories for report generation.
+4. Generate an "All Indicators Report" in an Excel file.
+5. Generate a "MasterSheet Report" in an Excel file.
+6. Upload the MasterSheet report to a database.
+7. Print the number of errors and warnings encountered during data processing.
 """
+
+
 
 import os
 import pandas as pd
 from high_frequency_checks import MasterSheet, ConfigHandler
 from high_frequency_checks.helpers.dataframe_customizer import DataFrameCustomizer
 from high_frequency_checks.helpers.get_data import read_data
+from high_frequency_checks.helpers.load import load_data
 from high_frequency_checks.helpers.logging_config import LoggingHandler
 from db_config import db_config
-
-from data_bridges_knots import DataBridgesShapes
-
 
 
 def main():
@@ -39,10 +39,18 @@ if __name__ == "__main__":
     indicators = config_handler.get_indicators()
     base_cols, review_cols = config_handler.get_base_config()
 
+    # report writing 
     reports_folder = './reports'
     os.makedirs(reports_folder, exist_ok=True)
-    report_all_indicators_path = os.path.join(reports_folder, f'{db_config["CountryName"]}_HFC_All_Indicators_Report.xlsx')
-    report_mastersheet_path = os.path.join(reports_folder, f'{db_config["CountryName"]}_HFC_MasterSheet_Report.xlsx')
+
+    reports = {
+        "all_indicators": f'{db_config["CountryName"]}_HFC_All_Indicators_Report.xlsx',
+        "mastersheet": f'{db_config["CountryName"]}_HFC_MasterSheet_Report.xlsx'
+    } 
+
+    report_all_indicators_path = os.path.join(reports_folder, reports["all_indicators"])
+
+    report_mastersheet_path = os.path.join(reports_folder, reports['mastersheet'])
 
     # Generate All Indicators Report
     with pd.ExcelWriter(report_all_indicators_path) as writer:
@@ -66,6 +74,11 @@ if __name__ == "__main__":
     final_mastersheet_df = MasterSheet.merge_with_existing_report(new_mastersheet_df, report_mastersheet_path)
     with pd.ExcelWriter(report_mastersheet_path) as writer:
         final_mastersheet_df.to_excel(writer, sheet_name='MasterSheet', index=False)
+
+    # Upload to DataBase
+    master_table_name = f"DQ_Mastersheet_{db_config["CountryName"]}"
+    load_data(report_mastersheet_path, "MasterSheet", master_table_name)
+    
         
     # Terminal: Print if there were any errors
     error_count = error_handler.error_count
