@@ -11,6 +11,7 @@ from .indicators.lcs_en import LCS_EN
 from .indicators.housing import Housing
 from .mastersheet.mastersheet import MasterSheet
 from .config.config_handler import ConfigHandler
+from .helpers.dataframe_customizer import DataFrameCustomizer
 
 __all__ = [
     'Demo',
@@ -25,5 +26,6 @@ __all__ = [
     'HHEXPNF_1M',
     'HHEXPNF_6M',
     'MasterSheet',
-    'ConfigHandler'
+    'ConfigHandler',
+    'DataFrameCustomizer',
 ]
