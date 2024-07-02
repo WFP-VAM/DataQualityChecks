@@ -1,4 +1,5 @@
 Indicators:
+  Timing: True
   Demo: True
   Housing: True
   FCS: True
@@ -11,6 +12,9 @@ Indicators:
   HHEXPNF_6M: True
 
 Mappings:
+  Timing:
+    class_name: Timing
+    config_file: timing.yaml
   Demo:
     class_name: Demo
     config_file: demo.yaml

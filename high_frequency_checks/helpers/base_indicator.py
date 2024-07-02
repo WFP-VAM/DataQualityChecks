@@ -39,8 +39,10 @@ class BaseIndicator:
                             self.df[col] = pd.to_numeric(self.df[col], errors='coerce').astype(float)
                         elif expected_type == 'str':
                             self.df[col] = self.df[col].astype(object)
+                        elif expected_type == 'datetime':
+                            self.df[col] = pd.to_datetime(self.df[col])
                         else:
-                            self.logger.warning(f"Column '{col}' has an unexpected type: {self.df[col].dtype}")
+                            self.logger.warning(f"Column '{col}' has an unexpected data type: {self.df[col].dtype}")
                         self.logger.info(f"Column '{col}' converted to type {expected_type}. Current type: {self.df[col].dtype}")
                     except Exception as e:
                         self.logger.error(f"Error converting column '{col}' to type {expected_type}: {e}")
@@ -199,8 +201,9 @@ class BaseIndicator:
     def process(self, writer):
         if len(self.cols) > 0:
             self.parse_columns()
-            self.check_missing_values()
-            self.check_erroneous_values() 
+            if self.indicator_name != 'Timing':
+                self.check_missing_values()
+                self.check_erroneous_values() 
             self._process_specific()
             self.generate_overall_flag()
             self.generate_narrative_flag()

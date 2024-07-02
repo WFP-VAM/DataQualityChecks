@@ -9,9 +9,11 @@ from .indicators.lcs_fs import LCS_FS
 from .indicators.lcs_fs_r import LCS_FS_R
 from .indicators.lcs_en import LCS_EN
 from .indicators.housing import Housing
+from .indicators.timing import Timing
 from .mastersheet.mastersheet import MasterSheet
 from .config.config_handler import ConfigHandler
 from .helpers.dataframe_customizer import DataFrameCustomizer
+
 
 __all__ = [
     'Demo',
@@ -28,4 +30,5 @@ __all__ = [
     'MasterSheet',
     'ConfigHandler',
     'DataFrameCustomizer',
+    'Timing'
 ]
