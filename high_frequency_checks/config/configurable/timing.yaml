@@ -15,9 +15,9 @@ time_thresholds:
     end: "12"
   afternoon:
     start: "12"
-    end: "17"
+    end: "19"
   evening:
-    start: "17"
+    start: "19"
     end: "21"
   night:
     start: "21"
