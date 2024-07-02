@@ -1,4 +1,4 @@
 columns_type:
   start: 'datetime'
   end: 'datetime'
-  today: 'datetime'
+  today: 'date'

@@ -41,6 +41,8 @@ class BaseIndicator:
                             self.df[col] = self.df[col].astype(object)
                         elif expected_type == 'datetime':
                             self.df[col] = pd.to_datetime(self.df[col])
+                        elif expected_type == 'date':
+                            self.df[col] = pd.to_datetime(self.df[col]).dt.date
                         else:
                             self.logger.warning(f"Column '{col}' has an unexpected data type: {self.df[col].dtype}")
                         self.logger.info(f"Column '{col}' converted to type {expected_type}. Current type: {self.df[col].dtype}")
