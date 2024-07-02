@@ -219,4 +219,3 @@ class BaseIndicator:
 
     def generate_flags(self):
         pass
-

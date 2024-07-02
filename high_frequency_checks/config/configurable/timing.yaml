@@ -1,6 +1,6 @@
 # In minutes
-short_survey: 20
-long_survey: 150
+short_survey_mins: 20
+long_survey_mins: 150
 
 # Adjust according to the timezone of the country office
 utc: +1

@@ -15,8 +15,8 @@ class Timing(BaseIndicator):
     def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):
         super().__init__(df, base_cols, review_cols, standard_config, configurable_config, flags)
         self.logger = logging.getLogger(__name__)
-        self.short_survey = self.configurable_config.get('short_survey')
-        self.long_survey = self.configurable_config.get('long_survey')
+        self.short_survey_mins = self.configurable_config.get('short_survey_mins')
+        self.long_survey_mins = self.configurable_config.get('long_survey_mins')
         self.utc = self.configurable_config.get('utc')
         self.time_thresholds = self.configurable_config.get('time_thresholds')
         self.abnormal_start_time = self.configurable_config.get('abnormal_period')
@@ -73,7 +73,7 @@ class Timing(BaseIndicator):
     def check_short_duration(self):
         self.logger.info("Checking for short survey durations")
         try:
-            self.df['Flag_Timing_Short_Duration'] = (self.df['Duration_Mins'] < self.short_survey).astype(int)
+            self.df['Flag_Timing_Short_Duration'] = (self.df['Duration_Mins'] < self.short_survey_mins).astype(int)
             self.logger.info("Generated short survey duration flag for Timing")
         except Exception as e:
             self.logger.error(f"Error checking short durations for Timing: {e}")
@@ -81,7 +81,7 @@ class Timing(BaseIndicator):
     def check_long_duration(self):
         self.logger.info("Checking for long survey durations")
         try:
-            self.df['Flag_Timing_Long_Duration'] = (self.df['Duration_Mins'] > self.long_survey).astype(int)
+            self.df['Flag_Timing_Long_Duration'] = (self.df['Duration_Mins'] > self.long_survey_mins).astype(int)
             self.logger.info("Generated long survey duration flag for Timing")
         except Exception as e:
             self.logger.error(f"Error checking long durations for Timing: {e}")
@@ -93,4 +93,3 @@ class Timing(BaseIndicator):
             self.logger.info("Generated Abnormal Start Period flag for Timing")
         except Exception as e:
             self.logger.error(f"Error checking Abnormal Start Periods for Timing: {e}")
-
