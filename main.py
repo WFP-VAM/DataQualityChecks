@@ -15,7 +15,7 @@ import pandas as pd
 from high_frequency_checks import MasterSheet, ConfigHandler
 from high_frequency_checks.helpers.dataframe_customizer import DataFrameCustomizer
 from data_bridges_knots import DataBridgesShapes
-from logging_config import LoggingHandler
+from high_frequency_checks.helpers.logging_config import LoggingHandler
 from db_config import db_config
 
 
