@@ -1,0 +1,68 @@
+columns_type:
+  HHStatus: 'str'
+  HHSize01M: 'int'
+  HHSize24M: 'int'
+  HHSize511M: 'int'
+  HHSize1217M: 'int'
+  HHSize1859M: 'int'
+  HHSize60AboveM: 'int'
+  HHSize01F: 'int'
+  HHSize24F: 'int'
+  HHSize511F: 'int'
+  HHSize1217F: 'int'
+  HHSize1859F: 'int'
+  HHSize60AboveF: 'int'
+  HHSize: 'int'
+  HHPregLactNb: 'int'
+
+conditional_pairs_integer:
+  HHPregLactNb:
+    - 'HHSize1217F'
+    - 'HHSize1859F'
+
+choices_lists:
+  HHStatus:
+    - '1'
+    - '2'
+    - '3'
+    - '4'
+    - '5'
+    - '6'
+    - '7'
+    - '999'
+
+male_cols:
+  - 'HHSize01M'
+  - 'HHSize24M'
+  - 'HHSize511M'
+  - 'HHSize1217M'
+  - 'HHSize1859M'
+  - 'HHSize60AboveM'
+
+female_cols:
+  - 'HHSize01F'
+  - 'HHSize24F'
+  - 'HHSize511F'
+  - 'HHSize1217F'
+  - 'HHSize1859F'
+  - 'HHSize60AboveF'
+
+adult_cols:
+  - 'HHSize1859M'
+  - 'HHSize60AboveM'
+  - 'HHSize1859F'
+  - 'HHSize60AboveF'
+
+children_cols:
+  - 'HHSize01M'
+  - 'HHSize24M'
+  - 'HHSize511M'
+  - 'HHSize1217M'
+  - 'HHSize01F'
+  - 'HHSize24F'
+  - 'HHSize511F'
+  - 'HHSize1217F'
+
+females1259:
+  - 'HHSize1217F'
+  - 'HHSize1859F'

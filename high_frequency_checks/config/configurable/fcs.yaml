@@ -1,0 +1,5 @@
+low_fcs: 10
+high_fcs: 90
+low_erroneous: 0
+high_erroneous: 7
+high_sugar_oil_consumption: True

@@ -1,0 +1,348 @@
+columns_type:
+  LcsR_stress_Animals: 'str'
+  LcsR_stress_BorrowCash: 'str'
+  LcsR_stress_Pawn: 'str'
+  LcsR_stress_DomAsset: 'str'
+  LcsR_stress_EatOut: 'str'
+  LcsR_stress_LessSchool: 'str'
+  LcsR_stress_Saving: 'str'
+  LcsR_stress_HHSeparation: 'str'
+  LcsR_stress_ConsActive: 'str'
+  LcsR_stress_SellFoodRation: 'str'
+  LcsR_stress_DomMigration: 'str'
+  LcsR_stress_Housing: 'str'
+  LcsR_crisis_Animals: 'str'
+  LcsR_crisis_ImmCrops: 'str'
+  LcsR_crisis_AgriCare: 'str'
+  LcsR_crisis_Health: 'str'
+  LcsR_crisis_Seed: 'str'
+  LcsR_crisis_Edu: 'str'
+  LcsR_crisis_ProdAssets: 'str'
+  LcsR_crisis_Housing: 'str'
+  LcsR_crisis_HHSeparation: 'str'
+  LcsR_crisis_Barter: 'str'
+  LcsR_crisis_Migration: 'str'
+  LcsR_crisis_ChildWork: 'str'
+  LcsR_crisis_Marriage: 'str'
+  LcsR_crisis_ConsActive: 'str'
+  LcsR_crisis_OutSchool: 'str'
+  LcsR_em_Seed: 'str'
+  LcsR_em_FemAnimal: 'str'
+  LcsR_em_OutSchool: 'str'
+  LcsR_em_Migration: 'str'
+  LcsR_em_ChildWork: 'str'
+  LcsR_em_Marriage: 'str'
+  LcsR_em_ResAsset: 'str'
+  LcsR_em_Begged: 'str'
+  LcsR_em_IllegalAct: 'str'
+  LcsR_em_ChildMigration: 'str'
+  LcsR_em_WildFood: 'str'
+  LcsR_stress_SellNFIRation: 'str'
+  LcsR_crisis_DomMigration: 'str'
+  LcsR_stress_Edu: 'str'
+
+conditional_pairs_categorical:
+  LcsR_stress_Animals:
+    - 'Rural'
+  LcsR_stress_BorrowCash:
+    - 'Rural'
+  LcsR_stress_Pawn:
+    - 'Rural'
+  LcsR_stress_DomAsset:
+    - 'Rural'
+  LcsR_stress_EatOut:
+    - 'Rural'
+  LcsR_stress_LessSchool:
+    - 'Rural'
+  LcsR_stress_Saving:
+    - 'Rural'
+  LcsR_stress_HHSeparation:
+    - 'Rural'
+  LcsR_stress_ConsActive:
+    - 'Rural'
+  LcsR_stress_SellFoodRation:
+    - 'Rural'
+  LcsR_stress_DomMigration:
+    - 'Rural'
+  LcsR_stress_Housing:
+    - 'Rural'
+  LcsR_crisis_Animals:
+    - 'Rural'
+  LcsR_crisis_ImmCrops:
+    - 'Rural'
+  LcsR_crisis_AgriCare:
+    - 'Rural'
+  LcsR_crisis_Health:
+    - 'Rural'
+  LcsR_crisis_Seed:
+    - 'Rural'
+  LcsR_crisis_Edu:
+    - 'Rural'
+  LcsR_crisis_ProdAssets:
+    - 'Rural'
+  LcsR_crisis_Housing:
+    - 'Rural'
+  LcsR_crisis_HHSeparation:
+    - 'Rural'
+  LcsR_crisis_Barter:
+    - 'Rural'
+  LcsR_crisis_Migration:
+    - 'Rural'
+  LcsR_crisis_ChildWork:
+    - 'Rural'
+  LcsR_crisis_Marriage:
+    - 'Rural'
+  LcsR_crisis_ConsActive:
+    - 'Rural'
+  LcsR_crisis_OutSchool:
+    - 'Rural'
+  LcsR_em_Seed:
+    - 'Rural'
+  LcsR_em_FemAnimal:
+    - 'Rural'
+  LcsR_em_OutSchool:
+    - 'Rural'
+  LcsR_em_Migration:
+    - 'Rural'
+  LcsR_em_ChildWork:
+    - 'Rural'
+  LcsR_em_Marriage:
+    - 'Rural'
+  LcsR_em_ResAsset:
+    - 'Rural'
+  LcsR_em_Begged:
+    - 'Rural'
+  LcsR_em_IllegalAct:
+    - 'Rural'
+  LcsR_em_ChildMigration:
+    - 'Rural'
+  LcsR_em_WildFood:
+    - 'Rural'
+  LcsR_stress_SellNFIRation:
+    - 'Rural'
+  LcsR_crisis_DomMigration:
+    - 'Rural'
+  LcsR_stress_Edu:
+    - 'Rural'
+
+choices_lists:
+  LcsR_stress_Animals:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_stress_BorrowCash:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_stress_Pawn:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_stress_DomAsset:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_stress_EatOut:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_stress_LessSchool:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_stress_Saving:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_stress_HHSeparation:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_stress_ConsActive:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_stress_SellFoodRation:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_stress_DomMigration:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_stress_Housing:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_crisis_Animals:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_crisis_ImmCrops:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_crisis_AgriCare:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_crisis_Health:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_crisis_Seed:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_crisis_Edu:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_crisis_ProdAssets:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_crisis_Housing:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_crisis_HHSeparation:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_crisis_Barter:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_crisis_Migration:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_crisis_ChildWork:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_crisis_Marriage:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_crisis_ConsActive:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_crisis_OutSchool:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_em_Seed:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_em_FemAnimal:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_em_OutSchool:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_em_Migration:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_em_ChildWork:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_em_Marriage:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_em_ResAsset:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_em_Begged:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_em_IllegalAct:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_em_ChildMigration:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_em_WildFood:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_stress_SellNFIRation:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_crisis_DomMigration:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+  LcsR_stress_Edu:
+    - '10'
+    - '20'
+    - '30'
+    - '9999'
+
+lcs_fs_r_children_cols:
+  - 'LcsR_stress_LessSchool'
+  - 'LcsR_crisis_ChildWork'
+  - 'LcsR_crisis_Marriage'
+  - 'LcsR_crisis_OutSchool'
+  - 'LcsR_em_OutSchool'
+  - 'LcsR_em_ChildWork'
+  - 'LcsR_em_Marriage'
+  - 'LcsR_em_ChildMigration'
+
+lcs_fs_r_non_exhaustive_cols:
+  - 'LcsR_stress_BorrowCash'
+  - 'LcsR_em_Begged'
+  - 'LcsR_em_IllegalAct'

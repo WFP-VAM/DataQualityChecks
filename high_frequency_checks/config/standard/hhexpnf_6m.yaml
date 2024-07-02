@@ -1,0 +1,137 @@
+columns_type:
+  HHExpNFMedServ_Purch_MN_6M: 'float'
+  HHExpNFMedGood_Purch_MN_6M: 'float'
+  HHExpNFCloth_Purch_MN_6M: 'float'
+  HHExpNFEduFee_Purch_MN_6M: 'float'
+  HHExpNFEduGood_Purch_MN_6M: 'float'
+  HHExpNFRent_Purch_MN_6M: 'float'
+  HHExpNFHHSoft_Purch_MN_6M: 'float'
+  HHExpNFHHMaint_Purch_MN_6M: 'float'
+  HHExpNFMedServ_GiftAid_MN_6M: 'float'
+  HHExpNFMedGood_GiftAid_MN_6M: 'float'
+  HHExpNFCloth_GiftAid_MN_6M: 'float'
+  HHExpNFEduFee_GiftAid_MN_6M: 'float'
+  HHExpNFEduGood_GiftAid_MN_6M: 'float'
+  HHExpNFRent_GiftAid_MN_6M: 'float'
+  HHExpNFHHSoft_GiftAid_MN_6M: 'float'
+  HHExpNFHHMaint_GiftAid_MN_6M: 'float'
+  HHExpNFMedServ_Purch_6M: 'str'
+  HHExpNFMedGood_Purch_6M: 'str'
+  HHExpNFCloth_Purch_6M: 'str'
+  HHExpNFEduFee_Purch_6M: 'str'
+  HHExpNFEduGood_Purch_6M: 'str'
+  HHExpNFRent_Purch_6M: 'str'
+  HHExpNFHHSoft_Purch_6M: 'str'
+  HHExpNFHHMaint_Purch_6M: 'str'
+  HHExpNFMedServ_GiftAid_6M: 'str'
+  HHExpNFMedGood_GiftAid_6M: 'str'
+  HHExpNFCloth_GiftAid_6M: 'str'
+  HHExpNFEduFee_GiftAid_6M: 'str'
+  HHExpNFEduGood_GiftAid_6M: 'str'
+  HHExpNFRent_GiftAid_6M: 'str'
+  HHExpNFHHSoft_GiftAid_6M: 'str'
+  HHExpNFHHMaint_GiftAid_6M: 'str'
+
+conditional_pairs_categorical:
+  HHExpNFMedServ_Purch_MN_6M:
+    - 'HHExpNFMedServ_Purch_6M'
+  HHExpNFMedGood_Purch_MN_6M:
+    - 'HHExpNFMedGood_Purch_6M'
+  HHExpNFCloth_Purch_MN_6M:
+    - 'HHExpNFCloth_Purch_6M'
+  HHExpNFEduFee_Purch_MN_6M:
+    - 'HHExpNFEduFee_Purch_6M'
+  HHExpNFEduGood_Purch_MN_6M:
+    - 'HHExpNFEduGood_Purch_6M'
+  HHExpNFRent_Purch_MN_6M:
+    - 'HHExpNFRent_Purch_6M'
+  HHExpNFHHSoft_Purch_MN_6M:
+    - 'HHExpNFHHSoft_Purch_6M'
+  HHExpNFHHMaint_Purch_MN_6M:
+    - 'HHExpNFHHMaint_Purch_6M'
+  HHExpNFMedServ_GiftAid_MN_6M:
+    - 'HHExpNFMedServ_GiftAid_6M'
+  HHExpNFMedGood_GiftAid_MN_6M:
+    - 'HHExpNFMedGood_GiftAid_6M'
+  HHExpNFCloth_GiftAid_MN_6M:
+    - 'HHExpNFCloth_GiftAid_6M'
+  HHExpNFEduFee_GiftAid_MN_6M:
+    - 'HHExpNFEduFee_GiftAid_6M'
+  HHExpNFEduGood_GiftAid_MN_6M:
+    - 'HHExpNFEduGood_GiftAid_6M'
+  HHExpNFRent_GiftAid_MN_6M:
+    - 'HHExpNFRent_GiftAid_6M'
+  HHExpNFHHSoft_GiftAid_MN_6M:
+    - 'HHExpNFHHSoft_GiftAid_6M'
+  HHExpNFHHMaint_GiftAid_MN_6M:
+    - 'HHExpNFHHMaint_GiftAid_6M'
+
+choices_lists:
+  HHExpNFMedServ_Purch_6M:
+    - '0'
+    - '1'
+  HHExpNFMedGood_Purch_6M:
+    - '0'
+    - '1'
+  HHExpNFCloth_Purch_6M:
+    - '0'
+    - '1'
+  HHExpNFEduFee_Purch_6M: 
+    - '0'
+    - '1'
+  HHExpNFEduGood_Purch_6M: 
+    - '0'
+    - '1'
+  HHExpNFRent_Purch_6M: 
+    - '0'
+    - '1'
+  HHExpNFHHSoft_Purch_6M: 
+    - '0'
+    - '1'
+  HHExpNFHHMaint_Purch_6M: 
+    - '0'
+    - '1'
+  HHExpNFMedServ_GiftAid_6M: 
+    - '0'
+    - '1'
+  HHExpNFMedGood_GiftAid_6M: 
+    - '0'
+    - '1'
+  HHExpNFCloth_GiftAid_6M: 
+    - '0'
+    - '1'
+  HHExpNFEduFee_GiftAid_6M: 
+    - '0'
+    - '1'
+  HHExpNFEduGood_GiftAid_6M: 
+    - '0'
+    - '1'
+  HHExpNFRent_GiftAid_6M: 
+    - '0'
+    - '1'
+  HHExpNFHHSoft_GiftAid_6M: 
+    - '0'
+    - '1'
+  HHExpNFHHMaint_GiftAid_6M: 
+    - '0'
+    - '1'
+
+hhexpnf_6m_purch_cols:
+  - 'HHExpNFMedServ_Purch_MN_6M'
+  - 'HHExpNFMedGood_Purch_MN_6M'
+  - 'HHExpNFCloth_Purch_MN_6M'
+  - 'HHExpNFEduFee_Purch_MN_6M'
+  - 'HHExpNFEduGood_Purch_MN_6M'
+  - 'HHExpNFRent_Purch_MN_6M'
+  - 'HHExpNFHHSoft_Purch_MN_6M'
+  - 'HHExpNFHHMaint_Purch_MN_6M'
+
+hhexpnf_6m_giftaid_cols:
+  - 'HHExpNFMedServ_GiftAid_MN_6M'
+  - 'HHExpNFMedGood_GiftAid_MN_6M'
+  - 'HHExpNFCloth_GiftAid_MN_6M'
+  - 'HHExpNFEduFee_GiftAid_MN_6M'
+  - 'HHExpNFEduGood_GiftAid_MN_6M'
+  - 'HHExpNFRent_GiftAid_MN_6M'
+  - 'HHExpNFHHSoft_GiftAid_MN_6M'
+  - 'HHExpNFHHMaint_GiftAid_MN_6M'

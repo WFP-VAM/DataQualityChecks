@@ -1,0 +1,347 @@
+columns_type:
+  HHExpFCer_Purch_MN_7D: 'float'
+  HHExpFTub_Purch_MN_7D: 'float'
+  HHExpFPuls_Purch_MN_7D: 'float'
+  HHExpFVeg_Purch_MN_7D: 'float'
+  HHExpFFrt_Purch_MN_7D: 'float'
+  HHExpFAnimMeat_Purch_MN_7D: 'float'
+  HHExpFAnimFish_Purch_MN_7D: 'float'
+  HHExpFFats_Purch_MN_7D: 'float'
+  HHExpFDairy_Purch_MN_7D: 'float'
+  HHExpFEgg_Purch_MN_7D: 'float'
+  HHExpFSgr_Purch_MN_7D: 'float'
+  HHExpFCond_Purch_MN_7D: 'float'
+  HHExpFBev_Purch_MN_7D: 'float'
+  HHExpFOut_Purch_MN_7D: 'float'
+  HHExpFCer_GiftAid_MN_7D: 'float'
+  HHExpFTub_GiftAid_MN_7D: 'float'
+  HHExpFPuls_GiftAid_MN_7D: 'float'
+  HHExpFVeg_GiftAid_MN_7D: 'float'
+  HHExpFFrt_GiftAid_MN_7D: 'float'
+  HHExpFAnimMeat_GiftAid_MN_7D: 'float'
+  HHExpFAnimFish_GiftAid_MN_7D: 'float'
+  HHExpFFats_GiftAid_MN_7D: 'float'
+  HHExpFDairy_GiftAid_MN_7D: 'float'
+  HHExpFEgg_GiftAid_MN_7D: 'float'
+  HHExpFSgr_GiftAid_MN_7D: 'float'
+  HHExpFCond_GiftAid_MN_7D: 'float'
+  HHExpFBev_GiftAid_MN_7D: 'float'
+  HHExpFOut_GiftAid_MN_7D: 'float'
+  HHExpFCer_Own_MN_7D: 'float'
+  HHExpFTub_Own_MN_7D: 'float'
+  HHExpFPuls_Own_MN_7D: 'float'
+  HHExpFVeg_Own_MN_7D: 'float'
+  HHExpFFrt_Own_MN_7D: 'float'
+  HHExpFAnimMeat_Own_MN_7D: 'float'
+  HHExpFAnimFish_Own_MN_7D: 'float'
+  HHExpFFats_Own_MN_7D: 'float'
+  HHExpFDairy_Own_MN_7D: 'float'
+  HHExpFEgg_Own_MN_7D: 'float'
+  HHExpFSgr_Own_MN_7D: 'float'
+  HHExpFCond_Own_MN_7D: 'float'
+  HHExpFBev_Own_MN_7D: 'float'
+  HHExpFOut_Own_MN_7D: 'float'
+  HHExpFCer_Purch_7D: 'str'
+  HHExpFTub_Purch_7D: 'str'
+  HHExpFPuls_Purch_7D: 'str'
+  HHExpFVeg_Purch_7D: 'str'
+  HHExpFFrt_Purch_7D: 'str'
+  HHExpFAnimMeat_Purch_7D: 'str'
+  HHExpFAnimFish_Purch_7D: 'str'
+  HHExpFFats_Purch_7D: 'str'
+  HHExpFDairy_Purch_7D: 'str'
+  HHExpFEgg_Purch_7D: 'str'
+  HHExpFSgr_Purch_7D: 'str'
+  HHExpFCond_Purch_7D: 'str'
+  HHExpFBev_Purch_7D: 'str'
+  HHExpFOut_Purch_7D: 'str'
+  HHExpFCer_GiftAid_7D: 'str'
+  HHExpFTub_GiftAid_7D: 'str'
+  HHExpFPuls_GiftAid_7D: 'str'
+  HHExpFVeg_GiftAid_7D: 'str'
+  HHExpFFrt_GiftAid_7D: 'str'
+  HHExpFAnimMeat_GiftAid_7D: 'str'
+  HHExpFAnimFish_GiftAid_7D: 'str'
+  HHExpFFats_GiftAid_7D: 'str'
+  HHExpFDairy_GiftAid_7D: 'str'
+  HHExpFEgg_GiftAid_7D: 'str'
+  HHExpFSgr_GiftAid_7D: 'str'
+  HHExpFCond_GiftAid_7D: 'str'
+  HHExpFBev_GiftAid_7D: 'str'
+  HHExpFOut_GiftAid_7D: 'str'
+  HHExpFCer_Own_7D: 'str'
+  HHExpFTub_Own_7D: 'str'
+  HHExpFPuls_Own_7D: 'str'
+  HHExpFVeg_Own_7D: 'str'
+  HHExpFFrt_Own_7D: 'str'
+  HHExpFAnimMeat_Own_7D: 'str'
+  HHExpFAnimFish_Own_7D: 'str'
+  HHExpFFats_Own_7D: 'str'
+  HHExpFDairy_Own_7D: 'str'
+  HHExpFEgg_Own_7D: 'str'
+  HHExpFSgr_Own_7D: 'str'
+  HHExpFCond_Own_7D: 'str'
+  HHExpFBev_Own_7D: 'str'
+  HHExpFOut_Own_7D: 'str'
+
+conditional_pairs_categorical:
+  HHExpFCer_Purch_MN_7D:
+    - 'HHExpFCer_Purch_7D'
+  HHExpFTub_Purch_MN_7D:
+    - 'HHExpFTub_Purch_7D'
+  HHExpFPuls_Purch_MN_7D:
+    - 'HHExpFPuls_Purch_7D'
+  HHExpFVeg_Purch_MN_7D:
+    - 'HHExpFVeg_Purch_7D'
+  HHExpFFrt_Purch_MN_7D:
+    - 'HHExpFFrt_Purch_7D'
+  HHExpFAnimMeat_Purch_MN_7D:
+    - 'HHExpFAnimMeat_Purch_7D'
+  HHExpFAnimFish_Purch_MN_7D:
+    - 'HHExpFAnimFish_Purch_7D'
+  HHExpFFats_Purch_MN_7D:
+    - 'HHExpFFats_Purch_7D'
+  HHExpFDairy_Purch_MN_7D:
+    - 'HHExpFDairy_Purch_7D'
+  HHExpFEgg_Purch_MN_7D:
+    - 'HHExpFEgg_Purch_7D'
+  HHExpFSgr_Purch_MN_7D:
+    - 'HHExpFSgr_Purch_7D'
+  HHExpFCond_Purch_MN_7D:
+    - 'HHExpFCond_Purch_7D'
+  HHExpFBev_Purch_MN_7D:
+    - 'HHExpFBev_Purch_7D'
+  HHExpFOut_Purch_MN_7D:
+    - 'HHExpFOut_Purch_7D'
+  HHExpFCer_GiftAid_MN_7D:
+    - 'HHExpFCer_GiftAid_7D'
+  HHExpFTub_GiftAid_MN_7D:
+    - 'HHExpFTub_GiftAid_7D'
+  HHExpFPuls_GiftAid_MN_7D:
+    - 'HHExpFPuls_GiftAid_7D'
+  HHExpFVeg_GiftAid_MN_7D:
+    - 'HHExpFVeg_GiftAid_7D'
+  HHExpFFrt_GiftAid_MN_7D:
+    - 'HHExpFFrt_GiftAid_7D'
+  HHExpFAnimMeat_GiftAid_MN_7D:
+    - 'HHExpFAnimMeat_GiftAid_7D'
+  HHExpFAnimFish_GiftAid_MN_7D:
+    - 'HHExpFAnimFish_GiftAid_7D'
+  HHExpFFats_GiftAid_MN_7D:
+    - 'HHExpFFats_GiftAid_7D'
+  HHExpFDairy_GiftAid_MN_7D:
+    - 'HHExpFDairy_GiftAid_7D'
+  HHExpFEgg_GiftAid_MN_7D:
+    - 'HHExpFEgg_GiftAid_7D'
+  HHExpFSgr_GiftAid_MN_7D:
+    - 'HHExpFSgr_GiftAid_7D'
+  HHExpFCond_GiftAid_MN_7D:
+    - 'HHExpFCond_GiftAid_7D'
+  HHExpFBev_GiftAid_MN_7D:
+    - 'HHExpFBev_GiftAid_7D'
+  HHExpFOut_GiftAid_MN_7D:
+    - 'HHExpFOut_GiftAid_7D'
+  HHExpFCer_Own_MN_7D:
+    - 'HHExpFCer_Own_7D'
+  HHExpFTub_Own_MN_7D:
+    - 'HHExpFTub_Own_7D'
+  HHExpFPuls_Own_MN_7D:
+    - 'HHExpFPuls_Own_7D'
+  HHExpFVeg_Own_MN_7D:
+    - 'HHExpFVeg_Own_7D'
+  HHExpFFrt_Own_MN_7D:
+    - 'HHExpFFrt_Own_7D'
+  HHExpFAnimMeat_Own_MN_7D:
+  - 'HHExpFAnimMeat_Own_7D'
+  HHExpFAnimFish_Own_MN_7D:
+    - 'HHExpFAnimFish_Own_7D'
+  HHExpFFats_Own_MN_7D:
+    - 'HHExpFFats_Own_7D'
+  HHExpFDairy_Own_MN_7D:
+    - 'HHExpFDairy_Own_7D'
+  HHExpFEgg_Own_MN_7D:
+    - 'HHExpFEgg_Own_7D'
+  HHExpFSgr_Own_MN_7D:
+    - 'HHExpFSgr_Own_7D'
+  HHExpFCond_Own_MN_7D:
+    - 'HHExpFCond_Own_7D'
+  HHExpFBev_Own_MN_7D:
+  - 'HHExpFBev_Own_7D'
+  HHExpFOut_Own_MN_7D:
+    - 'HHExpFOut_Own_7D'
+
+hhexpf_7d_purch_cols:
+  - HHExpFCer_Purch_MN_7D
+  - HHExpFTub_Purch_MN_7D
+  - HHExpFPuls_Purch_MN_7D
+  - HHExpFVeg_Purch_MN_7D
+  - HHExpFFrt_Purch_MN_7D
+  - HHExpFAnimMeat_Purch_MN_7D
+  - HHExpFAnimFish_Purch_MN_7D
+  - HHExpFFats_Purch_MN_7D
+  - HHExpFDairy_Purch_MN_7D
+  - HHExpFEgg_Purch_MN_7D
+  - HHExpFSgr_Purch_MN_7D
+  - HHExpFCond_Purch_MN_7D
+  - HHExpFBev_Purch_MN_7D
+  - HHExpFOut_Purch_MN_7D
+
+hhexpf_7d_giftaid_cols:
+  - HHExpFCer_GiftAid_MN_7D
+  - HHExpFTub_GiftAid_MN_7D
+  - HHExpFPuls_GiftAid_MN_7D
+  - HHExpFVeg_GiftAid_MN_7D
+  - HHExpFFrt_GiftAid_MN_7D
+  - HHExpFAnimMeat_GiftAid_MN_7D
+  - HHExpFAnimFish_GiftAid_MN_7D
+  - HHExpFFats_GiftAid_MN_7D
+  - HHExpFDairy_GiftAid_MN_7D
+  - HHExpFEgg_GiftAid_MN_7D
+  - HHExpFSgr_GiftAid_MN_7D
+  - HHExpFCond_GiftAid_MN_7D
+  - HHExpFBev_GiftAid_MN_7D
+  - HHExpFOut_GiftAid_MN_7D
+
+hhexpf_7d_own_cols:
+  - HHExpFCer_Own_MN_7D
+  - HHExpFTub_Own_MN_7D
+  - HHExpFPuls_Own_MN_7D
+  - HHExpFVeg_Own_MN_7D
+  - HHExpFFrt_Own_MN_7D
+  - HHExpFAnimMeat_Own_MN_7D
+  - HHExpFAnimFish_Own_MN_7D
+  - HHExpFFats_Own_MN_7D
+  - HHExpFDairy_Own_MN_7D
+  - HHExpFEgg_Own_MN_7D
+  - HHExpFSgr_Own_MN_7D
+  - HHExpFCond_Own_MN_7D
+  - HHExpFBev_Own_MN_7D
+  - HHExpFOut_Own_MN_7D
+
+choices_lists:
+  HHExpFCer_Purch_7D:
+    - '0'
+    - '1'
+  HHExpFTub_Purch_7D:
+    - '0'
+    - '1'
+  HHExpFPuls_Purch_7D:
+    - '0'
+    - '1'
+  HHExpFVeg_Purch_7D:
+    - '0'
+    - '1'
+  HHExpFFrt_Purch_7D:
+    - '0'
+    - '1'
+  HHExpFAnimMeat_Purch_7D:
+    - '0'
+    - '1'
+  HHExpFAnimFish_Purch_7D:
+    - '0'
+    - '1'
+  HHExpFFats_Purch_7D:
+    - '0'
+    - '1'
+  HHExpFDairy_Purch_7D:
+    - '0'
+    - '1'
+  HHExpFEgg_Purch_7D:
+    - '0'
+    - '1'
+  HHExpFSgr_Purch_7D:
+    - '0'
+    - '1'
+  HHExpFCond_Purch_7D:
+    - '0'
+    - '1'
+  HHExpFBev_Purch_7D:
+    - '0'
+    - '1'
+  HHExpFOut_Purch_7D:
+    - '0'
+    - '1'
+  HHExpFCer_GiftAid_7D:
+    - '0'
+    - '1'
+  HHExpFTub_GiftAid_7D:
+    - '0'
+    - '1'
+  HHExpFPuls_GiftAid_7D:
+    - '0'
+    - '1'
+  HHExpFVeg_GiftAid_7D:
+    - '0'
+    - '1'
+  HHExpFFrt_GiftAid_7D: 
+    - '0'
+    - '1'
+  HHExpFAnimMeat_GiftAid_7D: 
+    - '0'
+    - '1'
+  HHExpFAnimFish_GiftAid_7D: 
+    - '0'
+    - '1'
+  HHExpFFats_GiftAid_7D:
+    - '0'
+    - '1'
+  HHExpFDairy_GiftAid_7D: 
+    - '0'
+    - '1'
+  HHExpFEgg_GiftAid_7D:
+    - '0'
+    - '1'
+  HHExpFSgr_GiftAid_7D:
+    - '0'
+    - '1'
+  HHExpFCond_GiftAid_7D: 
+    - '0'
+    - '1'
+  HHExpFBev_GiftAid_7D: 
+    - '0'
+    - '1'
+  HHExpFOut_GiftAid_7D: 
+    - '0'
+    - '1'
+  HHExpFCer_Own_7D: 
+    - '0'
+    - '1'
+  HHExpFTub_Own_7D: 
+    - '0'
+    - '1'
+  HHExpFPuls_Own_7D: 
+    - '0'
+    - '1'
+  HHExpFVeg_Own_7D: 
+    - '0'
+    - '1'
+  HHExpFFrt_Own_7D: 
+    - '0'
+    - '1'
+  HHExpFAnimMeat_Own_7D: 
+    - '0'
+    - '1'
+  HHExpFAnimFish_Own_7D:
+    - '0'
+    - '1'
+  HHExpFFats_Own_7D: 
+    - '0'
+    - '1'
+  HHExpFDairy_Own_7D: 
+    - '0'
+    - '1'
+  HHExpFEgg_Own_7D:
+    - '0'
+    - '1'
+  HHExpFSgr_Own_7D: 
+    - '0'
+    - '1'
+  HHExpFCond_Own_7D: 
+    - '0'
+    - '1'
+  HHExpFBev_Own_7D: 
+    - '0'
+    - '1'
+  HHExpFOut_Own_7D:
+    - '0'
+    - '1'
