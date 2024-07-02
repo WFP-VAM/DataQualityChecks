@@ -52,9 +52,10 @@ if __name__ == "__main__":
         else:
             return read_data_from_databridges(client, db_config["DataBridgesIDs"]['dataset'])
 
-    output_dir = './reports'
-    report_all_indicators_path = os.path.join(output_dir, 'HFC_All_Indicators_Report.xlsx')
-    report_mastersheet_path = os.path.join(output_dir, 'HFC_MasterSheet_Report.xlsx')
+    reports_folder = './reports'
+    os.makedirs(reports_folder, exist_ok=True)
+    report_all_indicators_path = os.path.join(reports_folder, 'HFC_All_Indicators_Report.xlsx')
+    report_mastersheet_path = os.path.join(reports_folder, 'HFC_MasterSheet_Report.xlsx')
 
     # Generate All Indicators Report
     with pd.ExcelWriter(report_all_indicators_path) as writer:
