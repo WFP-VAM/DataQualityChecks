@@ -2,6 +2,7 @@
 
 This repository supports WFP Country Offices in checking the quality of the data collected in needs assessment surveys. 
 
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/:user/https%3A%2F%2Fgithub.com%2FWFP-VAM%2F/total)
 
 ## Features
 
