@@ -54,8 +54,8 @@ if __name__ == "__main__":
 
     reports_folder = './reports'
     os.makedirs(reports_folder, exist_ok=True)
-    report_all_indicators_path = os.path.join(reports_folder, 'HFC_All_Indicators_Report.xlsx')
-    report_mastersheet_path = os.path.join(reports_folder, 'HFC_MasterSheet_Report.xlsx')
+    report_all_indicators_path = os.path.join(reports_folder, f'{db_config["CountryName"]}_HFC_All_Indicators_Report.xlsx')
+    report_mastersheet_path = os.path.join(reports_folder, f'{db_config["CountryName"]}_HFC_MasterSheet_Report.xlsx')
 
     # Generate All Indicators Report
     with pd.ExcelWriter(report_all_indicators_path) as writer:

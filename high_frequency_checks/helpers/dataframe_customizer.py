@@ -29,8 +29,12 @@ class DataFrameCustomizer:
         Returns:
         pd.DataFrame: The DataFrame with new columns "Urban" and "Rural".
         """
-        self.df['Urban'] = self.df['ID06'].apply(lambda x: '1' if x == '1' else '0')
-        self.df['Rural'] = self.df['ID06'].apply(lambda x: '1' if x == '2' else '0')
+        try:
+            self.df['Urban'] = self.df['ID06'].apply(lambda x: '1' if x == '1' else '0')
+            
+            self.df['Rural'] = self.df['ID06'].apply(lambda x: '1' if x == '2' else '0')
+        except KeyError:
+            pass
         
         # Optionally, you can drop the original ID06 column if needed
         # self.df.drop('ID06', axis=1, inplace=True)
