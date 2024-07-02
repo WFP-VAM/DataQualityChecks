@@ -10,8 +10,6 @@ The main entry point of the application. This script is responsible for the foll
 7. Print the number of errors and warnings encountered during data processing.
 """
 
-
-
 import os
 import pandas as pd
 from high_frequency_checks import MasterSheet, ConfigHandler
@@ -21,15 +19,11 @@ from high_frequency_checks.helpers.load import load_data
 from high_frequency_checks.helpers.logging_config import LoggingHandler
 from db_config import db_config
 
+# Credentials for database and API
+CREDENTIALS = r"data_bridges_api_config.yaml"
 
 def main():
-    pass
-
-
-if __name__ == "__main__":
-    CONFIG_PATH = r"data_bridges_api_config.yaml"
-
-    # Set up Logging
+        # Set up Logging
     logging_handler = LoggingHandler()
     logger = logging_handler.logger
     error_handler = logging_handler.error_handler
@@ -54,7 +48,7 @@ if __name__ == "__main__":
 
     # Generate All Indicators Report
     with pd.ExcelWriter(report_all_indicators_path) as writer:
-        current_df = read_data(survey_id=db_config['DataBridgesIDs']['dataset'], config_path=CONFIG_PATH)
+        current_df = read_data(survey_id=db_config['DataBridgesIDs']['dataset'], config_path=CREDENTIALS)
         # Specifically for DRC
         df_customizer = DataFrameCustomizer(current_df)
         current_df = df_customizer.rename_columns()
@@ -85,3 +79,9 @@ if __name__ == "__main__":
     warning_count = error_handler.warning_count
     print(f"Data processing completed with {error_count} errors and {warning_count} warnings.")
     
+
+
+if __name__ == "__main__":
+    main()
+    
+
