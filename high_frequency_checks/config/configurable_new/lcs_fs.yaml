@@ -1,0 +1,4 @@
+used_strategies:
+- Lcs_stress_DomAsset
+- Lcs_stress_Saving
+- Lcs_stress_BorrowCash

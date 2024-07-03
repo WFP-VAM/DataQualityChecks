@@ -12,7 +12,7 @@ The main steps are:
 
 import os
 import pandas as pd
-from high_frequency_checks import MasterSheet, ConfigHandler
+from high_frequency_checks import MasterSheet, ConfigHandler, ConfigGenerator
 from high_frequency_checks.helpers.dataframe_customizer import DataFrameCustomizer
 from data_bridges_knots import DataBridgesShapes
 from logging_config import LoggingHandler
@@ -28,6 +28,16 @@ if __name__ == "__main__":
     logging_handler = LoggingHandler()
     logger = logging_handler.logger
     error_handler = logging_handler.error_handler
+
+    # Define the input directory and file path
+    input_directory = "high_frequency_checks/config"  # Replace with your actual input directory path
+    config_file_path = os.path.join(input_directory, 'config.csv')
+
+    # Check if config.csv exists in the input directory
+    if os.path.isfile(config_file_path):
+        # Read configuration from MODA csv and generate config files
+        config_generator = ConfigGenerator()
+        config_generator.generate_configs()
 
     # Read configurations for base indicator
     config_handler = ConfigHandler()

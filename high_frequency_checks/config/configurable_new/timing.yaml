@@ -1,0 +1,8 @@
+abnormal_period:
+- early_morning
+- evening
+- late_evening
+invalid_duration: 5
+long_duration_mins: 120
+short_duration_mins: 10
+utc: 2

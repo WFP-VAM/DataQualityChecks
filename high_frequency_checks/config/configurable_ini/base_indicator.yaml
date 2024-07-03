@@ -1,0 +1,18 @@
+# Generate 2 lists of columns in the HFC report:
+# 1. base_cols: extracted from the incoming data
+# 2. review_cols: for the follow-up on flagged cases
+
+base_cols:
+ - '_uuid'
+ - 'EnuName'
+ - 'EnuSupervisorName'
+ - 'ADMIN1Name'
+ - 'ADMIN2Name'
+ - 'ADMIN3Name'
+ - 'ADMIN4Name'
+
+review_cols: 
+  - 'Reviewed'
+  - 'Review_Date'
+  - 'Reviewed_By'
+  - 'Action_Taken'

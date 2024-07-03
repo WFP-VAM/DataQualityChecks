@@ -1,0 +1,11 @@
+# Context specific
+low_fcs: 10
+high_fcs: 90
+low_staple: 4
+
+#Depending on Recall period
+low_erroneous: 0
+high_erroneous: 7
+
+# Context with high sugar and oil consumption?
+high_sugar_oil_consumption: 1

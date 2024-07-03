@@ -21,6 +21,7 @@ class FCS(BaseIndicator):
         self.high_sugar_oil_consumption = self.configurable_config.get('high_sugar_oil_consumption')
         self.low_fcs = self.configurable_config.get('low_fcs')
         self.high_fcs = self.configurable_config.get('high_fcs')
+        self.low_staple = self.configurable_config.get('low_staple')
         
     def _process_specific(self):
         self.logger.info("Performing specific processing for FCS indicator")
@@ -43,7 +44,7 @@ class FCS(BaseIndicator):
     def calculate_fcg(self, mask):
         self.logger.info("Calculating FCG")
         try:
-            if self.high_sugar_oil_consumption:
+            if self.high_sugar_oil_consumption == 1:
                 self.df.loc[mask, 'FCSCat28'] = pd.cut(self.df.loc[mask, 'FCS'], bins=[0, 28.5, 42.5, float('inf')], labels=['Poor', 'Borderline', 'Acceptable'], right=False)
             else:
                 self.df.loc[mask, 'FCSCat21'] = pd.cut(self.df.loc[mask, 'FCS'], bins=[0, 21.5, 35.5, float('inf')], labels=['Poor', 'Borderline', 'Acceptable'], right=False)
@@ -62,7 +63,7 @@ class FCS(BaseIndicator):
     def check_low_staple(self, mask):
         self.logger.info(f"Checking for low staple consumption for {self.indicator_name}")
         try:
-            self.df.loc[mask, f'Flag_FCS_Low_Staple'] = (self.df.loc[mask, 'FCSStap'] < 4).astype(int)
+            self.df.loc[mask, f'Flag_FCS_Low_Staple'] = (self.df.loc[mask, 'FCSStap'] < self.low_staple).astype(int)
             self.logger.info(f"Generated low staple consumption flag for {self.indicator_name}")      
         except Exception as e:
             self.logger.error(f"Error checking low staple consumption for {self.indicator_name}: {e}") 
