@@ -5,13 +5,11 @@ This repository supports WFP Country Offices in checking the quality of the data
 
 ## Features
 
-- **Food Consumption Score (FCS) Checks**: Performs a series of checks on the FCS data, including missing values, erroneous values, abnormal patterns (e.g., all zeros, all sevens, identical values), low staple consumption, and low/high FCS scores.
-- **Reduced Coping Strategy Index (rCSI) Checks**: Validates the rCSI data by checking for missing values, erroneous values, and high rCSI scores.
-- **Demographic Checks**: Checks for erroneous values in age groups and flags households with extremely large household sizes.
-- **Household Dietary Diversity Score (HDDS) Checks**: Validates the HDDS data by checking for missing values and erroneous values.
-- **Food Expenditure Checks**: Checks for erroneous values in food expenditure data for 7 days, 1 month, and 6 months.
-- **Enumerator Performance Evaluation**: Generates reports summarizing the data quality issues at the enumerator level, including the total number of records and error percentages.
-- **Mastersheet Generation**: Consolidates all indicator checks into a single mastersheet, providing an overview of data quality across all indicators.
+Indicator Modules: The package includes modules for calculating and validating various indicators commonly used in survey data analysis, such as Food Consumption Score (FCS), Reduced Coping Strategy Index (rCSI), Household Dietary Diversity Score (HDDS), Household Expenditure, Livelihoods Coping Strategies, Housing conditions, and Demographic information.
+Configurable Checks: Each indicator module includes a set of configurable checks to identify potential errors or inconsistencies in the data. These checks can be customized based on the specific requirements of the survey or data collection process.
+Flagging System: The package implements a flagging system to mark records with potential issues. Flags are generated based on the configured checks, and a narrative description is provided for each flagged record, facilitating review and follow-up.
+Master Sheet Generation: The package can generate a master sheet that consolidates the original data with the calculated indicators and flags. This master sheet can be used for further review and analysis.
+Data Loading: The package includes utilities for loading data from various sources, such as Excel files or databases.
 
 ## Installation
 

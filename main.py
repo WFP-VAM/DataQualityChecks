@@ -22,6 +22,10 @@ from db_config import db_config
 # Credentials for database and API
 CREDENTIALS = r"data_bridges_api_config.yaml"
 
+def tableau_thingy(df):
+    pass
+
+
 def main():
         # Set up Logging
     logging_handler = LoggingHandler()
@@ -46,9 +50,11 @@ def main():
 
     report_mastersheet_path = os.path.join(reports_folder, reports['mastersheet'])
 
+    df = read_data(survey_id=db_config['DataBridgesIDs']['dataset'], config_path=CREDENTIALS)
+
     # Generate All Indicators Report
     with pd.ExcelWriter(report_all_indicators_path) as writer:
-        current_df = read_data(survey_id=db_config['DataBridgesIDs']['dataset'], config_path=CREDENTIALS)
+        current_df = df
         # Specifically for DRC
         df_customizer = DataFrameCustomizer(current_df)
         current_df = df_customizer.rename_columns()
@@ -74,6 +80,8 @@ def main():
     load_data(report_mastersheet_path, "MasterSheet", master_table_name)
     
         
+
+
     # Terminal: Print if there were any errors
     error_count = error_handler.error_count
     warning_count = error_handler.warning_count
