@@ -2,7 +2,6 @@
 
 This repository supports WFP Country Offices in checking the quality of the data collected in needs assessment surveys. 
 
-
 ## Features
 
 Indicator Modules: The package includes modules for calculating and validating various indicators commonly used in survey data analysis, such as Food Consumption Score (FCS), Reduced Coping Strategy Index (rCSI), Household Dietary Diversity Score (HDDS), Household Expenditure, Livelihoods Coping Strategies, Housing conditions, and Demographic information.

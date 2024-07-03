@@ -40,6 +40,9 @@ class MasterSheet:
 
     def generate_dataframe(self):
         try:
+            
+            self.generate_flag_narrative_final()
+            
             # Overall Flag
             flag_overall_cols = [col for col in self.df.columns if col.startswith('Flag_') and col.endswith('_Overall')]
             flag_narrative_cols = [col for col in self.df.columns if col.startswith('Flag_') and col.endswith('_Narrative')]
@@ -49,17 +52,37 @@ class MasterSheet:
             hh_summary = self.df[self.df['Flag_All_Indicators'] == 1]
 
             # Specify the columns in the mastersheet
-            mastersheet_cols = self.base_cols + flag_narrative_cols + self.review_cols
+            mastersheet_cols = self.base_cols + flag_narrative_cols + ['Flag_Narrative_Final'] + self.review_cols
 
             hh_summary = hh_summary[mastersheet_cols]
-
+            
             self.logger.info("Filtered MasterSheet dataframe to include only households with triggered flags")
             return hh_summary
         
         except Exception as e:
             self.logger.error(f"Error generating MasterSheet dataframe: {e}")
             return pd.DataFrame()
-
+            
+    def generate_flag_narrative_final(self):
+        self.logger.info("Generating Flag_Narrative_Final")
+        try:
+            flag_columns = [col for col in self.df.columns if col.startswith('Flag_') and col.endswith('_Narrative')]
+            
+            def generate_flag_narrative(row):
+                narrative_parts = []
+                i = 1
+                for col in flag_columns:
+                    value = row[col]
+                    if len(str(value)) >= 5:
+                        narrative_parts.append(f"{i}. {value}")
+                        i += 1
+                return ' '.join(narrative_parts)
+            
+            self.df['Flag_Narrative_Final'] = self.df.apply(generate_flag_narrative, axis=1)
+            
+            self.logger.info("Flag_Narrative_Final generated successfully")
+        except Exception as e:
+            self.logger.error(f"Error generating Flag_Narrative_Final: {e}")
 
     def generate_report(self, writer):
         try:

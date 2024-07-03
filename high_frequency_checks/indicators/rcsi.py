@@ -50,7 +50,7 @@ class rCSI(BaseIndicator):
     def check_poor_fcg_no_coping(self, mask):
         self.logger.info("Checking for Poor FCG with No Reduced Coping")
         try:
-            fcs_cat_column = 'FCSCat28' if self.high_sugar_oil_consumption else 'FCSCat21'
+            fcs_cat_column = 'FCSCat28' if self.high_sugar_oil_consumption == 1 else 'FCSCat21'
             self.df.loc[mask, 'Flag_rCSI_Poor_FCG_No_Coping'] = \
             ((self.df.loc[mask, fcs_cat_column] == 'Poor') & (self.df.loc[mask, 'rCSI'] == 0)).astype(int)
             self.logger.info("Generated Poor FCG with No Reduced Coping flag")
@@ -60,7 +60,7 @@ class rCSI(BaseIndicator):
     def check_acceptable_fcg_high_coping(self, mask):
         self.logger.info("Checking for Acceptable FCG with High Reduced Coping")
         try:
-            fcs_cat_column = 'FCSCat28' if self.high_sugar_oil_consumption else 'FCSCat21'
+            fcs_cat_column = 'FCSCat28' if self.high_sugar_oil_consumption == 1 else 'FCSCat21'
             self.df.loc[mask, 'Flag_rCSI_Acceptable_FCG_High_Coping'] = \
             ((self.df.loc[mask, fcs_cat_column] == 'Acceptable') & (self.df.loc[mask, 'rCSI'] > self.high_rcsi)).astype(int)
             self.logger.info("Generated Acceptable FCG with High Reduced Coping flag")

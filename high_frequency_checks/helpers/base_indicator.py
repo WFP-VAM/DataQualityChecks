@@ -2,8 +2,6 @@ import logging
 import pandas as pd
 import numpy as np
 
-# Configure logging
-logging.basicConfig(filename='data_processing_log.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class BaseIndicator:
     def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):
@@ -148,7 +146,7 @@ class BaseIndicator:
                 for col in categorical_cols:
                     choices = self.standard_config['choices_lists'].get(col, [])
                     if choices:
-                        erroneous_condition = (~self.df[col].isin(choices)).astype(int)
+                        erroneous_condition = ((~self.df[col].isin(choices)) & (~self.df[col].isna())).astype(int)
                         erroneous_flag_col[mask & (erroneous_flag_col != 1)] = erroneous_condition
                         self.logger.info(f"Generated erroneous value flags for categorical column: {col}")
                     else:

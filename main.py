@@ -12,7 +12,7 @@ The main entry point of the application. This script is responsible for the foll
 
 import os
 import pandas as pd
-from high_frequency_checks import MasterSheet, ConfigHandler
+from high_frequency_checks import MasterSheet, ConfigHandler, ConfigGenerator
 from high_frequency_checks.helpers.dataframe_customizer import DataFrameCustomizer
 from high_frequency_checks.helpers.get_data import read_data
 from high_frequency_checks.helpers.load import load_data
@@ -31,6 +31,16 @@ def main():
     logging_handler = LoggingHandler()
     logger = logging_handler.logger
     error_handler = logging_handler.error_handler
+
+    # Define the input directory and file path
+    input_directory = "high_frequency_checks/config"  # Replace with your actual input directory path
+    config_file_path = os.path.join(input_directory, 'config.csv')
+
+    # Check if config.csv exists in the input directory
+    if os.path.isfile(config_file_path):
+        # Read configuration from MODA csv and generate config files
+        config_generator = ConfigGenerator()
+        config_generator.generate_configs()
 
     # Read configurations for base indicator
     config_handler = ConfigHandler()
