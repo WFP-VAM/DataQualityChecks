@@ -2,7 +2,6 @@
 
 This repository supports WFP Country Offices in checking the quality of the data collected in needs assessment surveys. 
 
-
 ## Features
 
 - **Food Consumption Score (FCS) Checks**: Performs a series of checks on the FCS data, including missing values, erroneous values, abnormal patterns (e.g., all zeros, all sevens, identical values), low staple consumption, and low/high FCS scores.

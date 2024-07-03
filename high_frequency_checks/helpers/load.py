@@ -12,11 +12,11 @@ class ExcelExportError(Exception):
 
 def db_config(yaml_config_path):
     with open(yaml_config_path, "r") as yamlfile:
-        db_config = yaml.load(yamlfile, Loader=yaml.FullLoader)
-        SERVER = db_config['SERVER']
-        DATABASE = db_config["DB_NAME"]
-        USERNAME = db_config["DB_USERNAME"]
-        PASSWORD = db_config["DB_PASSWORD"]
+        database_config = yaml.load(yamlfile, Loader=yaml.FullLoader)
+        SERVER = database_config['SERVER']
+        DATABASE = database_config["DB_NAME"]
+        USERNAME = database_config["DB_USERNAME"]
+        PASSWORD = database_config["DB_PASSWORD"]
         conn_str = f'mssql+pyodbc://{USERNAME}:{PASSWORD}@{SERVER}/{DATABASE}?driver=ODBC+Driver+17+for+SQL+Server'
         return conn_str
         

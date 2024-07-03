@@ -1,30 +1,29 @@
 """
-This is the main entry point for the high frequency checks (HFC) application. It sets up logging, reads configuration files, and generates a report containing all the HFC indicators.
+The main entry point of the application. This script is responsible for the following tasks:
 
-The main steps are:
-1. Set up logging with file and stream handlers.
-2. Read base indicator configuration from a YAML file.
-3. Read configurations for each HFC indicator from YAML files.
-4. Get data from DataBridges or a local file (for testing).
-5. Generate an Excel report containing all the HFC indicators.
-6. Check if there were any errors during data processing and print the error count.
+1. Set up logging configuration.
+2. Read indicator configurations from a YAML file.
+3. Create necessary directories for report generation.
+4. Generate an "All Indicators Report" in an Excel file.
+5. Generate a "MasterSheet Report" in an Excel file.
+6. Upload the MasterSheet report to a database.
+7. Print the number of errors and warnings encountered during data processing.
 """
 
 import os
 import pandas as pd
 from high_frequency_checks import MasterSheet, ConfigHandler, ConfigGenerator
 from high_frequency_checks.helpers.dataframe_customizer import DataFrameCustomizer
-from data_bridges_knots import DataBridgesShapes
-from logging_config import LoggingHandler
+from high_frequency_checks.helpers.get_data import read_data
+from high_frequency_checks.helpers.load import load_data
+from high_frequency_checks.helpers.logging_config import LoggingHandler
 from db_config import db_config
 
+# Credentials for database and API
+CREDENTIALS = r"data_bridges_api_config.yaml"
 
-CONFIG_PATH = r"data_bridges_api_config.yaml"
-
-client = DataBridgesShapes(CONFIG_PATH)
-
-if __name__ == "__main__":
-    # Set up Logging
+def main():
+        # Set up Logging
     logging_handler = LoggingHandler()
     logger = logging_handler.logger
     error_handler = logging_handler.error_handler
@@ -44,32 +43,22 @@ if __name__ == "__main__":
     indicators = config_handler.get_indicators()
     base_cols, review_cols = config_handler.get_base_config()
 
-    # Get data
-    def read_data_from_local():
-        print("Read data from local file")
-        return pd.read_csv('data/congo.csv')
-
-    def read_data_from_databridges(client, survey_id):
-        print("Read data from DataBridges")
-        df = client.get_household_survey(survey_id=survey_id, access_type='full', page_size=800)
-        print(f"Retrieved data for dataset #{survey_id}")
-        print("\n --------------------------------------------------------- \n")
-        return df
-
-    def read_data(testing=False):
-        if testing:
-            return read_data_from_local()
-        else:
-            return read_data_from_databridges(client, db_config["DataBridgesIDs"]['dataset'])
-
+    # report writing 
     reports_folder = './reports'
     os.makedirs(reports_folder, exist_ok=True)
-    report_all_indicators_path = os.path.join(reports_folder, 'HFC_All_Indicators_Report.xlsx')
-    report_mastersheet_path = os.path.join(reports_folder, 'HFC_MasterSheet_Report.xlsx')
+
+    reports = {
+        "all_indicators": f'{db_config["CountryName"]}_HFC_All_Indicators_Report.xlsx',
+        "mastersheet": f'{db_config["CountryName"]}_HFC_MasterSheet_Report.xlsx'
+    } 
+
+    report_all_indicators_path = os.path.join(reports_folder, reports["all_indicators"])
+
+    report_mastersheet_path = os.path.join(reports_folder, reports['mastersheet'])
 
     # Generate All Indicators Report
     with pd.ExcelWriter(report_all_indicators_path) as writer:
-        current_df = read_data()
+        current_df = read_data(survey_id=db_config['DataBridgesIDs']['dataset'], config_path=CREDENTIALS)
         # Specifically for DRC
         df_customizer = DataFrameCustomizer(current_df)
         current_df = df_customizer.rename_columns()
@@ -89,9 +78,20 @@ if __name__ == "__main__":
     final_mastersheet_df = MasterSheet.merge_with_existing_report(new_mastersheet_df, report_mastersheet_path)
     with pd.ExcelWriter(report_mastersheet_path) as writer:
         final_mastersheet_df.to_excel(writer, sheet_name='MasterSheet', index=False)
+
+    # Upload to DataBase
+    master_table_name = f"DQ_Mastersheet_{db_config["CountryName"]}"
+    load_data(report_mastersheet_path, "MasterSheet", master_table_name)
+    
         
     # Terminal: Print if there were any errors
     error_count = error_handler.error_count
     warning_count = error_handler.warning_count
     print(f"Data processing completed with {error_count} errors and {warning_count} warnings.")
     
+
+
+if __name__ == "__main__":
+    main()
+    
+
