@@ -14,17 +14,13 @@ import os
 import pandas as pd
 from high_frequency_checks import MasterSheet, ConfigHandler, ConfigGenerator
 from high_frequency_checks.helpers.dataframe_customizer import DataFrameCustomizer
-from high_frequency_checks.helpers.get_data import read_data
-from high_frequency_checks.helpers.load import load_data
+from high_frequency_checks.helpers.get_data import read_data, subset_for_enumerator_performance
+from high_frequency_checks.helpers.load import load_data, load_to_tableau
 from high_frequency_checks.helpers.logging_config import LoggingHandler
 from db_config import db_config
 
 # Credentials for database and API
 CREDENTIALS = r"data_bridges_api_config.yaml"
-
-def tableau_thingy(df):
-    pass
-
 
 def main():
         # Set up Logging
@@ -87,10 +83,13 @@ def main():
 
     # Upload to DataBase
     master_table_name = f"DQ_Mastersheet_{db_config["CountryName"]}"
+    mastersheet_report = pd.read_excel(report_mastersheet_path, sheet_name="MasterSheet")
+    mastersheet_report = mastersheet_report["_uuid", "EnuName", "EnuSupervisorName", "ADMIN1Name", "ADMIN2Name", "ADMIN3Name", "ADMIN4Name", "Flag_Narrative_Final"]
     load_data(report_mastersheet_path, "MasterSheet", master_table_name)
     
-        
-
+    # Process for Tableau and upload to abase    
+    enumerator_df = subset_for_enumerator_performance(df)
+    load_data(enumerator_df, f"DQ_EnumeratorPerformance_{db_config["CountryName"]}")
 
     # Terminal: Print if there were any errors
     error_count = error_handler.error_count
