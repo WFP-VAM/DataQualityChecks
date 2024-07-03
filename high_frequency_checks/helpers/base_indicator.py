@@ -1,3 +1,18 @@
+"""
+The `BaseIndicator` class is an abstract base class that provides common functionality for processing and analyzing data in the context of various indicators.
+
+The class has the following responsibilities:
+- Initializes the class with the necessary data, configurations, and flags.
+- Parses the columns in the input DataFrame to ensure they have the expected data types.
+- Checks for missing values in the data and generates a flag column to indicate which rows have missing values.
+- Checks for erroneous values in the data and generates a flag column to indicate which rows have erroneous values.
+- Generates an overall flag column that combines the various flag columns.
+- Generates a narrative flag column that provides a human-readable description of the flags.
+- Generates a report of the processed data, including the flag columns, and writes it to an Excel file.
+
+Subclasses of `BaseIndicator` must implement the `_process_specific()` method to perform any indicator-specific processing.
+"""
+
 import logging
 import pandas as pd
 import numpy as np

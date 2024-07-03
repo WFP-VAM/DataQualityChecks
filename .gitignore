@@ -180,6 +180,7 @@ HFC_FCS
 
 # other files
 NOTES.md
+TODO.md
 *.log
 data_processing_log.txt
 
