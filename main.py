@@ -15,7 +15,7 @@ import pandas as pd
 from high_frequency_checks import MasterSheet, ConfigHandler, ConfigGenerator
 from high_frequency_checks.helpers.dataframe_customizer import DataFrameCustomizer
 from high_frequency_checks.etl.get_data import read_data, subset_for_enumerator_performance
-from high_frequency_checks.etl.load import load_data
+from high_frequency_checks.etl.load_data import load_data
 from high_frequency_checks.helpers.logging_config import LoggingHandler
 from db_config import db_config
 
@@ -82,7 +82,7 @@ def main():
         final_mastersheet_df.to_excel(writer, sheet_name='MasterSheet', index=False)
 
     # Upload to DataBase
-    master_table_name = f"DQ_Mastersheet_{db_config["CountryName"]}"
+    master_table_name = f"{db_config["CountryName"]}DataQualitySummaryReport"
     mastersheet_report = pd.read_excel(report_mastersheet_path, sheet_name="MasterSheet")
     cols = ['_uuid', 'EnuName', 'EnuSupervisorName', 'ADMIN1Name', 'ADMIN2Name', 'ADMIN3Name', 'ADMIN4Name', "Flag_Narrative_Final"]
     mastersheet_report = mastersheet_report[cols]
@@ -90,7 +90,7 @@ def main():
     
     # Process for Tableau and upload to abase    
     enumerator_df = subset_for_enumerator_performance(df)
-    load_data(enumerator_df, f"DQ_EnumeratorPerformance_{db_config["CountryName"]}")
+    load_data(enumerator_df, f"{db_config["CountryName"]}EnumeratorReport")
 
     # Terminal: Print if there were any errors
     error_count = error_handler.error_count
