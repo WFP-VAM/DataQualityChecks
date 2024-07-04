@@ -14,7 +14,7 @@ import os
 import pandas as pd
 from high_frequency_checks import MasterSheet, ConfigHandler, ConfigGenerator
 from high_frequency_checks.helpers.dataframe_customizer import DataFrameCustomizer
-from high_frequency_checks.etl.get_data import read_data, subset_for_enumerator_performance
+from high_frequency_checks.etl.get_data import read_data, subset_for_enumerator_performance, get_indicators
 from high_frequency_checks.etl.load_data import load_data
 from high_frequency_checks.helpers.logging_config import LoggingHandler
 from db_config import db_config
@@ -82,12 +82,18 @@ def main():
     with pd.ExcelWriter(report_mastersheet_path) as writer:
         final_mastersheet_df.to_excel(writer, sheet_name='MasterSheet', index=False)
 
-    # Upload to DataBase
+    # Upload Mastersheet to database
     master_table_name = f"{db_config["CountryName"]}DataQualitySummaryReport"
     mastersheet_columns = [ "date", '_uuid', 'EnuName', 'EnuSupervisorName', 'ADMIN1Name', 'ADMIN2Name', 'ADMIN3Name', 'ADMIN4Name', "Flag_Narrative_Final"]
     mastersheet_report = final_mastersheet_df[mastersheet_columns]
     load_data(mastersheet_report, master_table_name)
     
+    # Upload disaggregated report to database
+    disaggregated_table_name = f"{db_config['CountryName']}DataQualityAllIndicatorsReport"
+    excel_file = r'reports\DRC_HFC_All_Indicators_Report.xlsx'
+    all_indicators = get_indicators(excel_file)
+    load_data(all_indicators, disaggregated_table_name)
+
     # Process for Tableau and upload to abase    
     enumerator_df = subset_for_enumerator_performance(df)
     load_data(enumerator_df, f"{db_config["CountryName"]}DataQualityEnumeratorReport")
