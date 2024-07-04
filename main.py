@@ -90,7 +90,7 @@ def main():
     
     # Process for Tableau and upload to abase    
     enumerator_df = subset_for_enumerator_performance(df)
-    load_data(enumerator_df, f"{db_config["CountryName"]}EnumeratorReport")
+    load_data(enumerator_df, f"{db_config["CountryName"]}DataQualityEnumeratorReport")
 
     # Terminal: Print if there were any errors
     error_count = error_handler.error_count
