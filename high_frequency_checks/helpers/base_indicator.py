@@ -22,7 +22,7 @@ class BaseIndicator:
     def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):
 
         self.df = df
-        self.base_cols = base_cols + ['today']
+        self.base_cols = base_cols
         self.review_cols = review_cols
         self.standard_config = standard_config
         self.configurable_config = configurable_config
@@ -208,7 +208,7 @@ class BaseIndicator:
             hh_summary_cols = self.base_cols + self.cols + list(self.flags.keys()) + [f'Flag_{self.indicator_name}_Overall', f'Flag_{self.indicator_name}_Narrative']
             hh_summary = self.df[hh_summary_cols]
             hh_filtered = hh_summary[hh_summary[f'Flag_{self.indicator_name}_Overall'] == 1]
-            hh_filtered = hh_filtered.rename(columns={"today": "date"})
+            # hh_filtered = hh_filtered.rename(columns={"today": "date"})
             hh_filtered.to_excel(writer, sheet_name=self.indicator_name, index=False)
             self.logger.info(f"Report for {self.indicator_name} generated successfully")
         except Exception as e:

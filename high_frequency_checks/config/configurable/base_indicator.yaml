@@ -6,6 +6,7 @@ base_cols:
 - ADMIN2Name
 - ADMIN3Name
 - ADMIN4Name
+- today
 review_cols:
 - Reviewed
 - Review_Date

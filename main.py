@@ -23,7 +23,7 @@ from db_config import db_config
 CREDENTIALS = r"databridges_api_database_credentials.yaml"
 
 def main():
-        # Set up Logging
+    # Set up Logging
     logging_handler = LoggingHandler()
     logger = logging_handler.logger
     error_handler = logging_handler.error_handler
@@ -78,14 +78,14 @@ def main():
     mastersheet = MasterSheet(current_df, base_cols, review_cols)
     new_mastersheet_df = mastersheet.generate_dataframe()
     final_mastersheet_df = MasterSheet.merge_with_existing_report(new_mastersheet_df, report_mastersheet_path)
+
     with pd.ExcelWriter(report_mastersheet_path) as writer:
         final_mastersheet_df.to_excel(writer, sheet_name='MasterSheet', index=False)
 
     # Upload to DataBase
     master_table_name = f"{db_config["CountryName"]}DataQualitySummaryReport"
-    mastersheet_report = pd.read_excel(report_mastersheet_path, sheet_name="MasterSheet")
-    cols = ['_uuid', 'EnuName', 'EnuSupervisorName', 'ADMIN1Name', 'ADMIN2Name', 'ADMIN3Name', 'ADMIN4Name', "Flag_Narrative_Final"]
-    mastersheet_report = mastersheet_report[cols]
+    mastersheet_columns = ['_uuid', 'EnuName', 'EnuSupervisorName', 'ADMIN1Name', 'ADMIN2Name', 'ADMIN3Name', 'ADMIN4Name', "Flag_Narrative_Final"]
+    mastersheet_report = final_mastersheet_df[mastersheet_columns]
     load_data(mastersheet_report, master_table_name)
     
     # Process for Tableau and upload to abase    
@@ -97,8 +97,6 @@ def main():
     warning_count = error_handler.warning_count
     print(f"Data processing completed with {error_count} errors and {warning_count} warnings.")
     
-
-
 if __name__ == "__main__":
     main()
     
