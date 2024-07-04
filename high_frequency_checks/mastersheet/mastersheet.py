@@ -45,6 +45,7 @@ class MasterSheet:
             
             # Overall Flag
             flag_overall_cols = [col for col in self.df.columns if col.startswith('Flag_') and col.endswith('_Overall')]
+            flag_overall_cols += ["today"]
             flag_narrative_cols = [col for col in self.df.columns if col.startswith('Flag_') and col.endswith('_Narrative')]
             self.df['Flag_All_Indicators'] = self.df[flag_overall_cols].any(axis=1).astype(int)
 
@@ -55,6 +56,8 @@ class MasterSheet:
             mastersheet_cols = self.base_cols + flag_narrative_cols + ['Flag_Narrative_Final'] + self.review_cols
 
             hh_summary = hh_summary[mastersheet_cols]
+
+            hh_summary = hh_summary.rename(columns={'today': 'date'})
             
             self.logger.info("Filtered MasterSheet dataframe to include only households with triggered flags")
             return hh_summary

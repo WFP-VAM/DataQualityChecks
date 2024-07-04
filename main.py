@@ -84,7 +84,7 @@ def main():
 
     # Upload to DataBase
     master_table_name = f"{db_config["CountryName"]}DataQualitySummaryReport"
-    mastersheet_columns = ['_uuid', 'EnuName', 'EnuSupervisorName', 'ADMIN1Name', 'ADMIN2Name', 'ADMIN3Name', 'ADMIN4Name', "Flag_Narrative_Final"]
+    mastersheet_columns = [ "date", '_uuid', 'EnuName', 'EnuSupervisorName', 'ADMIN1Name', 'ADMIN2Name', 'ADMIN3Name', 'ADMIN4Name', "Flag_Narrative_Final"]
     mastersheet_report = final_mastersheet_df[mastersheet_columns]
     load_data(mastersheet_report, master_table_name)
     
