@@ -171,6 +171,7 @@ DataBridgesKnots-main
 # code
 EGCO_Sudanese_24_HFC.do
 HFC_FCS
+chat
 *.ipynb
 
 
@@ -185,5 +186,5 @@ TODO.md
 data_processing_log.txt
 
 # config files 
-data_bridges_api_config.yaml
+databridges_api_database_credentials.yaml
 data_processing_log.txt

@@ -5,7 +5,7 @@ import yaml
 from datetime import date
 import logging 
 
-CONFIG_PATH = r"data_bridges_api_config.yaml"
+CONFIG_PATH = r"databridges_api_database_credentials.yaml"
 
 class ExcelExportError(Exception):
     pass
