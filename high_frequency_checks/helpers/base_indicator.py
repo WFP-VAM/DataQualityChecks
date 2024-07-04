@@ -22,7 +22,7 @@ class BaseIndicator:
     def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):
 
         self.df = df
-        self.base_cols = base_cols
+        self.base_cols = base_cols + ['today']
         self.review_cols = review_cols
         self.standard_config = standard_config
         self.configurable_config = configurable_config
