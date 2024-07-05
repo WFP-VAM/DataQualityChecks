@@ -84,8 +84,8 @@ def main():
 
     # Upload Mastersheet to database
     master_table_name = f"{db_config["CountryName"]}DataQualitySummaryReport"
-    mastersheet_columns = [ "date", '_uuid', 'EnuName', 'EnuSupervisorName', 'ADMIN1Name', 'ADMIN2Name', 'ADMIN3Name', 'ADMIN4Name', "Flag_Narrative_Final"]
-    mastersheet_report = final_mastersheet_df[mastersheet_columns]
+    mastersheets_cols_to_drop = ["Flag_Narrative_Final", "Reviewed", "Review_Date", "Reviewed_By", "Action_Taken"]
+    mastersheet_report = final_mastersheet_df.drop(columns=mastersheets_cols_to_drop)
     load_data(mastersheet_report, master_table_name)
     
     # Upload disaggregated report to database

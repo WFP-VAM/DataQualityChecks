@@ -43,9 +43,17 @@ def subset_for_enumerator_performance(data: pd.DataFrame) -> pd.DataFrame:
     - Quota by Admin 2
     - GPS
     """
-    cols = ["uuid", "start", "today", 'ID00', 'ID01', 'ID02', "GPS", "EnuName", "ID04LABEL"]
     
-    return data[cols]
+    
+    try:
+        data = data.rename(columns={'ID00': 'ADMIN0Name', "ID01": "ADMIN1Name", "ID02": "ADMIN2Name", "ID03": "ADMIN3Name", "ID04LABEL": "ADMIN4Name"})
+    except KeyError:
+        pass
+    
+    cols = ["uuid", "start", "today", 'ADMIN0Name', 'ADMIN1Name', 'ADMIN2Name', "GPS", "EnuName", "EnuSupervisor", "ADMIN4Name"]
+    
+    data = data[cols]
+    return 
 
 
 def get_indicators(excel_file):
