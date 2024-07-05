@@ -50,10 +50,9 @@ def subset_for_enumerator_performance(data: pd.DataFrame) -> pd.DataFrame:
     except KeyError:
         pass
     
-    cols = ["uuid", "start", "today", 'ADMIN0Name', 'ADMIN1Name', 'ADMIN2Name', "GPS", "EnuName", "EnuSupervisor", "ADMIN4Name"]
+    cols = ["uuid", "start", "today", 'ADMIN0Name', 'ADMIN1Name', 'ADMIN2Name', "GPS", "EnuName", "EnuSupervisorName", "ADMIN4Name"]
     
-    data = data[cols]
-    return 
+    return data[cols]
 
 
 def get_indicators(excel_file):
