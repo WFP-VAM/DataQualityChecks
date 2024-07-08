@@ -34,8 +34,16 @@ class Timing(BaseIndicator):
 
     def transform_correct_timezone(self):
         correct_tz = pytz.FixedOffset(self.utc * 60)
-        self.df['start'] = pd.to_datetime(self.df['start']).dt.tz_convert(correct_tz).dt.tz_localize(None)
-        self.df['end'] = pd.to_datetime(self.df['end'], format='mixed').dt.tz_convert(correct_tz).dt.tz_localize(None)
+        try:
+            self.df['start'] = pd.to_datetime(self.df['start'], format='mixed').dt.tz_convert(correct_tz).dt.tz_localize(None)
+        except ValueError as e:
+            self.logger.error("self.df['start'] produces error %s" % e)
+            pass
+        try:
+            self.df['end'] = pd.to_datetime(self.df['end'], format='mixed').dt.tz_convert(correct_tz).dt.tz_localize(None)
+        except ValueError as e:
+            self.logger.error("self.df['end'] produces error %s" % e)
+            pass
 
     def calculate_duration_mins(self):
         self.logger.info("Calculating Survey Duration")
