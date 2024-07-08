@@ -53,7 +53,7 @@ class BaseIndicator:
                         elif expected_type == 'str':
                             self.df[col] = self.df[col].astype(object)
                         elif expected_type == 'datetime':
-                            self.df[col] = pd.to_datetime(self.df[col])
+                            self.df[col] = pd.to_datetime(self.df[col], format='mixed')
                         elif expected_type == 'date':
                             self.df[col] = pd.to_datetime(self.df[col]).dt.date
                         else:

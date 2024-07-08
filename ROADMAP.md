@@ -9,20 +9,20 @@ This document outlines the high-level roadmap and future plans for the project.
 
 ## Upcoming Milestones
 
-### Milestone 1: Improved reporting outputs (Target Release: 0.2.0, 8 July 2024)
+### Milestone 1: Improved reporting outputs (Target Release: 0.2.0, 9 July 2024)
 
 - [X] Add start date to mastersheet report
-- [ ] Enumerator performance indicators
-  - [ ] Average daily completion by enumerator
-  - [ ] Total survey completed
-  - [ ] Total survey completed by admin region (see sample size)
-  - [ ] Enumerator completion (overall number by day and scatter hours of the day if real-time submission is possible)
+- [ ] Enumerator performance data source  
 - [ ] Documentation on data quality checks and module usage
 - [X] Change database to Household Processed
 
 ### Milestone 2: Additional data qualit y checks (Target Release: 0.3.0, 12 July 2024)
 - [ ] Additional data quality checks
   - [ ] HHS
+  - [ ] Average daily completion by enumerator
+  - [ ] Total survey completed
+  - [ ] Total survey completed by admin region (see sample size)
+  - [ ] Enumerator completion
 - [ ] Country-specific configurations available through MoDa Form
   - [ ] db_config fields available in MoDa configuration
 
