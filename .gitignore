@@ -188,3 +188,4 @@ data_processing_log.txt
 # config files 
 databridges_api_database_credentials.yaml
 data_processing_log.txt
+logs/*.sql
