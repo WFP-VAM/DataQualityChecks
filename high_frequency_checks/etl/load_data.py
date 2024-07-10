@@ -5,7 +5,7 @@ import yaml
 from datetime import date
 import logging 
 
-CONFIG_PATH = r"data_bridges_api_config.yaml"
+CONFIG_PATH = r"databridges_api_database_credentials.yaml"
 
 class ExcelExportError(Exception):
     pass
@@ -24,8 +24,7 @@ conn_str = db_config(CONFIG_PATH)
 engine = create_engine(conn_str)
 
 
-def load_data(path, sheet_name, table_name):
-    df = pd.read_excel(path, sheet_name=sheet_name)
+def load_data(df, table_name):
     try:
         df.to_sql(name=table_name, con=engine, if_exists='replace')
         logging.info(f"Loaded to {table_name}")

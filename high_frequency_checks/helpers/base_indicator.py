@@ -1,9 +1,22 @@
+"""
+The `BaseIndicator` class is an abstract base class that provides common functionality for processing and analyzing data in the context of various indicators.
+
+The class has the following responsibilities:
+- Initializes the class with the necessary data, configurations, and flags.
+- Parses the columns in the input DataFrame to ensure they have the expected data types.
+- Checks for missing values in the data and generates a flag column to indicate which rows have missing values.
+- Checks for erroneous values in the data and generates a flag column to indicate which rows have erroneous values.
+- Generates an overall flag column that combines the various flag columns.
+- Generates a narrative flag column that provides a human-readable description of the flags.
+- Generates a report of the processed data, including the flag columns, and writes it to an Excel file.
+
+Subclasses of `BaseIndicator` must implement the `_process_specific()` method to perform any indicator-specific processing.
+"""
+
 import logging
 import pandas as pd
 import numpy as np
 
-# Configure logging
-logging.basicConfig(filename='data_processing_log.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class BaseIndicator:
     def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):
@@ -40,7 +53,7 @@ class BaseIndicator:
                         elif expected_type == 'str':
                             self.df[col] = self.df[col].astype(object)
                         elif expected_type == 'datetime':
-                            self.df[col] = pd.to_datetime(self.df[col])
+                            self.df[col] = pd.to_datetime(self.df[col], format='mixed')
                         elif expected_type == 'date':
                             self.df[col] = pd.to_datetime(self.df[col]).dt.date
                         else:
@@ -148,7 +161,7 @@ class BaseIndicator:
                 for col in categorical_cols:
                     choices = self.standard_config['choices_lists'].get(col, [])
                     if choices:
-                        erroneous_condition = (~self.df[col].isin(choices)).astype(int)
+                        erroneous_condition = ((~self.df[col].isin(choices)) & (~self.df[col].isna())).astype(int)
                         erroneous_flag_col[mask & (erroneous_flag_col != 1)] = erroneous_condition
                         self.logger.info(f"Generated erroneous value flags for categorical column: {col}")
                     else:
@@ -195,6 +208,7 @@ class BaseIndicator:
             hh_summary_cols = self.base_cols + self.cols + list(self.flags.keys()) + [f'Flag_{self.indicator_name}_Overall', f'Flag_{self.indicator_name}_Narrative']
             hh_summary = self.df[hh_summary_cols]
             hh_filtered = hh_summary[hh_summary[f'Flag_{self.indicator_name}_Overall'] == 1]
+            # hh_filtered = hh_filtered.rename(columns={"today": "date"})
             hh_filtered.to_excel(writer, sheet_name=self.indicator_name, index=False)
             self.logger.info(f"Report for {self.indicator_name} generated successfully")
         except Exception as e:
