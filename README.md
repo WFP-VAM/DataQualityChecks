@@ -22,7 +22,7 @@ To install the package, follow the steps below:
 ## Data Quality checks
 The reposity checks data quality for the main food security outcome indicators used in WFP Needs Assessments. 
 
-Issues for each indicators are flagged through **sequential** and **independent** checks.
+Issues for each indicators are flagged through a hierarchical structure of **sequential** and **independent** checks.
 
 The checks are organized in the following way:
 - **Sequential Checks**: The flags for missing values and erroneous values are sequential. If one of these flags is triggered, the subsequent conditions are not checked. 
@@ -31,24 +31,61 @@ The checks are organized in the following way:
 - **Independent Checks**: If the indicator has no missing or erronous values, custom indipendent checks are executed for each indicator. 
 - **Flag Values**: In the generated reports, each flag can be either equal to 0 (Condition Not Met), 1 (Condition Met), or NONE (Check did not execute).
 
-### Food Consumption score
-The FCS checks follow a hierarchical structure, with sequential and independent checks applied to the data. The following graph shows the decision logic of both sequential and independent checsk:
+### Demographic module
+The following graph shows the decision logic of both sequential and independent checsk:
 
-![Food Consumption Score Checks](docs/FCS.jpg)
+![Demographics Checks](docs/demographic.png)
+
+The **indipendent checks** for this indicators are:
+- missing values for pregnant and breastfeeding women
+- number of pregnant and breastfeeding women exceeds the number of women aged 12-59
+- household size is very high (default: 30)
+- number of males and females in the household does not match household size
+- no adults in the household (default: adult > 15 age)
+
+### Food Consumption Score (FCS)
+The following graph shows the decision logic of both sequential and independent checsk:
+
+![FCS Checks](docs/FCS.jpg)
 
 The **indipendent checks** for this indicators are:
 - identical values
-- low (<10) and high FCS score (>100)
-- low staple consumption (<= 4 days)
+- low FCS score (default: <10) 
+- high FCS score (default: >100)
+- low staple consumption (default: <= 4 days)
 
-### rCSI
-Documentation to be added
+### Reduced Coping Strategy Index (rCSI)
+The following graph shows the decision logic of both sequential and independent checsk:
 
-### Demographics
-Documentation to be added
+![rCSI Checks](docs/rCSI.jpg)
+
+The **indipendent checks** for this indicators are:
+- identical values
+- poor FCS with no coping (default: rCSI == 0)
+- adequate FCS with high coping (default: rCSI > 50)
+- adults reduced their meail intake so children could eat in households with no children
 
 ### HHDS
 Documentation to be added
+
+### Expenditures
+
+### LCS-FS
+
+#### LCS-FS-rural
+
+### LCS-EN
+
+### Housing
+
+### Timing
+Documentation to be added
+
+### HHS
+Coming soon
+
+## Contextualization
+Some data quality checks can be contextualized based on the country context (e.g. abnormally high/low food expenditure). WFP Country Offices can insert the custom thresholds for the customizable indicators in the configuration files contained in the ```config``` folder. 
 
 
 ## Contributing
