@@ -3,7 +3,12 @@ from high_frequency_checks.helpers.base_indicator import BaseIndicator
     
     
 class HHEXPNF_1M(BaseIndicator):
-        
+    """
+    Calculates the monthly non-food expenditures for a household based on the provided data.
+
+    The HHEXPNF_1M class is responsible for processing the non-food expenditures data for a 1-month period. It calculates the total monthly non-food expenditures by summing the values in the `hhexpnf_1m_purch_cols` and `hhexpnf_1m_giftaid_cols` columns, and stores the result in the `HHExpNF_1M_Monthly` column. The class also handles missing and erroneous values in the data.
+    """
+                
     flags = {
         'Flag_HHEXPNF_1M_Missing': "Missing value(s) in the Non-Food Expenditures 1M Module",
         'Flag_HHEXPNF_1M_Erroneous': "Erroneous value(s) in the Non-Food Expenditures 1M Module",

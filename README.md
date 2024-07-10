@@ -32,7 +32,7 @@ The checks are organized in the following way:
 - **Flag Values**: In the generated reports, each flag can be either equal to 0 (Condition Not Met), 1 (Condition Met), or NONE (Check did not execute).
 
 ### Demographic module
-The following graph shows the decision logic of both sequential and independent checsk:
+The following graph shows the decision logic of both sequential and independent checks:
 
 ![Demographics Checks](docs/demographic.png)
 
@@ -44,7 +44,7 @@ The **indipendent checks** for this indicators are:
 - no adults in the household (default: adult > 15 age)
 
 ### Food Consumption Score (FCS)
-The following graph shows the decision logic of both sequential and independent checsk:
+The following graph shows the decision logic of both sequential and independent checks:
 
 ![FCS Checks](docs/FCS.jpg)
 
@@ -55,7 +55,7 @@ The **indipendent checks** for this indicators are:
 - low staple consumption (default: <= 4 days)
 
 ### Reduced Coping Strategy Index (rCSI)
-The following graph shows the decision logic of both sequential and independent checsk:
+The following graph shows the decision logic of both sequential and independent checks:
 
 ![rCSI Checks](docs/rCSI.jpg)
 
@@ -66,10 +66,13 @@ The **indipendent checks** for this indicators are:
 - adults reduced their meail intake so children could eat in households with no children
 
 ### Food Expenditures
+The following graph shows the decision logic of both sequential and independent checks for food expenditure:
 
-#### 7-day recall period
 
-#### 1 month recall period
+![Food expenditures Checks](docs/HHEXPF_7D.jpg)
+
+The **indipendent checks** for this indicators are:
+- no expenditure on food report nor own production
 
 ### Non-food Expenditures
 
