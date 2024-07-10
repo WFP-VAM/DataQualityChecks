@@ -4,7 +4,12 @@ import logging
 from high_frequency_checks.helpers.base_indicator import BaseIndicator
     
 class Demo(BaseIndicator):
-    
+    """
+    The `Demo` class is a subclass of `BaseIndicator` and is responsible for performing specific processing for the Demographics module. It calculates various metrics related to the demographics of a household, such as the total number of males, females, adults, children, and females between 12 and 59 years old. It also checks for high household size, inconsistent household size, the absence of adults, and whether the number of pregnant and lactating women (PLW) exceeds the number of females between 12 and 59 years old.
+
+    The class has several methods that perform the calculations and checks, and it uses the `standard_config` and `configurable_config` parameters to access the necessary configuration settings. The results of the calculations and checks are stored in the `DataFrame` passed to the class during initialization.
+    """
+        
     flags = {
         'Flag_Demo_Missing': "Missing value(s) in the Demographics Module",
         'Flag_Demo_Erroneous': "Erroneous value(s) in the Demographics Module",

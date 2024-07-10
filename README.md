@@ -65,24 +65,40 @@ The **indipendent checks** for this indicators are:
 - adequate FCS with high coping (default: rCSI > 50)
 - adults reduced their meail intake so children could eat in households with no children
 
-### HHDS
-Documentation to be added
+### Food Expenditures
 
-### Expenditures
+#### 7-day recall period
+
+#### 1 month recall period
+
+### Non-food Expenditures
+
+#### 7-day recall period
+
+#### 1 month recall period
+
 
 ### LCS-FS
+TODO 
 
 #### LCS-FS-rural
+TODO 
 
 ### LCS-EN
+TODO 
 
 ### Housing
+TODO
+
 
 ### Timing
 Documentation to be added
 
+### Household Diet Diversity Score (HDDS)
+Indicator check coming soon
+
 ### HHS
-Coming soon
+Indicator check coming soon
 
 ## Contextualization
 Some data quality checks can be contextualized based on the country context (e.g. abnormally high/low food expenditure). WFP Country Offices can insert the custom thresholds for the customizable indicators in the configuration files contained in the ```config``` folder. 
