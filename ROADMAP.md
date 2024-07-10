@@ -11,7 +11,7 @@ This document outlines the high-level roadmap and future plans for the project.
 ### Milestone 1: Improved reporting outputs (Target Release: 0.2.0)
 - [X] Add start date to mastersheet report (0.2.1)
 - [X] Change database to Household Processed (0.2.1)
-- [ ] Documentation on data quality checks and module usage
+- [X] Documentation on data quality checks and module usage
 - [ ] Enumerator data labels
 - [ ] Quotas
 
