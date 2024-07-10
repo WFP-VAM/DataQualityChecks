@@ -27,6 +27,7 @@ This document outlines the high-level roadmap and future plans for the project.
 - [ ] Country-specific configurations available through MoDa Form
 - [ ] Configuration in settings folder (as separate module)
 - [ ] Read from official instead of full for everything that's not survey 
+- [ ] Package it as module (PyPI)
 
 ## Future versions (v2.0.0)
 - [ ] Optimize code 

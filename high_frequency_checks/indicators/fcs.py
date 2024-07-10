@@ -4,7 +4,22 @@ import logging
 from high_frequency_checks.helpers.base_indicator import BaseIndicator
 
 class FCS(BaseIndicator):
-        
+    """
+    The `FCS` class is a subclass of `BaseIndicator` and is responsible for processing and calculating the Food Consumption Score (FCS) indicator.
+
+    The class has several flags that are used to indicate different issues with the FCS data, such as missing values, erroneous values, identical values, low staple consumption, low FCS, and high FCS.
+
+    The `__init__` method initializes the class with the necessary data and configuration parameters, including the weights for calculating the FCS and various thresholds for the different flags.
+
+    The `_process_specific` method performs the specific processing for the FCS indicator, including checking for identical values, calculating the FCS and Food Consumption Group (FCG), and checking for low staple consumption, low FCS, and high FCS.
+
+    The `calculate_fcs` method calculates the FCS by multiplying the consumption values for each food group by the corresponding weights and summing the results.
+
+    The `calculate_fcg` method calculates the FCG by categorizing the FCS values into "Poor", "Borderline", and "Acceptable" based on the configured thresholds.
+
+    The `check_identical_values`, `check_low_staple`, `check_low_fcs`, and `check_high_fcs` methods generate flags for the corresponding issues with the FCS data.
+    """
+                
     flags = {
         'Flag_FCS_Missing': "Missing value(s) in the consumption of the 8 main food groups",
         'Flag_FCS_Erroneous': "Erroneous value(s) in the consumption of the 8 main food groups",
