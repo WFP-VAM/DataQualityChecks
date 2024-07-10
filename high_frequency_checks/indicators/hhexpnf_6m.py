@@ -3,6 +3,14 @@ from high_frequency_checks.helpers.base_indicator import BaseIndicator
     
     
 class HHEXPNF_6M(BaseIndicator):
+    """
+    Calculates the monthly non-food expenditures for the household over a 6-month period.
+
+    This class extends the `BaseIndicator` class and provides methods to process and calculate the monthly non-food expenditures for a household. It uses the standard and configurable configurations to determine the relevant columns for the calculation.
+
+    The class also defines two flags: `Flag_HHEXPNF_6M_Missing` and `Flag_HHEXPNF_6M_Erroneous`, which are used to indicate missing or erroneous values in the non-food expenditures 6-month module.
+    """
+        
         
     flags = {
         'Flag_HHEXPNF_6M_Missing': "Missing value(s) in the Non-Food Expenditures 6M Module",

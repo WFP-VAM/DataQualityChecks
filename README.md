@@ -68,21 +68,30 @@ The **indipendent checks** for this indicators are:
 ### Food Expenditures
 The following graph shows the decision logic of both sequential and independent checks for food expenditure:
 
-
 ![Food expenditures Checks](docs/HHEXPF_7D.jpg)
+
+The **sequential checks** for this indicators are customizibile according to the country context. 
 
 The **indipendent checks** for this indicators are:
 - no expenditure on food report nor own production
 
 ### Non-food Expenditures
 
-#### 7-day recall period
+The following graphs shows the decision logic of both sequential and independent checks for food expenditure:
 
-#### 1 month recall period
+#### 10month recall period
+![Food expenditures Checks](docs/HHEXPNF_1M.jpg)
 
+#### 6-month recall period
+![Food expenditures Checks](docs/HHEXPNF_6M.jpg)
+
+The **sequential checks** for this indicators are customizibile according to the country context. 
 
 ### LCS-FS
 TODO 
+
+The **sequential checks** for this indicators are customizibile according to the country context. 
+
 
 #### LCS-FS-rural
 TODO 
