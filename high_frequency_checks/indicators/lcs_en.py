@@ -3,7 +3,17 @@ from high_frequency_checks.helpers.base_indicator import BaseIndicator
 
     
 class LCS_EN(BaseIndicator):
-        
+    """
+    Implements the LCS-EN (Livelihood Coping Strategies - English) indicator, which checks for various issues in the livelihood coping strategies data.
+
+    The indicator performs the following checks:
+    - Checks if there are any children-related livelihood coping strategies reported in households with no children.
+    - Checks if there are three or more livelihood coping strategies reported as N/A.
+    - Checks if any non-exhaustive livelihood coping strategies are reported as N/A or exhausted.
+
+    The indicator uses a set of predefined flags to report the issues found in the data.
+    """
+                
     flags = {
     'Flag_LCS_EN_Missing': "LCS-EN: Missing value(s) in the livelihood coping strategies",
     'Flag_LCS_EN_Erroneous': "LCS-EN: Erroneous value(s) in the livelhihood coping strategies",

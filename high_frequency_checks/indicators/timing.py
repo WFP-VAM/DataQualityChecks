@@ -4,6 +4,19 @@ import logging
 from high_frequency_checks.helpers.base_indicator import BaseIndicator
 
 class Timing(BaseIndicator):
+    """
+    The `Timing` class is a subclass of `BaseIndicator` and is responsible for processing and analyzing the timing-related aspects of survey data. It performs the following tasks:
+
+    1. Transforms the start and end timestamps of the survey to the correct timezone specified in the configuration.
+    2. Calculates the duration of the survey in minutes.
+    3. Categorizes the start time of the survey into different periods of the day based on the configured time thresholds.
+    4. Checks for invalid, short, and long survey durations based on the configured thresholds.
+    5. Checks if the survey started during an abnormal period of the day based on the configured abnormal start time periods.
+
+    The class has several configurable parameters, such as the invalid, short, and long duration thresholds, the UTC offset, and the time thresholds for categorizing the start time. These parameters are loaded from the `configurable_config` dictionary passed to the constructor.
+
+    The `_process_specific()` method is the main entry point for processing the survey data and generating the various timing-related flags.
+"""
 
     flags = {
         'Flag_Timing_Invalid_Duration': "The survey duration is invalid",

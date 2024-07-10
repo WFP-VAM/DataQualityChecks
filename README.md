@@ -66,6 +66,7 @@ The **indipendent checks** for this indicators are:
 - adults reduced their meail intake so children could eat in households with no children
 
 ### Food Expenditures
+
 The following graph shows the decision logic of both sequential and independent checks for food expenditure:
 
 ![Food expenditures Checks](docs/HHEXPF_7D.jpg)
@@ -87,41 +88,61 @@ The following graphs shows the decision logic of both sequential and independent
 
 The **sequential checks** for this indicators are customizibile according to the country context. 
 
-### LCS-FS
-TODO 
+### LCS 
 
-The **sequential checks** for this indicators are customizibile according to the country context. 
+The following graph shows the decision logic of both sequential and independent checks for 
 
+![Livelihood Coping Strategy](docs/LCS-FS.jpg)
 
-#### LCS-FS-rural
-TODO 
+The **indipendent checks** for this indicators are:
+- household reported applying strategies related to children when there are no children in the house
+- three or more coping strategy was reported as NA
+- houshold reported as not applicable or exhausted strategies that cannot be exhausted or not applicable (e.g. begging or illecit activities)
 
-### LCS-EN
-TODO 
+The **independent checks** for this indicators are customizibile according to the country context (i.e. choosing the coping strategies)
 
 ### Housing
-TODO
 
+The following graph shows the decision logic of both sequential and independent checks for 
+
+![Housing module checks](docs/Housing.drawio.png)
+
+The **indipendent checks** for this indicators are:
+- a displaced household reports living in a property they own
 
 ### Timing
-Documentation to be added
+
+The following graph shows the decision logic of both sequential and independent checks for 
+
+![Checks on timing](docs/Timing.jpg)
+
+The **indipendent checks** for this indicators are:
+- survey has an invalid durationg (default: <5 minutes)
+- survey is too short (default: <10 minutes)
+- survey is too long (default: >120 minutes)
+- survey started during an unusual time of the day (e.g. during the night) (default: survey started between 7pm and 7am)
+
+The **independent checks** for this indicators are customizibile according to the country context (i.e. choosing the unusual times of the day)
+
 
 ### Household Diet Diversity Score (HDDS)
+
 Indicator check coming soon
 
 ### HHS
+
 Indicator check coming soon
 
 ## Contextualization
-Some data quality checks can be contextualized based on the country context (e.g. abnormally high/low food expenditure). WFP Country Offices can insert the custom thresholds for the customizable indicators in the configuration files contained in the ```config``` folder. 
 
+Some data quality checks can be contextualized based on the country context (e.g. abnormally high/low food expenditure). WFP Country Offices can insert the custom thresholds for the customizable indicators in the configuration files contained in the ```config``` folder. 
 
 ## Contributing
 
 Contributions to this project are welcome. If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
 
-
 ## Authors
+
 - [Ali Assi](https://github.com/AssiALi16)
 - [Alessandra Gherardelli](https://github.com/AlexGherardelli)
 

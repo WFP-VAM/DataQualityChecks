@@ -3,7 +3,14 @@ from high_frequency_checks.helpers.base_indicator import BaseIndicator
 
     
 class LCS_FS(BaseIndicator):
-        
+    """
+    The `LCS_FS` class is a subclass of `BaseIndicator` and is responsible for performing specific processing for the "Livelihood Coping Strategies - Food Security" (LCS-FS) indicator.
+
+    The class defines several flags that are used to indicate different types of issues or errors that may be found in the data, such as missing values, erroneous values, and issues related to the application of livelihood coping strategies in households with no children.
+
+    The `__init__` method initializes the class with the necessary data and configuration parameters, and the `_process_specific` method performs the specific processing for the LCS-FS indicator, including checking for issues related to children strategies, three or more N/A values in the strategies, and non-exhaustive strategies reported as N/A or exhausted.
+    """
+                
     flags = {
     'Flag_LCS_FS_Missing': "LCS-FS: Missing value(s) in the livelihood coping strategies",
     'Flag_LCS_FS_Erroneous': "LCS-FS: Erroneous value(s) in the livelihood coping strategies",
