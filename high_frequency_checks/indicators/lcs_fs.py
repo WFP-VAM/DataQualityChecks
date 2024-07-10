@@ -3,13 +3,20 @@ from high_frequency_checks.helpers.base_indicator import BaseIndicator
 
     
 class LCS_FS(BaseIndicator):
-        
+    """
+    The `LCS_FS` class is a subclass of `BaseIndicator` and is responsible for performing specific processing for the "Livelihood Coping Strategies - Food Security" (LCS-FS) indicator.
+
+    The class defines several flags that are used to indicate different types of issues or errors that may be found in the data, such as missing values, erroneous values, and issues related to the application of livelihood coping strategies in households with no children.
+
+    The `__init__` method initializes the class with the necessary data and configuration parameters, and the `_process_specific` method performs the specific processing for the LCS-FS indicator, including checking for issues related to children strategies, three or more N/A values in the strategies, and non-exhaustive strategies reported as N/A or exhausted.
+    """
+                
     flags = {
-    'Flag_LCS_FS_Missing': "Missing value(s) in the livelihood coping strategies",
-    'Flag_LCS_FS_Erroneous': "Erroneous value(s) in the livelihood coping strategies",
-    'Flag_LCS_FS_No_Children': "HH Applied strategies related to children with no children",
-    'Flag_LCS_FS_Three_or_More_NA': "Three or more livelihood coping strategies reported as NA",
-    'Flag_LCS_FS_NonExhaustive_Strategies_NA': "HH Reported activities that can't be exhausted as exhausted or Not Applicable"
+    'Flag_LCS_FS_Missing': "LCS-FS: Missing value(s) in the livelihood coping strategies",
+    'Flag_LCS_FS_Erroneous': "LCS-FS: Erroneous value(s) in the livelihood coping strategies",
+    'Flag_LCS_FS_No_Children': "LCS-FS: HH Applied strategies related to children with no children",
+    'Flag_LCS_FS_Three_or_More_NA': "LCS-FS: Three or more livelihood coping strategies reported as NA",
+    'Flag_LCS_FS_NonExhaustive_Strategies_NA': "LCS-FS: HH Reported activities that can't be exhausted as exhausted or Not Applicable"
     }
         
     def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):

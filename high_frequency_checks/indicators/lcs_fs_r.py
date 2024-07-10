@@ -3,13 +3,25 @@ from high_frequency_checks.helpers.base_indicator import BaseIndicator
 
     
 class LCS_FS_R(BaseIndicator):
-        
+    """
+    Implements the LCS-FS-R indicator, which checks for various issues related to livelihood coping strategies reported in a dataset.
+
+    The indicator performs the following checks:
+    - Checks if any livelihood coping strategies are missing.
+    - Checks if any livelihood coping strategies have erroneous values.
+    - Checks if any households applied strategies related to children when they have no children.
+    - Checks if three or more livelihood coping strategies are reported as N/A.
+    - Checks if any non-exhaustible strategies are reported as exhausted or N/A.
+
+    The indicator uses several flags to track the issues found, and the results are stored in the input DataFrame.
+    """
+                
     flags = {
-    'Flag_LCS_FS_R_Missing': "Missing value(s) in the livelihood coping strategies",
-    'Flag_LCS_FS_R_Erroneous': "Erroneous value(s) in the livelihood coping strategies",
-    'Flag_LCS_FS_R_No_Children': "HH Applied strategies related to children with no children",
-    'Flag_LCS_FS_R_Three_or_More_NA': "Three or more livelihood coping strategies reported as NA",
-    'Flag_LCS_FS_R_NonExhaustive_Strategies_NA': "HH Reported activities that can't be exhausted as exhausted or Not Applicable"
+    'Flag_LCS_FS_R_Missing': "LCS-FS-R: Missing value(s) in the livelihood coping strategies",
+    'Flag_LCS_FS_R_Erroneous': "LCS-FS-R: Erroneous value(s) in the livelihood coping strategies",
+    'Flag_LCS_FS_R_No_Children': "LCS-FS-R: HH Applied strategies related to children with no children",
+    'Flag_LCS_FS_R_Three_or_More_NA': "LCS-FS-R: Three or more livelihood coping strategies reported as NA",
+    'Flag_LCS_FS_R_NonExhaustive_Strategies_NA': "LCS-FS-R: HH Reported activities that can't be exhausted as exhausted or Not Applicable"
     }
         
     def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):

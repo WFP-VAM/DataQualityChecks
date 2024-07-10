@@ -35,6 +35,78 @@ columns_type:
   Lcs_stress_SellNFIRation: 'str'
   Lcs_stress_Edu: 'str'
 
+conditional_pairs_categorical:
+  Lcs_stress_DomAsset:
+    - 'Urban'
+  Lcs_stress_Saving:
+    - 'Urban'
+  Lcs_stress_EatOut:
+    - 'Urban'
+  Lcs_stress_BorrowCash:
+    - 'Urban'
+  Lcs_stress_Pawn:
+    - 'Urban'
+  Lcs_stress_LessSchool:
+    - 'Urban'
+  Lcs_stress_DomMigration:
+    - 'Urban'
+  Lcs_stress_HHSeparation:
+    - 'Urban'
+  Lcs_stress_ConsActive:
+    - 'Urban'
+  Lcs_stress_Housing:
+    - 'Urban'
+  Lcs_stress_Utilities:
+    - 'Urban'
+  Lcs_stress_SellFoodRation:
+    - 'Urban'
+  Lcs_crisis_ProdAssets:
+    - 'Urban'
+  Lcs_crisis_Health:
+    - 'Urban'
+  Lcs_crisis_Edu:
+    - 'Urban'
+  Lcs_crisis_Housing:
+    - 'Urban'
+  Lcs_crisis_HHSeparation:
+    - 'Urban'
+  Lcs_crisis_ChildWork:
+    - 'Urban'
+  Lcs_crisis_Marriage:
+    - 'Urban'
+  Lcs_crisis_Migration:
+    - 'Urban'
+  Lcs_crisis_ConsActive:
+    - 'Urban'
+  Lcs_crisis_OutSchool:
+    - 'Urban'
+  Lcs_crisis_Barter:
+    - 'Urban'
+  Lcs_crisis_Utilities:
+    - 'Urban'
+  Lcs_em_OutSchool:
+    - 'Urban'
+  Lcs_em_Migration:
+    - 'Urban'
+  Lcs_em_ChildWork:
+    - 'Urban'
+  Lcs_em_Marriage:
+    - 'Urban'
+  Lcs_em_ResAsset:
+    - 'Urban'
+  Lcs_em_Begged:
+    - 'Urban'
+  Lcs_em_IllegalAct:
+    - 'Urban'
+  Lcs_em_ChildMigration:
+    - 'Urban'
+  Lcs_crisis_DomMigration:
+    - 'Urban'
+  Lcs_stress_SellNFIRation:
+    - 'Urban'
+  Lcs_stress_Edu:
+    - 'Urban'
+
 choices_lists:
   Lcs_stress_DomAsset:
     - '10'

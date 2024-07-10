@@ -89,7 +89,7 @@ class Demo(BaseIndicator):
     def check_high_hhsize(self, mask):
         self.logger.info("Checking for high household size")
         try:
-            self.df.loc[mask, 'Flag_Demo_High_HHSize'] = (self.df.loc[mask, 'Sum_M_F'] != self.df.loc[mask, 'HHSize']).astype(int)
+            self.df.loc[mask, 'Flag_Demo_High_HHSize'] = (self.df.loc[mask, 'HHSize'] > self.high_hhsize).astype(int)
             self.logger.info("Generated high household size flag")
         except Exception as e:
             self.logger.error(f"Error checking high household size: {e}")

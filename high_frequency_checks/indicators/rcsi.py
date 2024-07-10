@@ -5,7 +5,19 @@ from high_frequency_checks.helpers.base_indicator import BaseIndicator
     
     
 class rCSI(BaseIndicator):
-        
+    """
+    The `rCSI` class is a subclass of `BaseIndicator` and is responsible for processing and calculating the Reduced Coping Strategies Index (rCSI) for a given dataset.
+
+    The class has several methods that perform the following tasks:
+    - `calculate_rcsi`: Calculates the rCSI by multiplying the values in the dataset with the corresponding weights defined in the `standard_config`.
+    - `check_identical_values`: Checks if the values of all reduced coping strategies are identical for a given row.
+    - `check_poor_fcg_no_coping`: Checks if the food consumption is poor with no reduced coping.
+    - `check_acceptable_fcg_high_coping`: Checks if the food consumption is acceptable and the rCSI is high.
+    - `check_meal_adult_no_children`: Checks if adults reduced their meal intake for children with no children in the household.
+
+    The class also defines several flags that are used to indicate the different conditions that are checked during the processing of the rCSI indicator.
+    """
+                
     flags = {
         'Flag_rCSI_Missing': "Missing value(s) in the reduced coping strategies",
         'Flag_rCSI_Erroneous': "Erroneous value(s) in the reduced coping strategies",
@@ -50,7 +62,7 @@ class rCSI(BaseIndicator):
     def check_poor_fcg_no_coping(self, mask):
         self.logger.info("Checking for Poor FCG with No Reduced Coping")
         try:
-            fcs_cat_column = 'FCSCat28' if self.high_sugar_oil_consumption else 'FCSCat21'
+            fcs_cat_column = 'FCSCat28' if self.high_sugar_oil_consumption == 1 else 'FCSCat21'
             self.df.loc[mask, 'Flag_rCSI_Poor_FCG_No_Coping'] = \
             ((self.df.loc[mask, fcs_cat_column] == 'Poor') & (self.df.loc[mask, 'rCSI'] == 0)).astype(int)
             self.logger.info("Generated Poor FCG with No Reduced Coping flag")
@@ -60,7 +72,7 @@ class rCSI(BaseIndicator):
     def check_acceptable_fcg_high_coping(self, mask):
         self.logger.info("Checking for Acceptable FCG with High Reduced Coping")
         try:
-            fcs_cat_column = 'FCSCat28' if self.high_sugar_oil_consumption else 'FCSCat21'
+            fcs_cat_column = 'FCSCat28' if self.high_sugar_oil_consumption == 1 else 'FCSCat21'
             self.df.loc[mask, 'Flag_rCSI_Acceptable_FCG_High_Coping'] = \
             ((self.df.loc[mask, fcs_cat_column] == 'Acceptable') & (self.df.loc[mask, 'rCSI'] > self.high_rcsi)).astype(int)
             self.logger.info("Generated Acceptable FCG with High Reduced Coping flag")

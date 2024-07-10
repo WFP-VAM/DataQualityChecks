@@ -12,6 +12,7 @@ from .indicators.housing import Housing
 from .indicators.timing import Timing
 from .mastersheet.mastersheet import MasterSheet
 from .config.config_handler import ConfigHandler
+from .config.config_generator import ConfigGenerator
 from .helpers.dataframe_customizer import DataFrameCustomizer
 
 
@@ -29,6 +30,7 @@ __all__ = [
     'HHEXPNF_6M',
     'MasterSheet',
     'ConfigHandler',
+    'ConfigGenerator',
     'DataFrameCustomizer',
     'Timing'
 ]
