@@ -19,7 +19,7 @@ rem Using call is required here, see: https://stackoverflow.com/questions/246781
 call %CONDAPATH%\Scripts\activate.bat %ENVPATH%
 
 rem Run a python script in that environment
-python main.py
+python main.py > data_process.log
 
 rem Deactivate the environment
 call conda deactivate
