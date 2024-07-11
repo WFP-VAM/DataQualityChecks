@@ -1,4 +1,4 @@
-# High Frenquency Checks for WFP Needs Assessments
+# High Frequency Checks for WFP Needs Assessments
 
 This repository supports WFP Country Offices in checking the quality of the data collected in needs assessment surveys. 
 
@@ -15,7 +15,7 @@ This repository supports WFP Country Offices in checking the quality of the data
 
 To install the package, follow the steps below:
 
-1. Clone the repository: `git clone https://github.com/your-repo/fcs-checks.git`
+1. Clone the repository: `git clone https://github.com/WFP-VAM/DataQualityChecks.git`
 2. Install the required dependencies: `pip install -r requirements.txt`
 
 
