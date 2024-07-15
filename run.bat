@@ -1,4 +1,5 @@
-@echo OFF
+@echo off
+
 rem How to run a Python script in a given conda environment from a batch file.
 
 rem It doesn't require:
@@ -19,7 +20,7 @@ rem Using call is required here, see: https://stackoverflow.com/questions/246781
 call %CONDAPATH%\Scripts\activate.bat %ENVPATH%
 
 rem Run a python script in that environment
-python main.py > data_process.log
+python main.py
 
 rem Deactivate the environment
 call conda deactivate
