@@ -32,11 +32,13 @@ def main():
     input_directory = "high_frequency_checks/config"  # Replace with your actual input directory path
     config_file_path = os.path.join(input_directory, 'config.csv')
 
-    # Check if config.csv exists in the input directory
-    if os.path.isfile(config_file_path):
-        # Read configuration from MODA csv and generate config files
-        config_generator = ConfigGenerator()
-        config_generator.generate_configs()
+    # # Generate configuration from MODA csv (NOTE: never executes with yaml files)
+    # # Check if config.csv exists in the input directory
+    # if os.path.isfile(config_file_path):
+    #     print(f"Generating configuration from {config_file_path}")
+    #     # Read configuration from MODA csv and generate config files
+    #     config_generator = ConfigGenerator()
+    #     config_generator.generate_configs()
 
     # Read configurations for base indicator
     config_handler = ConfigHandler()
@@ -82,7 +84,7 @@ def main():
     with pd.ExcelWriter(report_mastersheet_path) as writer:
         final_mastersheet_df.to_excel(writer, sheet_name='MasterSheet', index=False)
 
-    # Upload Mastersheet to database
+    # # Upload Mastersheet to database
     master_table_name = f"{db_config["CountryName"]}DataQualitySummaryReport"
     mastersheets_cols_to_drop = ["Reviewed", "Review_Date", "Reviewed_By", "Action_Taken"]
     mastersheet_report = final_mastersheet_df.drop(columns=mastersheets_cols_to_drop)
@@ -93,6 +95,7 @@ def main():
     excel_file = r'reports\DRC_HFC_All_Indicators_Report.xlsx'
     all_indicators = get_indicators(excel_file)
     load_data(all_indicators, disaggregated_table_name)
+
 
     # Process for Tableau and upload to abase    
     enumerator_df = subset_for_enumerator_performance(df)
