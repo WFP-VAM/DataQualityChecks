@@ -44,12 +44,12 @@ class ConfigHandler:
             raise
 
     def get_base_config(self):
-    """
-    Retrieve the base configuration.
+        """
+        Retrieve the base configuration.
 
-    Returns:
-        tuple: A tuple containing base_cols and review_cols lists.
-    """
+        Returns:
+            tuple: A tuple containing base_cols and review_cols lists.
+        """
         self.logger.info("Getting base config")
         try:
             base_config_path = os.path.join(self.base_dir, 'configurable', 'base_indicator.yaml')
