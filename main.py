@@ -107,6 +107,7 @@ def main():
     print(f"Data processing completed with {error_count} errors and {warning_count} warnings.")
     
 if __name__ == "__main__":
+
     main()
     
 

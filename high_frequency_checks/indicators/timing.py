@@ -61,7 +61,7 @@ class Timing(BaseIndicator):
     def calculate_duration_mins(self):
         self.logger.info("Calculating Survey Duration")
         try:
-            self.df['Duration_Mins'] = ((self.df['end'] - self.df['start']).dt.total_seconds() / 60).round().astype(int)
+            self.df['Duration_Mins'] = ((self.df['end'] - self.df['start']).dt.total_seconds() / 60).round().astype(int, errors='ignore')
             self.logger.info("Survey Duration calculated successfully")
         except Exception as e:
             self.logger.error(f"Error calculating Survey Duration: {e}")
