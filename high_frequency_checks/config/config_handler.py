@@ -5,10 +5,28 @@ import high_frequency_checks as hfc_module
 
 class ConfigHandler:
     def __init__(self, base_dir='high_frequency_checks/config'):
+        """
+        Initialize the ConfigHandler with a base directory for config files.
+
+        Args:
+            base_dir (str): The base directory for configuration files.
+        """
         self.base_dir = base_dir
         self.logger = logging.getLogger(__name__)
     
     def read_yaml(self, file_path):
+        """
+        Read and parse a YAML file.
+
+        Args:
+        file_path (str): The path to the YAML file.
+
+        Returns:
+        dict: The parsed YAML data.
+
+        Raises:
+        FileNotFoundError: If the file is not found.
+        """
         self.logger.info(f"Reading YAML file: {file_path}")
         try:
             with open(file_path, 'r') as file:
@@ -26,6 +44,12 @@ class ConfigHandler:
             raise
 
     def get_base_config(self):
+    """
+    Retrieve the base configuration.
+
+    Returns:
+        tuple: A tuple containing base_cols and review_cols lists.
+    """
         self.logger.info("Getting base config")
         try:
             base_config_path = os.path.join(self.base_dir, 'configurable', 'base_indicator.yaml')
@@ -40,6 +64,15 @@ class ConfigHandler:
             raise
 
     def get_indicator_config(self, config_file):
+        """
+        Retrieve the configuration for a specific indicator.
+
+        Args:
+            config_file (str): The name of the configuration file.
+
+        Returns:
+            tuple: A tuple containing standard_config and configurable_config dictionaries.
+        """
         self.logger.info(f"Getting indicator config for file: {config_file}")
         try:
             standard_config_dir = os.path.join(self.base_dir, 'standard')
@@ -61,6 +94,12 @@ class ConfigHandler:
             raise
     
     def get_indicators(self):
+        """
+        Retrieve all enabled indicators from the main configuration.
+
+        Returns:
+            list: A list of tuples containing (indicator_class, config_file) for each enabled indicator.
+        """
         self.logger.info("Getting indicators from main config")
         try:
             main_config_path = os.path.join(self.base_dir, 'main_config.yaml')
