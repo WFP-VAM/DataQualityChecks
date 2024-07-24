@@ -20,7 +20,7 @@ hdds_cols = ['HDDSStapCer',
 # Flags related to HDDS
 hdds_flags = {
     'Flag_HDDS_Missing_Values': "Missing value(s) in the consumption of the food groups",
-    'Flag_HDDS_Erroneous_Values': "Erroneous value(s) (not 1 or 0)",
+    'Flag_HDDS_Erroneous_Values': "Invalid range of values in HDDS(not 1 or 0)",
     'Flag_HDDS_Identical_Values': "0 values across the food groups",
     'Flag_HDDS_FCSStap_mismatch': "Mismatch between FCSStap and HDDSStapCer/HDDSStapRoot",
     'Flag_HDDS_FCSPulse_mismatch': "Mismatch between FCSPulse and HDDSPulse",

@@ -7,7 +7,7 @@ class Demo(BaseIndicator):
     
     flags = {
         'Flag_Demo_Missing': "Missing value(s) in the Demographics Module",
-        'Flag_Demo_Erroneous': "Erroneous value(s) in the Demographics Module",
+        'Flag_Demo_Erroneous': "Demographics Module has invalid range of values (e.g. household size > 30 or no people in the household)",
         'Flag_Demo_High_HHSize': "The Household Size is very high",
         'Flag_Demo_PLW_Higher_F1259': "Number of PLW exceeds females 12-59",
         'Flag_Demo_Inconsistent_HHSize': "Sum of Males and Females does not match the household size",
