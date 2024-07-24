@@ -13,10 +13,10 @@ class LCS_FS(BaseIndicator):
                 
     flags = {
     'Flag_LCS_FS_Missing': "LCS-FS: Missing value(s) in the livelihood coping strategies",
-    'Flag_LCS_FS_Erroneous': "LCS-FS: Erroneous value(s) in the livelihood coping strategies",
+    'Flag_LCS_FS_Erroneous': "LCS-FS: choice list not matching standard Codebook choices - please review choice list in DataBridges",
     'Flag_LCS_FS_No_Children': "LCS-FS: HH Applied strategies related to children with no children",
     'Flag_LCS_FS_Three_or_More_NA': "LCS-FS: Three or more livelihood coping strategies reported as NA",
-    'Flag_LCS_FS_NonExhaustive_Strategies_NA': "LCS-FS: HH Reported activities that can't be exhausted as exhausted or Not Applicable"
+    'Flag_LCS_FS_NonExhaustive_Strategies_NA': "LCS-FS: HH reported as exhausted or not applicable coping strategies that cannot be exhausted or not applicable (e.g. illegal activities, begging)"
     }
         
     def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):

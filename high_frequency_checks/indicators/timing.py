@@ -19,10 +19,10 @@ class Timing(BaseIndicator):
 """
 
     flags = {
-        'Flag_Timing_Invalid_Duration': "The survey duration is invalid",
+        'Flag_Timing_Invalid_Duration': "The survey duration is less than 5 minutes",
         'Flag_Timing_Short_Duration': "The survey duration is short",
         'Flag_Timing_Long_Duration': "The survey duration is long",
-        'Flag_Timing_Abnormal_Start_Period': "The survey started in an abnormal period of the day"
+        'Flag_Timing_Abnormal_Start_Period': "The survey started in an unusual period of the day (e.g. night time)"
     }
 
     def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):
