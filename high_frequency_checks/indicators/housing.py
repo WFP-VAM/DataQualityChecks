@@ -6,7 +6,7 @@ class Housing(BaseIndicator):
         
     flags = {
         'Flag_Housing_Missing': "Missing value(s) in the Housing Module",
-        'Flag_Housing_Erroneous': "Erroneous value(s) in the Housing Module",
+        'Flag_Housing_Erroneous': "Housing Module choice list not matching standard Codebook choices - please review choice list in DataBridges",
         'Flag_Housing_Displaced_Owner': "HH is displaced and own a residential property"
     }
         

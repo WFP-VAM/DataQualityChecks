@@ -17,7 +17,7 @@ class HHEXPF_7D(BaseIndicator):
                 
     flags = {
         'Flag_HHEXPF_7D_Missing': "Missing value(s) in the Food Expenditures 7D Module",
-        'Flag_HHEXPF_7D_Erroneous': "Erroneous value(s) in the Food Expenditures 7D Module",
+        'Flag_HHEXPF_7D_Erroneous': "Food Expenditures 7D Module has invalid range of values (negative or above max thresholds)",
         'Flag_HHEXPF_7D_Zero_FEXP': "No Food Purchases/GiftAid/OwnProduction Reported in the last 7 days"
     }
         

@@ -20,7 +20,7 @@ class rCSI(BaseIndicator):
                 
     flags = {
         'Flag_rCSI_Missing': "Missing value(s) in the reduced coping strategies",
-        'Flag_rCSI_Erroneous': "Erroneous value(s) in the reduced coping strategies",
+        'Flag_rCSI_Erroneous': "rCSI has invalid values (negative or >7)",
         'Flag_rCSI_Identical': "The values of all reduced coping strategies are identical",
         'Flag_rCSI_Poor_FCG_No_Coping': "The food consumption is poor with no reduced coping",
         'Flag_rCSI_Acceptable_FCG_High_Coping': "The food consumption is acceptable and rCSI is high",

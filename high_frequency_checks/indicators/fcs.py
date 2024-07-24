@@ -22,7 +22,7 @@ class FCS(BaseIndicator):
                 
     flags = {
         'Flag_FCS_Missing': "Missing value(s) in the consumption of the 8 main food groups",
-        'Flag_FCS_Erroneous': "Erroneous value(s) in the consumption of the 8 main food groups",
+        'Flag_FCS_Erroneous': "Invalid value(s) in the consumption of the 8 main food groups i.e. food group consumption > 7",
         'Flag_FCS_Identical': "The consumption of all 8 main food groups is identical",
         'Flag_FCS_Low_Staple': "Low staple consumption",
         'Flag_FCS_Low_FCS': "Low FCS",
