@@ -12,6 +12,7 @@ The main entry point of the application. This script is responsible for the foll
 
 import os
 import pandas as pd
+import datetime
 from high_frequency_checks import MasterSheet, ConfigHandler, ConfigGenerator
 from high_frequency_checks.helpers.dataframe_customizer import DataFrameCustomizer
 from high_frequency_checks.etl.get_data import read_data, subset_for_enumerator_performance, get_indicators
@@ -23,6 +24,7 @@ from db_config import db_config
 CREDENTIALS = r"databridges_api_database_credentials.yaml"
 
 def main():
+    start_time = datetime.datetime.now()
     # Set up Logging
     logging_handler = LoggingHandler()
     logger = logging_handler.logger
@@ -101,10 +103,13 @@ def main():
     enumerator_df = subset_for_enumerator_performance(df)
     load_data(enumerator_df, f"{db_config["CountryName"]}DataQualityEnumeratorReport")
 
+    end_time = datetime.datetime.now()
+
     # Terminal: Print if there were any errors
     error_count = error_handler.error_count
     warning_count = error_handler.warning_count
     print(f"Data processing completed with {error_count} errors and {warning_count} warnings.")
+    print(f"Total time taken: {end_time - start_time}")
     
 if __name__ == "__main__":
 
