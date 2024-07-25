@@ -12,7 +12,7 @@ The main entry point of the application. This script is responsible for the foll
 
 import os
 import pandas as pd
-import datetime
+from datetime import datetime
 from data_bridges_knots import DataBridgesShapes
 from high_frequency_checks import MasterSheet, ConfigHandler, ConfigGenerator, DataFrameCustomizer
 from high_frequency_checks.etl.extract import read_data, subset_for_enumerator_performance, get_indicators
@@ -54,7 +54,7 @@ def generate_all_indicators_report(df, indicators, base_cols, report_path):
             current_df = instance.df.copy()
     return current_df
 
-def generate_mastersheet_report(df):
+def generate_mastersheet_report(df, base_cols, report_path):
     """
     Generates a mastersheet report from the provided DataFrame, base columns, and review columns.
 
@@ -71,16 +71,20 @@ def generate_mastersheet_report(df):
     return MasterSheet.merge_with_existing_report(new_mastersheet_df, report_path)
 
 
-def main():
+
+    
+if __name__ == "__main__":
+
+    TEST = False
 
     # Time setup
-    start_time = datetime.datetime.now()
+    start_time = datetime.now()
+    start_time = start_time.strftime("%m/%d/%Y, %H:%M:%S")
 
     # Setup API client
     client = DataBridgesShapes(CREDENTIALS)
     survey_id = DATA_BRIDGES_CONFIG['survey_id']
-    print(f'Checking data quality for {COUNTRY_NAME} survey #{survey_id}')
-
+    print(f'Checking data quality for {COUNTRY_NAME} survey #{survey_id} at {start_time}')
 
     # Setup logging
     logging_handler = LoggingHandler()
@@ -94,8 +98,14 @@ def main():
 
     # Read data
     survey_id = DATA_BRIDGES_CONFIG['survey_id']
-    df = client.get_household_survey(survey_id=survey_id, access_type='full', page_size=1000)
+
+    if TEST == True:
+        df = pd.read_csv("data/drc_test_data.csv")
+    else:
+        df = client.get_household_survey(survey_id=survey_id, access_type='full', page_size=1000)
     print(f"Data loaded, performing checks")
+
+    # df.to_csv("data/drc_test_data.csv")
 
     # DRC specific standardization / mapping
     df = map_admin_areas(df)
@@ -108,21 +118,19 @@ def main():
     full_report = generate_all_indicators_report(df, indicators, base_cols, report_all_indicators_path)
 
     # Generate mastersheet
-    generate_mastersheet_report(full_report)
+    mastersheet_report = generate_mastersheet_report(full_report, base_cols, report_mastersheet_path)
 
     # Export reports in Excel
-    with pd.ExcelWriter(report_path) as writer:
-        final_mastersheet_df.to_excel(writer, sheet_name='MasterSheet', index=False)
+    with pd.ExcelWriter(report_mastersheet_path) as writer:
+        mastersheet_report.to_excel(writer, sheet_name='MasterSheet', index=False)
 
-    end_time = datetime.datetime.now()
+    end_time = datetime.now()
+    end_time = end_time.strftime("%m/%d/%Y, %H:%M:%S")
 
     # Terminal: Print if there were any errors
     error_count = error_handler.error_count
     warning_count = error_handler.warning_count
     print(f"Data processing completed with {error_count} errors and {warning_count} warnings.")
     print(f"Total time taken: {end_time - start_time}")
-    
-if __name__ == "__main__":
-    main()
     
 
