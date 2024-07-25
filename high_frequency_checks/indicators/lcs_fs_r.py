@@ -24,8 +24,8 @@ class LCS_FS_R(BaseIndicator):
     'Flag_LCS_FS_R_NonExhaustive_Strategies_NA': "LCS-FS-R: HH reported as exhausted or not applicable coping strategies that cannot be exhausted or not applicable (e.g. illegal activities, begging)"
     }
         
-    def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):
-        super().__init__(df, base_cols, review_cols, standard_config, configurable_config, flags)
+    def __init__(self, df, base_cols, standard_config, configurable_config, flags):
+        super().__init__(df, base_cols, standard_config, configurable_config, flags)
         self.logger = logging.getLogger(__name__)
         self.lcs_children_cols = list(self.standard_config.get('lcs_fs_r_children_cols', {}))
         self.lcs_non_exhaustive_cols = list(self.standard_config.get('lcs_fs_r_non_exhaustive_cols', {}))

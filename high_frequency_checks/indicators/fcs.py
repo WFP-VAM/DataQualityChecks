@@ -29,8 +29,8 @@ class FCS(BaseIndicator):
         'Flag_FCS_High_FCS': "High FCS",
     }
         
-    def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):
-        super().__init__(df, base_cols, review_cols, standard_config, configurable_config, flags)
+    def __init__(self, df, base_cols, standard_config, configurable_config, flags):
+        super().__init__(df, base_cols, standard_config, configurable_config, flags)
         self.logger = logging.getLogger(__name__)
         self.weights = self.standard_config.get('weights', {})
         self.high_sugar_oil_consumption = self.configurable_config.get('high_sugar_oil_consumption')

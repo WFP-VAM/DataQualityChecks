@@ -19,11 +19,10 @@ import numpy as np
 
 
 class BaseIndicator:
-    def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):
+    def __init__(self, df, base_cols, standard_config, configurable_config, flags):
 
         self.df = df
         self.base_cols = base_cols
-        self.review_cols = review_cols
         self.standard_config = standard_config
         self.configurable_config = configurable_config
         self.cols_type = self.standard_config.get('columns_type', {})

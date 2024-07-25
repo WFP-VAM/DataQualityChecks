@@ -56,9 +56,8 @@ class ConfigHandler:
             self.logger.info(f"Base config path: {base_config_path}")
             base_config = self.read_yaml(base_config_path)
             base_cols = list(base_config.get('base_cols', []))
-            review_cols = list(base_config.get('review_cols', []))
             self.logger.info("Successfully retrieved base config")
-            return base_cols, review_cols
+            return base_cols
         except Exception as e:
             self.logger.error(f"Error getting base config: {e}")
             raise

@@ -10,8 +10,8 @@ class Housing(BaseIndicator):
         'Flag_Housing_Displaced_Owner': "HH is displaced and own a residential property"
     }
         
-    def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):
-        super().__init__(df, base_cols, review_cols, standard_config, configurable_config, flags)
+    def __init__(self, df, base_cols, standard_config, configurable_config, flags):
+        super().__init__(df, base_cols, standard_config, configurable_config, flags)
         self.logger = logging.getLogger(__name__)
         
     def _process_specific(self):

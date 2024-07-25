@@ -14,8 +14,8 @@ class Demo(BaseIndicator):
         'Flag_Demo_No_Adults': "There are no adults in the household",
     }
         
-    def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):
-        super().__init__(df, base_cols, review_cols, standard_config, configurable_config, flags)
+    def __init__(self, df, base_cols, standard_config, configurable_config, flags):
+        super().__init__(df, base_cols, standard_config, configurable_config, flags)
         self.logger = logging.getLogger(__name__)
         self.male_cols = list(self.standard_config.get('male_cols', {}))
         self.female_cols = list(self.standard_config.get('female_cols', {}))

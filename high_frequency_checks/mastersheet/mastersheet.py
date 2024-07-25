@@ -6,18 +6,10 @@ import os
 logging.basicConfig(filename='data_processing_log.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class MasterSheet:
-    def __init__(self, df, base_cols, review_cols):
+    def __init__(self, df, base_cols):
         self.df = df
         self.base_cols = base_cols
-        self.review_cols = review_cols
-        self.ensure_review_cols()
         self.logger = logging.getLogger(__name__)
-
-    def ensure_review_cols(self):
-        """Ensure review columns are present in the dataframe."""
-        for col in self.review_cols:
-            if col not in self.df.columns:
-                self.df[col] = None
         
     @staticmethod
     def merge_with_existing_report(new_mastersheet_df, existing_mastersheet_path):
@@ -53,7 +45,7 @@ class MasterSheet:
             hh_summary = self.df[self.df['Flag_All_Indicators'] == 1]
 
             # Specify the columns in the mastersheet
-            mastersheet_cols = self.base_cols + flag_narrative_cols + ['Flag_Narrative_Final'] + self.review_cols
+            mastersheet_cols = self.base_cols + flag_narrative_cols + ['Flag_Narrative_Final']
 
             hh_summary = hh_summary[mastersheet_cols]
 

@@ -25,8 +25,8 @@ class Timing(BaseIndicator):
         'Flag_Timing_Abnormal_Start_Period': "The survey started in an unusual period of the day (e.g. night time)"
     }
 
-    def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):
-        super().__init__(df, base_cols, review_cols, standard_config, configurable_config, flags)
+    def __init__(self, df, base_cols, standard_config, configurable_config, flags):
+        super().__init__(df, base_cols, standard_config, configurable_config, flags)
         self.logger = logging.getLogger(__name__)
         self.invalid_duration_mins = self.configurable_config.get('invalid_duration_mins')
         self.short_duration_mins = self.configurable_config.get('short_duration_mins')
