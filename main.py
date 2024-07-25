@@ -14,10 +14,10 @@ import os
 import pandas as pd
 import datetime
 from data_bridges_knots import DataBridgesShapes
-from high_frequency_checks import MasterSheet, ConfigHandler, ConfigGenerator
-from high_frequency_checks.helpers.dataframe_customizer import DataFrameCustomizer
+from high_frequency_checks import MasterSheet, ConfigHandler, ConfigGenerator, DataFrameCustomizer
 from high_frequency_checks.etl.extract import read_data, subset_for_enumerator_performance, get_indicators
 from high_frequency_checks.etl.load import load_data
+from high_frequency_checks.etl.transform import map_admin_areas, create_urban_rural
 from high_frequency_checks.helpers.logging_config import LoggingHandler
 from data__bridges_config import DATA_BRIDGES_CONFIG
 
@@ -74,6 +74,7 @@ def generate_all_indicators_report(df, indicators, base_cols, review_cols, repor
             current_df = instance.df.copy()
 
 def generate_mastersheet_report(df, base_cols, review_cols, report_path):
+    df = DataFrameCustomizer(df)
     mastersheet = MasterSheet(df, base_cols, review_cols)
     new_mastersheet_df = mastersheet.generate_dataframe()
     final_mastersheet_df = MasterSheet.merge_with_existing_report(new_mastersheet_df, report_path)
@@ -128,11 +129,24 @@ def main():
     # Get path for reports
     report_all_indicators_path, report_mastersheet_path = create_reports_folder()
 
-    # Generate All Indicators Report
-    generate_all_indicators_report(df, indicators, base_cols, review_cols, report_all_indicators_path)
+    # # Generate All Indicators Report
+    # generate_all_indicators_report(df, indicators, base_cols, review_cols, report_all_indicators_path)
 
     # Generate MasterSheet Report
-    generate_mastersheet_report(df, base_cols, review_cols, report_mastersheet_path)
+    # df = DataFrameCustomizer(df)
+    df = map_admin_areas(df)
+    df = create_urban_rural(df)
+
+    mastersheet = MasterSheet(df, base_cols, review_cols)
+    new_mastersheet_df = mastersheet.generate_dataframe()
+    final_mastersheet_df = MasterSheet.merge_with_existing_report(new_mastersheet_df, report_mastersheet_path)
+
+    with pd.ExcelWriter(report_mastersheet_path) as writer:
+        final_mastersheet_df.to_excel(writer, sheet_name='Summary', index=False)
+
+
+
+    # generate_mastersheet_report(df, base_cols, review_cols, report_mastersheet_path)
 
     end_time = datetime.datetime.now()
 
