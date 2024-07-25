@@ -13,92 +13,87 @@ The main entry point of the application. This script is responsible for the foll
 import os
 import pandas as pd
 import datetime
-from high_frequency_checks import MasterSheet, ConfigHandler, ConfigGenerator
-from high_frequency_checks.helpers.dataframe_customizer import DataFrameCustomizer
+from data_bridges_knots import DataBridgesShapes
+from high_frequency_checks import MasterSheet, ConfigHandler, ConfigGenerator, DataFrameCustomizer
 from high_frequency_checks.etl.extract import read_data, subset_for_enumerator_performance, get_indicators
 from high_frequency_checks.etl.load import load_data
+from high_frequency_checks.etl.transform import map_admin_areas, create_urban_rural
 from high_frequency_checks.helpers.logging_config import LoggingHandler
-from db_config import db_config
-from data_bridges_knots import DataBridgesShapes
+from data__bridges_config import DATA_BRIDGES_CONFIG
 
+CREDENTIALS = DATA_BRIDGES_CONFIG["credentials_file_path"]
 
-# Credentials for database and API
-CREDENTIALS = r"databridges_api_database_credentials.yaml"
-
-
-
-def main():
-    start_time = datetime.datetime.now()
-    # Set up Logging
+def setup_logging():
     logging_handler = LoggingHandler()
-    logger = logging_handler.logger
-    error_handler = logging_handler.error_handler
+    return logging_handler.logger, logging_handler.error_handler
 
-    # Define the input directory and file path
-    input_directory = "high_frequency_checks/config"  # Replace with your actual input directory path
+def get_configuration(input_directory = "high_frequency_checks/config"):
+      # Replace with your actual input directory path
     config_file_path = os.path.join(input_directory, 'config.csv')
 
-    # # Generate configuration from MODA csv (NOTE: never executes with yaml files)
-    # # Check if config.csv exists in the input directory
-    # if os.path.isfile(config_file_path):
-    #     print(f"Generating configuration from {config_file_path}")
-    #     # Read configuration from MODA csv and generate config files
-    #     config_generator = ConfigGenerator()
-    #     config_generator.generate_configs()
+    # Generate configuration from MODA csv (NOTE: never executes with yaml files)
+    # Check if config.csv exists in the input directory
+    if os.path.isfile(config_file_path):
+        print(f"Generating configuration from {config_file_path}")
+        # Read configuration from MODA csv and generate config files
+        config_generator = ConfigGenerator()
+        config_generator.generate_configs()
+    return  config_generator
 
-    # Read configurations for base indicator
-    config_handler = ConfigHandler()
-    indicators = config_handler.get_indicators()
-    base_cols, review_cols = config_handler.get_base_config()
-
-    # report writing 
-    reports_folder = './reports'
+def create_reports_folder(reports_folder = './reports'):
     os.makedirs(reports_folder, exist_ok=True)
-
-    reports = {
-        "all_indicators": f'{db_config["CountryName"]}_HFC_All_Indicators_Report.xlsx',
-        "mastersheet": f'{db_config["CountryName"]}_HFC_MasterSheet_Report.xlsx'
-    } 
+    
+    reports =  { "all_indicators": f'{DATA_BRIDGES_CONFIG["country_name"]}_HFC_All_Indicators_Report.xlsx', "mastersheet": f'{DATA_BRIDGES_CONFIG["country_name"]}_HFC_MasterSheet_Report.xlsx' } 
 
     report_all_indicators_path = os.path.join(reports_folder, reports["all_indicators"])
 
     report_mastersheet_path = os.path.join(reports_folder, reports['mastersheet'])
+    
+    return report_all_indicators_path, report_mastersheet_path
 
-    df = read_data(survey_id=db_config['DataBridgesIDs']['dataset'], config_path=CREDENTIALS)
+def standardize_dataset(df):
+    df = map_admin_areas(df)
+    df = create_urban_rural(df)
+    return df
 
-    # Specifically for DRC
-    drc_customizations = DataFrameCustomizer(df)
-    df = drc_customizations.rename_columns()
-    df = drc_customizations.create_urban_rural()
+def generate_all_indicators_report(df, indicators, base_cols, review_cols, report_path):
+    with pd.ExcelWriter(report_path) as writer:
+        current_df = df.copy()
 
-    # Generate All Indicators Report
-    with pd.ExcelWriter(report_all_indicators_path) as writer:
-        current_df = df
-        
+        config_handler = ConfigHandler()
         for indicator_class, config_file in indicators:
             standard_config, configurable_config = config_handler.get_indicator_config(config_file)
-            instance = indicator_class(df=current_df, base_cols=base_cols, review_cols=review_cols, 
-                                       standard_config=standard_config, configurable_config=configurable_config,
-                                       flags=indicator_class.flags)
+            instance = indicator_class(
+                df=current_df, 
+                base_cols=base_cols, 
+                review_cols=review_cols, 
+                standard_config=standard_config, 
+                configurable_config=configurable_config,
+                flags=indicator_class.flags
+            )
             instance.process(writer)
             current_df = instance.df.copy()
+    return current_df
 
-    # Generate MasterSheet Report
-    mastersheet = MasterSheet(current_df, base_cols, review_cols)
+def generate_mastersheet_report(df, base_cols, review_cols, report_path):
+    mastersheet = MasterSheet(df, base_cols, review_cols)
     new_mastersheet_df = mastersheet.generate_dataframe()
-    final_mastersheet_df = MasterSheet.merge_with_existing_report(new_mastersheet_df, report_mastersheet_path)
+    final_mastersheet_df = MasterSheet.merge_with_existing_report(new_mastersheet_df, report_path)
 
-    with pd.ExcelWriter(report_mastersheet_path) as writer:
+    with pd.ExcelWriter(report_path) as writer:
         final_mastersheet_df.to_excel(writer, sheet_name='MasterSheet', index=False)
+    
+    return final_mastersheet_df
 
-    # # Upload Mastersheet to database
-    master_table_name = f"{db_config["CountryName"]}DataQualitySummaryReport"
+def upload_reports_to_database(client, report_all_indicators_path, report_mastersheet_path):
+        # # Upload Mastersheet to database
+    master_table_name = f"{DATA_BRIDGES_CONFIG["country_name"]}DataQualitySummaryReport"
     mastersheets_cols_to_drop = ["Reviewed", "Review_Date", "Reviewed_By", "Action_Taken"]
     mastersheet_report = final_mastersheet_df.drop(columns=mastersheets_cols_to_drop)
     load_data(mastersheet_report, master_table_name)
     
     # Upload disaggregated report to database
-    disaggregated_table_name = f"{db_config['CountryName']}DataQualityAllIndicatorsReport"
+    disaggregated_table_name = f"{DATA_BRIDGES_CONFIG['country_name']}DataQualityAllIndicatorsReport"
     excel_file = r'reports\DRC_HFC_All_Indicators_Report.xlsx'
     all_indicators = get_indicators(excel_file)
     load_data(all_indicators, disaggregated_table_name)
@@ -106,7 +101,50 @@ def main():
 
     # Process for Tableau and upload to abase    
     enumerator_df = subset_for_enumerator_performance(df)
-    load_data(enumerator_df, f"{db_config["CountryName"]}DataQualityEnumeratorReport")
+    load_data(enumerator_df, f"{DATA_BRIDGES_CONFIG['country_name']}DataQualityEnumeratorReport")
+
+
+def main():
+    # Time setup
+    start_time = datetime.datetime.now()
+
+    # Setup API client
+    client = DataBridgesShapes(CREDENTIALS)
+
+    # Setup logging
+    logging_handler = LoggingHandler()
+    logger = logging_handler.logger
+    error_handler = logging_handler.error_handler
+
+    # Read configurations for base indicator
+    config_handler = ConfigHandler()
+    indicators = config_handler.get_indicators()
+    base_cols, review_cols = config_handler.get_base_config()
+
+    # Read data
+    print("Reading data from DataBridges")
+    survey_id = DATA_BRIDGES_CONFIG['survey_id']
+    df = client.get_household_survey(survey_id=survey_id, access_type='full', page_size=1000)
+
+    print(f"Data for {DATA_BRIDGES_CONFIG["country_name"]} survey #{survey_id} read successfully.")
+
+    # Get path for reports
+    report_all_indicators_path, report_mastersheet_path = create_reports_folder()
+
+    # DRC specific standardization / mapping
+    df = standardize_dataset(df)
+
+    # # Generate All Indicators Report
+    all_indicator_report = generate_all_indicators_report(df, indicators, base_cols, review_cols, report_all_indicators_path)
+
+    # mastersheet = MasterSheet(all_indicator_report, base_cols, review_cols)
+    # new_mastersheet_df = mastersheet.generate_dataframe()
+    # final_mastersheet_df = MasterSheet.merge_with_existing_report(new_mastersheet_df, report_mastersheet_path)
+
+    # with pd.ExcelWriter(report_mastersheet_path) as writer:
+    #     final_mastersheet_df.to_excel(writer, sheet_name='Summary', index=False)
+
+    generate_mastersheet_report(all_indicator_report, base_cols, review_cols, report_mastersheet_path)
 
     end_time = datetime.datetime.now()
 
@@ -117,7 +155,6 @@ def main():
     print(f"Total time taken: {end_time - start_time}")
     
 if __name__ == "__main__":
-
     main()
     
 
