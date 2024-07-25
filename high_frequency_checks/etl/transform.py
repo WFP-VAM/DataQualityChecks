@@ -9,8 +9,12 @@ def map_admin_areas(df):
         'ID04LABEL': 'ADMIN4Name',
         'ID05': 'ADMIN5Name',
     }
-    return df.rename(columns=admin_areas)
+    try:
+        df = df.rename(columns=admin_areas)
+    except KeyError:
+        pass
 
+    return df
 
 def create_urban_rural(df):
     """

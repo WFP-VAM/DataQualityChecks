@@ -51,14 +51,15 @@ def create_reports_folder(reports_folder = './reports'):
     
     return report_all_indicators_path, report_mastersheet_path
 
+def standardize_dataset(df):
+    df = map_admin_areas(df)
+    df = create_urban_rural(df)
+    return df
 
 def generate_all_indicators_report(df, indicators, base_cols, review_cols, report_path):
     with pd.ExcelWriter(report_path) as writer:
         current_df = df.copy()
-        df_customizer = DataFrameCustomizer(current_df)
-        current_df = df_customizer.rename_columns()
-        current_df = df_customizer.create_urban_rural()
-        
+
         config_handler = ConfigHandler()
         for indicator_class, config_file in indicators:
             standard_config, configurable_config = config_handler.get_indicator_config(config_file)
@@ -72,9 +73,9 @@ def generate_all_indicators_report(df, indicators, base_cols, review_cols, repor
             )
             instance.process(writer)
             current_df = instance.df.copy()
+    return current_df
 
 def generate_mastersheet_report(df, base_cols, review_cols, report_path):
-    df = DataFrameCustomizer(df)
     mastersheet = MasterSheet(df, base_cols, review_cols)
     new_mastersheet_df = mastersheet.generate_dataframe()
     final_mastersheet_df = MasterSheet.merge_with_existing_report(new_mastersheet_df, report_path)
@@ -124,29 +125,26 @@ def main():
     print("Reading data from DataBridges")
     survey_id = DATA_BRIDGES_CONFIG['survey_id']
     df = client.get_household_survey(survey_id=survey_id, access_type='full', page_size=1000)
+
     print(f"Data for {DATA_BRIDGES_CONFIG["country_name"]} survey #{survey_id} read successfully.")
 
     # Get path for reports
     report_all_indicators_path, report_mastersheet_path = create_reports_folder()
 
+    # DRC specific standardization / mapping
+    df = standardize_dataset(df)
+
     # # Generate All Indicators Report
-    # generate_all_indicators_report(df, indicators, base_cols, review_cols, report_all_indicators_path)
+    all_indicator_report = generate_all_indicators_report(df, indicators, base_cols, review_cols, report_all_indicators_path)
 
-    # Generate MasterSheet Report
-    # df = DataFrameCustomizer(df)
-    df = map_admin_areas(df)
-    df = create_urban_rural(df)
+    # mastersheet = MasterSheet(all_indicator_report, base_cols, review_cols)
+    # new_mastersheet_df = mastersheet.generate_dataframe()
+    # final_mastersheet_df = MasterSheet.merge_with_existing_report(new_mastersheet_df, report_mastersheet_path)
 
-    mastersheet = MasterSheet(df, base_cols, review_cols)
-    new_mastersheet_df = mastersheet.generate_dataframe()
-    final_mastersheet_df = MasterSheet.merge_with_existing_report(new_mastersheet_df, report_mastersheet_path)
+    # with pd.ExcelWriter(report_mastersheet_path) as writer:
+    #     final_mastersheet_df.to_excel(writer, sheet_name='Summary', index=False)
 
-    with pd.ExcelWriter(report_mastersheet_path) as writer:
-        final_mastersheet_df.to_excel(writer, sheet_name='Summary', index=False)
-
-
-
-    # generate_mastersheet_report(df, base_cols, review_cols, report_mastersheet_path)
+    generate_mastersheet_report(all_indicator_report, base_cols, review_cols, report_mastersheet_path)
 
     end_time = datetime.datetime.now()
 
