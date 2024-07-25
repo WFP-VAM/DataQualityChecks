@@ -75,8 +75,6 @@ def generate_mastersheet_report(df, base_cols, report_path):
     
 if __name__ == "__main__":
 
-    TEST = False
-
     # Time setup
     start_time = datetime.now()
     start_time = start_time.strftime("%m/%d/%Y, %H:%M:%S")
@@ -99,13 +97,8 @@ if __name__ == "__main__":
     # Read data
     survey_id = DATA_BRIDGES_CONFIG['survey_id']
 
-    if TEST == True:
-        df = pd.read_csv("data/drc_test_data.csv")
-    else:
-        df = client.get_household_survey(survey_id=survey_id, access_type='full', page_size=1000)
+    df = client.get_household_survey(survey_id=survey_id, access_type='full', page_size=1000)
     print(f"Data loaded, performing checks")
-
-    # df.to_csv("data/drc_test_data.csv")
 
     # DRC specific standardization / mapping
     df = map_admin_areas(df)
