@@ -15,13 +15,17 @@ import pandas as pd
 import datetime
 from high_frequency_checks import MasterSheet, ConfigHandler, ConfigGenerator
 from high_frequency_checks.helpers.dataframe_customizer import DataFrameCustomizer
-from high_frequency_checks.etl.get_data import read_data, subset_for_enumerator_performance, get_indicators
-from high_frequency_checks.etl.load_data import load_data
+from high_frequency_checks.etl.extract import read_data, subset_for_enumerator_performance, get_indicators
+from high_frequency_checks.etl.load import load_data
 from high_frequency_checks.helpers.logging_config import LoggingHandler
 from db_config import db_config
+from data_bridges_knots import DataBridgesShapes
+
 
 # Credentials for database and API
 CREDENTIALS = r"databridges_api_database_credentials.yaml"
+
+
 
 def main():
     start_time = datetime.datetime.now()

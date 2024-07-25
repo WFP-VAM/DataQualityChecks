@@ -1,6 +1,6 @@
 # Get data
 import pandas as pd
-from data_bridges_knots import DataBridgesShapes, get_value_labels
+from data_bridges_knots import DataBridgesShapes
 
 def read_test_data():
     print("Reading data from local file")
