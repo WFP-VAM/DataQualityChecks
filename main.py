@@ -66,13 +66,14 @@ def main():
 
     df = read_data(survey_id=db_config['DataBridgesIDs']['dataset'], config_path=CREDENTIALS)
 
+    # Specifically for DRC
+    drc_customizations = DataFrameCustomizer(df)
+    df = drc_customizations.rename_columns()
+    df = drc_customizations.create_urban_rural()
+
     # Generate All Indicators Report
     with pd.ExcelWriter(report_all_indicators_path) as writer:
         current_df = df
-        # Specifically for DRC
-        df_customizer = DataFrameCustomizer(current_df)
-        current_df = df_customizer.rename_columns()
-        current_df = df_customizer.create_urban_rural()
         
         for indicator_class, config_file in indicators:
             standard_config, configurable_config = config_handler.get_indicator_config(config_file)
