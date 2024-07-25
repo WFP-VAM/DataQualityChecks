@@ -19,14 +19,14 @@ class Timing(BaseIndicator):
 """
 
     flags = {
-        'Flag_Timing_Invalid_Duration': "The survey duration is invalid",
+        'Flag_Timing_Invalid_Duration': "The survey duration is less than 5 minutes",
         'Flag_Timing_Short_Duration': "The survey duration is short",
         'Flag_Timing_Long_Duration': "The survey duration is long",
-        'Flag_Timing_Abnormal_Start_Period': "The survey started in an abnormal period of the day"
+        'Flag_Timing_Abnormal_Start_Period': "The survey started in an unusual period of the day (e.g. night time)"
     }
 
-    def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):
-        super().__init__(df, base_cols, review_cols, standard_config, configurable_config, flags)
+    def __init__(self, df, base_cols, standard_config, configurable_config, flags):
+        super().__init__(df, base_cols, standard_config, configurable_config, flags)
         self.logger = logging.getLogger(__name__)
         self.invalid_duration_mins = self.configurable_config.get('invalid_duration_mins')
         self.short_duration_mins = self.configurable_config.get('short_duration_mins')
@@ -61,7 +61,7 @@ class Timing(BaseIndicator):
     def calculate_duration_mins(self):
         self.logger.info("Calculating Survey Duration")
         try:
-            self.df['Duration_Mins'] = ((self.df['end'] - self.df['start']).dt.total_seconds() / 60).round().astype(int)
+            self.df['Duration_Mins'] = ((self.df['end'] - self.df['start']).dt.total_seconds() / 60).round().astype(int, errors='ignore')
             self.logger.info("Survey Duration calculated successfully")
         except Exception as e:
             self.logger.error(f"Error calculating Survey Duration: {e}")

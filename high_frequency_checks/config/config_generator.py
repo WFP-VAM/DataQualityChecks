@@ -101,12 +101,6 @@ class ConfigGenerator:
                 'ADMIN2Name',
                 'ADMIN3Name',
                 'ADMIN4Name'
-            ],
-            'review_cols': [
-                'Reviewed',
-                'Review_Date',
-                'Reviewed_By',
-                'Action_Taken'
             ]
         }
         yaml_filename = os.path.join(self.output_dir, 'base_indicator.yaml')

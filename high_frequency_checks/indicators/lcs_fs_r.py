@@ -18,14 +18,14 @@ class LCS_FS_R(BaseIndicator):
                 
     flags = {
     'Flag_LCS_FS_R_Missing': "LCS-FS-R: Missing value(s) in the livelihood coping strategies",
-    'Flag_LCS_FS_R_Erroneous': "LCS-FS-R: Erroneous value(s) in the livelihood coping strategies",
+    'Flag_LCS_FS_R_Erroneous': "LCS-FS-R: choice list not matching standard Codebook choices - please review choice list in DataBridges",
     'Flag_LCS_FS_R_No_Children': "LCS-FS-R: HH Applied strategies related to children with no children",
     'Flag_LCS_FS_R_Three_or_More_NA': "LCS-FS-R: Three or more livelihood coping strategies reported as NA",
-    'Flag_LCS_FS_R_NonExhaustive_Strategies_NA': "LCS-FS-R: HH Reported activities that can't be exhausted as exhausted or Not Applicable"
+    'Flag_LCS_FS_R_NonExhaustive_Strategies_NA': "LCS-FS-R: HH reported as exhausted or not applicable coping strategies that cannot be exhausted or not applicable (e.g. illegal activities, begging)"
     }
         
-    def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):
-        super().__init__(df, base_cols, review_cols, standard_config, configurable_config, flags)
+    def __init__(self, df, base_cols, standard_config, configurable_config, flags):
+        super().__init__(df, base_cols, standard_config, configurable_config, flags)
         self.logger = logging.getLogger(__name__)
         self.lcs_children_cols = list(self.standard_config.get('lcs_fs_r_children_cols', {}))
         self.lcs_non_exhaustive_cols = list(self.standard_config.get('lcs_fs_r_non_exhaustive_cols', {}))

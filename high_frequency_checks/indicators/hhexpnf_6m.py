@@ -14,11 +14,11 @@ class HHEXPNF_6M(BaseIndicator):
         
     flags = {
         'Flag_HHEXPNF_6M_Missing': "Missing value(s) in the Non-Food Expenditures 6M Module",
-        'Flag_HHEXPNF_6M_Erroneous': "Erroneous value(s) in the Non-Food Expenditures 6M Module",
+        'Flag_HHEXPNF_6M_Erroneous': "Non-Food Expenditures 6M Module has invalid range of values (negative or above max thresholds)",
     }
         
-    def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):
-        super().__init__(df, base_cols, review_cols, standard_config, configurable_config, flags)
+    def __init__(self, df, base_cols, standard_config, configurable_config, flags):
+        super().__init__(df, base_cols, standard_config, configurable_config, flags)
         self.logger = logging.getLogger(__name__)
         self.hhexpnf_6m_purch_cols = self.standard_config.get('hhexpnf_6m_purch_cols', {})
         self.hhexpnf_6m_giftaid_cols = self.standard_config.get('hhexpnf_6m_giftaid_cols', {})

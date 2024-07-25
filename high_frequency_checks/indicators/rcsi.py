@@ -20,15 +20,15 @@ class rCSI(BaseIndicator):
                 
     flags = {
         'Flag_rCSI_Missing': "Missing value(s) in the reduced coping strategies",
-        'Flag_rCSI_Erroneous': "Erroneous value(s) in the reduced coping strategies",
+        'Flag_rCSI_Erroneous': "rCSI has invalid values (negative or >7)",
         'Flag_rCSI_Identical': "The values of all reduced coping strategies are identical",
         'Flag_rCSI_Poor_FCG_No_Coping': "The food consumption is poor with no reduced coping",
         'Flag_rCSI_Acceptable_FCG_High_Coping': "The food consumption is acceptable and rCSI is high",
         'Flag_rCSI_MealAdult_No_Children': "Adults reduced their meal intake for children with no children in HH"
     }
         
-    def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):
-        super().__init__(df, base_cols, review_cols, standard_config, configurable_config, flags)
+    def __init__(self, df, base_cols, standard_config, configurable_config, flags):
+        super().__init__(df, base_cols, standard_config, configurable_config, flags)
         self.logger = logging.getLogger(__name__)
         self.weights = self.standard_config.get('weights', {})
         self.high_sugar_oil_consumption = self.configurable_config.get('high_sugar_oil_consumption')

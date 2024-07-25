@@ -1,4 +1,5 @@
-@echo OFF
+@echo off
+
 rem How to run a Python script in a given conda environment from a batch file.
 
 rem It doesn't require:

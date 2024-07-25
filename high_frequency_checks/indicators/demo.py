@@ -7,15 +7,15 @@ class Demo(BaseIndicator):
     
     flags = {
         'Flag_Demo_Missing': "Missing value(s) in the Demographics Module",
-        'Flag_Demo_Erroneous': "Erroneous value(s) in the Demographics Module",
+        'Flag_Demo_Erroneous': "Demographics Module has invalid range of values (e.g. household size > 30 or no people in the household)",
         'Flag_Demo_High_HHSize': "The Household Size is very high",
         'Flag_Demo_PLW_Higher_F1259': "Number of PLW exceeds females 12-59",
         'Flag_Demo_Inconsistent_HHSize': "Sum of Males and Females does not match the household size",
         'Flag_Demo_No_Adults': "There are no adults in the household",
     }
         
-    def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):
-        super().__init__(df, base_cols, review_cols, standard_config, configurable_config, flags)
+    def __init__(self, df, base_cols, standard_config, configurable_config, flags):
+        super().__init__(df, base_cols, standard_config, configurable_config, flags)
         self.logger = logging.getLogger(__name__)
         self.male_cols = list(self.standard_config.get('male_cols', {}))
         self.female_cols = list(self.standard_config.get('female_cols', {}))

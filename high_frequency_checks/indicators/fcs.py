@@ -22,15 +22,15 @@ class FCS(BaseIndicator):
                 
     flags = {
         'Flag_FCS_Missing': "Missing value(s) in the consumption of the 8 main food groups",
-        'Flag_FCS_Erroneous': "Erroneous value(s) in the consumption of the 8 main food groups",
+        'Flag_FCS_Erroneous': "Invalid value(s) in the consumption of the 8 main food groups i.e. food group <0 or >7",
         'Flag_FCS_Identical': "The consumption of all 8 main food groups is identical",
         'Flag_FCS_Low_Staple': "Low staple consumption",
         'Flag_FCS_Low_FCS': "Low FCS",
         'Flag_FCS_High_FCS': "High FCS",
     }
         
-    def __init__(self, df, base_cols, review_cols, standard_config, configurable_config, flags):
-        super().__init__(df, base_cols, review_cols, standard_config, configurable_config, flags)
+    def __init__(self, df, base_cols, standard_config, configurable_config, flags):
+        super().__init__(df, base_cols, standard_config, configurable_config, flags)
         self.logger = logging.getLogger(__name__)
         self.weights = self.standard_config.get('weights', {})
         self.high_sugar_oil_consumption = self.configurable_config.get('high_sugar_oil_consumption')

@@ -7,8 +7,3 @@ base_cols:
 - ADMIN3Name
 - ADMIN4Name
 - today
-review_cols:
-- Reviewed
-- Review_Date
-- Reviewed_By
-- Action_Taken
