@@ -14,9 +14,7 @@ import os
 import pandas as pd
 from datetime import datetime
 from data_bridges_knots import DataBridgesShapes
-from high_frequency_checks import MasterSheet, ConfigHandler, ConfigGenerator, DataFrameCustomizer
-from high_frequency_checks.etl.extract import read_data, subset_for_enumerator_performance, get_indicators
-from high_frequency_checks.etl.load import load_data
+from high_frequency_checks import MasterSheet, ConfigHandler
 from high_frequency_checks.etl.transform import map_admin_areas, create_urban_rural
 from high_frequency_checks.helpers.logging_config import LoggingHandler
 from data__bridges_config import DATA_BRIDGES_CONFIG
@@ -24,7 +22,7 @@ from data__bridges_config import DATA_BRIDGES_CONFIG
 CREDENTIALS = DATA_BRIDGES_CONFIG["credentials_file_path"]
 COUNTRY_NAME = DATA_BRIDGES_CONFIG["country_name"]
 REPORT_FOLDER = "./reports"
-ALL_INDICATOR_REPORT = f' {COUNTRY_NAME}_HFC_All_Indicators_Report.xlsx'
+ALL_INDICATOR_REPORT = f'{COUNTRY_NAME}_HFC_All_Indicators_Report.xlsx'
 MASTERSHEET_REPORT = f'{COUNTRY_NAME}_HFC_MasterSheet_Report.xlsx'
 
 def setup_logging():
@@ -70,19 +68,17 @@ def generate_mastersheet_report(df, base_cols, report_path):
     new_mastersheet_df = mastersheet.generate_dataframe()
     return MasterSheet.merge_with_existing_report(new_mastersheet_df, report_path)
 
-
-
     
 if __name__ == "__main__":
 
     # Time setup
     start_time = datetime.now()
-    start_time = start_time.strftime("%m/%d/%Y, %H:%M:%S")
+    timestamp = start_time.strftime("%m/%d/%Y, %H:%M:%S")
 
     # Setup API client
     client = DataBridgesShapes(CREDENTIALS)
     survey_id = DATA_BRIDGES_CONFIG['survey_id']
-    print(f'Checking data quality for {COUNTRY_NAME} survey #{survey_id} at {start_time}')
+    print(f'Checking data quality for {COUNTRY_NAME} survey #{survey_id} at {timestamp}')
 
     # Setup logging
     logging_handler = LoggingHandler()
@@ -118,12 +114,9 @@ if __name__ == "__main__":
         mastersheet_report.to_excel(writer, sheet_name='MasterSheet', index=False)
 
     end_time = datetime.now()
-    end_time = end_time.strftime("%m/%d/%Y, %H:%M:%S")
 
     # Terminal: Print if there were any errors
     error_count = error_handler.error_count
     warning_count = error_handler.warning_count
     print(f"Data processing completed with {error_count} errors and {warning_count} warnings.")
     print(f"Total time taken: {end_time - start_time}")
-    
-
