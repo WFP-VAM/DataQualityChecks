@@ -17,7 +17,8 @@ from data_bridges_knots import DataBridgesShapes
 from high_frequency_checks import MasterSheet, ConfigHandler
 from high_frequency_checks.etl.transform import map_admin_areas, create_urban_rural
 from high_frequency_checks.helpers.logging_config import LoggingHandler
-from data__bridges_config import DATA_BRIDGES_CONFIG
+from high_frequency_checks.helpers.quotas import generate_quotas_report
+from data_bridges_config import DATA_BRIDGES_CONFIG
 
 CREDENTIALS = DATA_BRIDGES_CONFIG["credentials_file_path"]
 COUNTRY_NAME = DATA_BRIDGES_CONFIG["country_name"]
@@ -108,6 +109,11 @@ if __name__ == "__main__":
 
     # Generate mastersheet
     mastersheet_report = generate_mastersheet_report(full_report, base_cols, report_mastersheet_path)
+
+    # Generate quotas report
+    
+    admin_columns = ["_uuid", "ID01", "ID02",  "ID03", "ID04LABEL"]
+    generate_quotas_report(df, admin_columns)
 
     # Export reports in Excel
     with pd.ExcelWriter(report_mastersheet_path) as writer:
