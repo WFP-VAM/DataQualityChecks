@@ -94,10 +94,16 @@ if __name__ == "__main__":
     # Read data
     survey_id = DATA_BRIDGES_CONFIG['survey_id']
 
-    df = client.get_household_survey(survey_id=survey_id, access_type='full', page_size=1000)
-    print(f"Data loaded, performing checks")
+    # df = client.get_household_survey(survey_id=survey_id, access_type='full', page_size=1000)
+    # print(f"Data loaded, performing checks")
+    df = pd.read_csv(DATA_BRIDGES_CONFIG['data_file_extract'], low_memory=False)
+
+    # Generate quotas report
 
     # DRC specific standardization / mapping
+    admin_columns = ["_uuid", "ID01", "ID02",  "ID03", "ID04LABEL"]
+    generate_quotas_report(df, admin_columns)
+
     df = map_admin_areas(df)
     df = create_urban_rural(df)
 
@@ -110,10 +116,7 @@ if __name__ == "__main__":
     # Generate mastersheet
     mastersheet_report = generate_mastersheet_report(full_report, base_cols, report_mastersheet_path)
 
-    # Generate quotas report
-    
-    admin_columns = ["_uuid", "ID01", "ID02",  "ID03", "ID04LABEL"]
-    generate_quotas_report(df, admin_columns)
+
 
     # Export reports in Excel
     with pd.ExcelWriter(report_mastersheet_path) as writer:

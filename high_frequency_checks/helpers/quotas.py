@@ -57,24 +57,29 @@ def filter_admin_areas(df):
     completion_by_area = completion_by_area.fillna(0)
     return completion_by_area
 
-def generate_quotas_report(df, admin_columns):
-    
+def generate_quotas_report(df, admin_columns = None):
+    if admin_columns = None:
+        admin_columns = ["ADMIN1Name", "ADMIN2Name", "ADMIN3Name", "ADMIN4Name", "_uuid"]
 
-    admin_areas, admin_quotas = get_admin_areas_quotas(ADMIN_AREAS_LABELS, ADMIN_AREAS_QUOTAS)
+    try:
+        admin_areas, admin_quotas = get_admin_areas_quotas(ADMIN_AREAS_LABELS, ADMIN_AREAS_QUOTAS)
 
-    admin_data = relabel_admin_areas(df, admin_columns, admin_areas)
+        admin_data = relabel_admin_areas(df, admin_columns, admin_areas)
 
-    admin_data = rename_admin_areas(admin_data)
+        admin_data = rename_admin_areas(admin_data)
 
-    count_df = add_survey_count(admin_data)
+        count_df = add_survey_count(admin_data)
 
-    result_df = add_quotas(count_df, admin_quotas)
+        result_df = add_quotas(count_df, admin_quotas)
 
-    completion_by_area = filter_admin_areas(result_df)
-    completion_by_area.to_csv("reports/drc_survey_count_quotas.csv")
-    print("Done")
+        completion_by_area = filter_admin_areas(result_df)
+        completion_by_area.to_csv("reports/drc_survey_count_quotas.csv")
+        print("Report quota generated")
+    except FileNotFoundError:
+        print("File not found. Quota report not generated.")
 
 
 if __name__ == "__main__":
+    pass
 
 
