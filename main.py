@@ -14,17 +14,16 @@ import os
 import pandas as pd
 from datetime import datetime
 from data_bridges_knots import DataBridgesShapes
-from high_frequency_checks import MasterSheet, ConfigHandler, ConfigGenerator, DataFrameCustomizer
-from high_frequency_checks.etl.extract import read_data, subset_for_enumerator_performance, get_indicators
-from high_frequency_checks.etl.load import load_data
+from high_frequency_checks import MasterSheet, ConfigHandler
 from high_frequency_checks.etl.transform import map_admin_areas, create_urban_rural
 from high_frequency_checks.helpers.logging_config import LoggingHandler
-from data__bridges_config import DATA_BRIDGES_CONFIG
+from high_frequency_checks.helpers.quotas import generate_quotas_report
+from data_bridges_config import DATA_BRIDGES_CONFIG
 
 CREDENTIALS = DATA_BRIDGES_CONFIG["credentials_file_path"]
 COUNTRY_NAME = DATA_BRIDGES_CONFIG["country_name"]
 REPORT_FOLDER = "./reports"
-ALL_INDICATOR_REPORT = f' {COUNTRY_NAME}_HFC_All_Indicators_Report.xlsx'
+ALL_INDICATOR_REPORT = f'{COUNTRY_NAME}_HFC_All_Indicators_Report.xlsx'
 MASTERSHEET_REPORT = f'{COUNTRY_NAME}_HFC_MasterSheet_Report.xlsx'
 
 def setup_logging():
@@ -70,21 +69,17 @@ def generate_mastersheet_report(df, base_cols, report_path):
     new_mastersheet_df = mastersheet.generate_dataframe()
     return MasterSheet.merge_with_existing_report(new_mastersheet_df, report_path)
 
-
-
     
 if __name__ == "__main__":
 
-    TEST = False
-
     # Time setup
     start_time = datetime.now()
-    start_time = start_time.strftime("%m/%d/%Y, %H:%M:%S")
+    timestamp = start_time.strftime("%m/%d/%Y, %H:%M:%S")
 
     # Setup API client
     client = DataBridgesShapes(CREDENTIALS)
     survey_id = DATA_BRIDGES_CONFIG['survey_id']
-    print(f'Checking data quality for {COUNTRY_NAME} survey #{survey_id} at {start_time}')
+    print(f'Checking data quality for {COUNTRY_NAME} survey #{survey_id} at {timestamp}')
 
     # Setup logging
     logging_handler = LoggingHandler()
@@ -99,15 +94,16 @@ if __name__ == "__main__":
     # Read data
     survey_id = DATA_BRIDGES_CONFIG['survey_id']
 
-    if TEST == True:
-        df = pd.read_csv("data/drc_test_data.csv")
-    else:
-        df = client.get_household_survey(survey_id=survey_id, access_type='full', page_size=1000)
-    print(f"Data loaded, performing checks")
+    # df = client.get_household_survey(survey_id=survey_id, access_type='full', page_size=1000)
+    # print(f"Data loaded, performing checks")
+    df = pd.read_csv(DATA_BRIDGES_CONFIG['data_file_extract'], low_memory=False)
 
-    # df.to_csv("data/drc_test_data.csv")
+    # Generate quotas report
 
     # DRC specific standardization / mapping
+    admin_columns = ["_uuid", "ID01", "ID02",  "ID03", "ID04LABEL"]
+    generate_quotas_report(df, admin_columns)
+
     df = map_admin_areas(df)
     df = create_urban_rural(df)
 
@@ -120,17 +116,16 @@ if __name__ == "__main__":
     # Generate mastersheet
     mastersheet_report = generate_mastersheet_report(full_report, base_cols, report_mastersheet_path)
 
+
+
     # Export reports in Excel
     with pd.ExcelWriter(report_mastersheet_path) as writer:
         mastersheet_report.to_excel(writer, sheet_name='MasterSheet', index=False)
 
     end_time = datetime.now()
-    end_time = end_time.strftime("%m/%d/%Y, %H:%M:%S")
 
     # Terminal: Print if there were any errors
     error_count = error_handler.error_count
     warning_count = error_handler.warning_count
     print(f"Data processing completed with {error_count} errors and {warning_count} warnings.")
     print(f"Total time taken: {end_time - start_time}")
-    
-
