@@ -58,7 +58,7 @@ def filter_admin_areas(df):
     return completion_by_area
 
 def generate_quotas_report(df, admin_columns = None):
-    if admin_columns = None:
+    if admin_columns == None:
         admin_columns = ["ADMIN1Name", "ADMIN2Name", "ADMIN3Name", "ADMIN4Name", "_uuid"]
 
     try:
