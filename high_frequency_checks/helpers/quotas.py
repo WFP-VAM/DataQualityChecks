@@ -17,9 +17,11 @@ def relabel_admin_areas(df, admin_columns, admin_areas):
     admin_data = df[admin_columns]
     admin_labels = dict(zip(admin_areas['name'], admin_areas['value_label']))
 
-    admin_data['ID01'] = admin_data['ID01'].map(admin_labels)
-    admin_data['ID02'] = admin_data['ID02'].map(admin_labels)
-    admin_data['ID03'] = admin_data['ID03'].map(admin_labels)
+    admin_data.loc[:, 'ID01'] = admin_data['ID01'].map(admin_labels)
+    admin_data.loc[:, 'ID02'] = admin_data['ID02'].map(admin_labels)
+    admin_data.loc[:, 'ID03'] = admin_data['ID03'].map(admin_labels)
+
+    # Try using .loc[row_indexer,col_indexer] = value instead
     return admin_data
 
 def rename_admin_areas(admin_data):

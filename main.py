@@ -96,8 +96,8 @@ if __name__ == "__main__":
     survey_id = DATA_BRIDGES_CONFIG['survey_id']
 
     # df = client.get_household_survey(survey_id=survey_id, access_type='full', page_size=1000)
-    # print(f"Data loaded, performing checks")
     df = pd.read_csv(DATA_BRIDGES_CONFIG['data_file_extract'], low_memory=False)
+    print(f"Data loaded for {df.shape[0]} entries, performing checks on survey id:{survey_id}")
 
     # Generate enumerator subset
     enumerator_report = subset_for_enumerator_performance(df)
@@ -125,7 +125,7 @@ if __name__ == "__main__":
 
     end_time = datetime.now()
 
-    # Load data to database
+    # # Load data to database
     load_data(mastersheet_report, "DRCDataQualitySummaryReport")
     load_data(enumerator_report, "DRCDataQualityEnumeratorReport")
     load_data(survey_completion_report, "DRCDataQualityCompletionReport")
