@@ -75,6 +75,7 @@ def generate_quotas_report(df, admin_columns = None):
         completion_by_area = filter_admin_areas(result_df)
         completion_by_area.to_csv(f"reports/{DATA_BRIDGES_CONFIG["country_name"]}_Survey_Completion_Report.csv")
         print("Report quota generated")
+        return completion_by_area
     except FileNotFoundError:
         print("Data files not found. Survey completion report not generated.")
 
