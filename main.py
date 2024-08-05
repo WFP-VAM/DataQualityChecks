@@ -15,7 +15,8 @@ import pandas as pd
 from datetime import datetime
 from data_bridges_knots import DataBridgesShapes
 from high_frequency_checks import MasterSheet, ConfigHandler
-from high_frequency_checks.etl.transform import map_admin_areas, create_urban_rural
+from high_frequency_checks.etl.transform import map_admin_areas, create_urban_rural, subset_for_enumerator_performance
+from high_frequency_checks.etl.load import load_data
 from high_frequency_checks.helpers.logging_config import LoggingHandler
 from high_frequency_checks.helpers.quotas import generate_quotas_report
 from data_bridges_config import DATA_BRIDGES_CONFIG
@@ -98,12 +99,15 @@ if __name__ == "__main__":
     # print(f"Data loaded, performing checks")
     df = pd.read_csv(DATA_BRIDGES_CONFIG['data_file_extract'], low_memory=False)
 
+    # Generate enumerator subset
+    enumerator_report = subset_for_enumerator_performance(df)
+
     # Generate quotas report
+    admin_columns = ["_uuid", "ID01", "ID02",  "ID03", "ID04LABEL"]
+    
+    survey_completion_report = generate_quotas_report(df, admin_columns)
 
     # DRC specific standardization / mapping
-    admin_columns = ["_uuid", "ID01", "ID02",  "ID03", "ID04LABEL"]
-    generate_quotas_report(df, admin_columns)
-
     df = map_admin_areas(df)
     df = create_urban_rural(df)
 
@@ -115,14 +119,16 @@ if __name__ == "__main__":
 
     # Generate mastersheet
     mastersheet_report = generate_mastersheet_report(full_report, base_cols, report_mastersheet_path)
-
-
-
     # Export reports in Excel
     with pd.ExcelWriter(report_mastersheet_path) as writer:
         mastersheet_report.to_excel(writer, sheet_name='MasterSheet', index=False)
 
     end_time = datetime.now()
+
+    # Load data to database
+    load_data(mastersheet_report, "DRCDataQualitySummaryReport")
+    load_data(enumerator_report, "DRCDataQualityEnumeratorReport")
+    load_data(survey_completion_report, "DRCDataQualityCompletionReport")
 
     # Terminal: Print if there were any errors
     error_count = error_handler.error_count
