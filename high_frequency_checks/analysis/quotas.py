@@ -6,15 +6,16 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 from data_bridges_config import DATA_BRIDGES_CONFIG
 
 # Configure logging
-logging.basicConfig(filename='quotas_processing_log.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename='quotas_processing.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 
 class QuotasReport:
     def __init__(self, df, admin_columns=None):
         self.df = df
         self.admin_columns = admin_columns or ["ADMIN1Name", "ADMIN2Name", "ADMIN3Name", "ADMIN4Name", "_uuid"]
         self.logger = logging.getLogger(__name__)
-        self.ADMIN_AREAS_LABELS = "data/drc_admin_labels.pkl"
-        self.ADMIN_AREAS_QUOTAS = "data/drc_sampling_size.pkl"
+        self.ADMIN_AREAS_LABELS = DATA_BRIDGES_CONFIG['admin_areas_labels_file']
+        self.ADMIN_AREAS_QUOTAS =  DATA_BRIDGES_CONFIG['admin_areas_quotas_file']	
 
     def get_admin_areas_quotas(self):
         try:

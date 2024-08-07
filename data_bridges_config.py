@@ -6,5 +6,7 @@ DATA_BRIDGES_CONFIG = {
     "country_name": "DRC",
     "credentials_file_path": r"databridges_api_database_credentials.yaml",
     "data_file_extract": r"data/drc_efsa_data.csv", # BACKUP IF PIPELINE FAILS
-    'test_data_file_extract': r"data/drc_test_data.pkl"
+    'test_data_file_extract': r"data/drc_test_data.pkl",
+    'admin_areas_quotas_file': r"data/drc_sampling_size.pkl",
+    'admin_areas_labels_file': r"data/drc_admin_labels.pkl",
 }
