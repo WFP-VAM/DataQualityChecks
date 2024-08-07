@@ -99,8 +99,6 @@ if __name__ == "__main__":
     df = pd.read_csv(DATA_BRIDGES_CONFIG['data_file_extract'], low_memory=False)
     print(f"Data loaded for {df.shape[0]} entries, performing checks on survey id:{survey_id}")
 
-    # Generate enumerator subset
-    enumerator_report = subset_for_enumerator_performance(df)
 
     # Generate quotas report
     admin_columns = ["_uuid", "ID01", "ID02",  "ID03", "ID04LABEL"]
@@ -110,6 +108,9 @@ if __name__ == "__main__":
     # DRC specific standardization / mapping
     df = map_admin_areas(df)
     df = create_urban_rural(df)
+
+    # Generate enumerator subset
+    enumerator_report = subset_for_enumerator_performance(df)
 
     # Generate report folders
     report_all_indicators_path, report_mastersheet_path = create_reports_folder()
@@ -123,18 +124,17 @@ if __name__ == "__main__":
     with pd.ExcelWriter(report_mastersheet_path) as writer:
         mastersheet_report.to_excel(writer, sheet_name='MasterSheet', index=False)
 
-    end_time = datetime.now()
-
     all_indicator_report = create_all_indicators_for_db(report_mastersheet_path)
 
     # # # Load data to database
-    # load_data(mastersheet_report, "DRCDataQualitySummaryReport")
-    # load_data(enumerator_report, "DRCDataQualityEnumeratorReport")
-    # load_data(survey_completion_report, "DRCDataQualityCompletionReport")
+    load_data(mastersheet_report, "DRCDataQualitySummaryReport")
+    load_data(enumerator_report, "DRCDataQualityEnumeratorReport")
+    load_data(survey_completion_report, "DRCDataQualityCompletionReport")
     load_data(all_indicator_report, "DRCDataQualityAllIndicatorsReport")
 
     # Terminal: Print if there were any errors
     error_count = error_handler.error_count
     warning_count = error_handler.warning_count
+    end_time = datetime.now()
     print(f"Data processing completed with {error_count} errors and {warning_count} warnings.")
     print(f"Total time taken: {end_time - start_time}")
