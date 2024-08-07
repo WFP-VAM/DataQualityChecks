@@ -18,6 +18,7 @@ from high_frequency_checks import MasterSheet, ConfigHandler, QuotasReport
 from high_frequency_checks.etl.transform import map_admin_areas, create_urban_rural, subset_for_enumerator_performance, create_all_indicators_for_db
 from high_frequency_checks.etl.load import load_data
 from high_frequency_checks.helpers.logging_config import LoggingHandler
+from high_frequency_checks.helpers.file_conversion import convert_to_pickle
 from data_bridges_config import DATA_BRIDGES_CONFIG
 
 # FOR DEVELOPMENT
@@ -112,6 +113,9 @@ if __name__ == "__main__":
     indicators = config_handler.get_indicators()
     base_cols = config_handler.get_base_config()
 
+    # Convert data to pickle
+    convert_to_pickle()
+    
     # Read data
     df = read_data()
 
