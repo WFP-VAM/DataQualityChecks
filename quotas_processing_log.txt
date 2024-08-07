@@ -1,0 +1,4 @@
+2024-08-07 12:05:03,324 - ERROR - Error generating quotas report: "['ADMIN1Name', 'ADMIN2Name', 'ADMIN3Name', 'ADMIN4Name'] not in index"
+2024-08-07 12:09:03,009 - ERROR - Error generating quotas report: "['ADMIN1Name', 'ADMIN2Name', 'ADMIN3Name', 'ADMIN4Name'] not in index"
+2024-08-07 12:20:02,799 - ERROR - Error generating quotas report: "['ADMIN1Name', 'ADMIN2Name', 'ADMIN3Name', 'ADMIN4Name'] not in index"
+2024-08-07 12:25:19,152 - INFO - Report quota generated and saved to reports/DRC_Survey_Completion_Report.csv

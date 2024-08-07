@@ -10,10 +10,12 @@ from .indicators.lcs_fs_r import LCS_FS_R
 from .indicators.lcs_en import LCS_EN
 from .indicators.housing import Housing
 from .indicators.timing import Timing
-from .mastersheet.mastersheet import MasterSheet
+from .analysis.mastersheet import MasterSheet
 from .config.config_handler import ConfigHandler
 from .config.config_generator import ConfigGenerator
 from .helpers.dataframe_customizer import DataFrameCustomizer
+from .helpers.logging_config import LoggingHandler
+from .analysis.quotas import generate_quotas_report
 
 
 __all__ = [
@@ -32,5 +34,7 @@ __all__ = [
     'ConfigHandler',
     'ConfigGenerator',
     'DataFrameCustomizer',
-    'Timing'
+    'Timing', 
+    'LoggingHandler',
+    'generate_quotas_report'
 ]

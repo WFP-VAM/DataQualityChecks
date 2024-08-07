@@ -18,7 +18,7 @@ from high_frequency_checks import MasterSheet, ConfigHandler
 from high_frequency_checks.etl.transform import map_admin_areas, create_urban_rural, subset_for_enumerator_performance, create_all_indicators_for_db
 from high_frequency_checks.etl.load import load_data
 from high_frequency_checks.helpers.logging_config import LoggingHandler
-from high_frequency_checks.helpers.quotas import generate_quotas_report
+from high_frequency_checks.analysis.quotas import generate_quotas_report
 from data_bridges_config import DATA_BRIDGES_CONFIG
 
 CREDENTIALS = DATA_BRIDGES_CONFIG["credentials_file_path"]
@@ -134,10 +134,10 @@ if __name__ == "__main__":
     all_indicator_report = create_all_indicators_for_db(report_mastersheet_path)
 
     # # # # Load data to database
-    # load_data(mastersheet_report, "DRCDataQualitySummaryReport")
-    # load_data(enumerator_report, "DRCDataQualityEnumeratorReport")
-    # load_data(survey_completion_report, "DRCDataQualityCompletionReport")
-    # load_data(all_indicator_report, "DRCDataQualityAllIndicatorsReport")
+    load_data(mastersheet_report, "DRCDataQualitySummaryReport")
+    load_data(enumerator_report, "DRCDataQualityEnumeratorReport")
+    load_data(survey_completion_report, "DRCDataQualityCompletionReport")
+    load_data(all_indicator_report, "DRCDataQualityAllIndicatorsReport")
 
     # Terminal: Print if there were any errors
     error_count = error_handler.error_count

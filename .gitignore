@@ -172,13 +172,13 @@ DataBridgesKnots-main
 EGCO_Sudanese_24_HFC.do
 HFC_FCS
 chat
-*.ipynb
-sandbox.py
+notebooks/*
 *.bak
 
 # data
 *.xlsx
 *.csv
+data/*
 
 # other files
 NOTES.md
