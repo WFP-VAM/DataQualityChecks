@@ -133,11 +133,11 @@ if __name__ == "__main__":
 
     all_indicator_report = create_all_indicators_for_db(report_mastersheet_path)
 
-    # # # Load data to database
-    load_data(mastersheet_report, "DRCDataQualitySummaryReport")
-    load_data(enumerator_report, "DRCDataQualityEnumeratorReport")
-    load_data(survey_completion_report, "DRCDataQualityCompletionReport")
-    load_data(all_indicator_report, "DRCDataQualityAllIndicatorsReport")
+    # # # # Load data to database
+    # load_data(mastersheet_report, "DRCDataQualitySummaryReport")
+    # load_data(enumerator_report, "DRCDataQualityEnumeratorReport")
+    # load_data(survey_completion_report, "DRCDataQualityCompletionReport")
+    # load_data(all_indicator_report, "DRCDataQualityAllIndicatorsReport")
 
     # Terminal: Print if there were any errors
     error_count = error_handler.error_count
