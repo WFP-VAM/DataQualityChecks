@@ -5,5 +5,6 @@ DATA_BRIDGES_CONFIG = {
     "survey_id": 3653, 
     "country_name": "DRC",
     "credentials_file_path": r"databridges_api_database_credentials.yaml",
-    "data_file_extract": r"data/drc_efsa_data.csv" # BACKUP IF PIPELINE FAILS
+    "data_file_extract": r"data/drc_efsa_data.csv", # BACKUP IF PIPELINE FAILS
+    'test_data_file_extract': r"data/drc_test_data.pkl"
 }

@@ -14,18 +14,23 @@ import os
 import pandas as pd
 from datetime import datetime
 from data_bridges_knots import DataBridgesShapes
-from high_frequency_checks import MasterSheet, ConfigHandler
+from high_frequency_checks import MasterSheet, ConfigHandler, QuotasReport
 from high_frequency_checks.etl.transform import map_admin_areas, create_urban_rural, subset_for_enumerator_performance, create_all_indicators_for_db
 from high_frequency_checks.etl.load import load_data
 from high_frequency_checks.helpers.logging_config import LoggingHandler
-from high_frequency_checks.analysis.quotas import generate_quotas_report
 from data_bridges_config import DATA_BRIDGES_CONFIG
 
+# FOR DEVELOPMENT
+TEST_MODE = True
+IS_PIPELINE_WORKING = False
+
+# Set up of constants
 CREDENTIALS = DATA_BRIDGES_CONFIG["credentials_file_path"]
 COUNTRY_NAME = DATA_BRIDGES_CONFIG["country_name"]
 REPORT_FOLDER = "./reports"
 ALL_INDICATOR_REPORT = f'{COUNTRY_NAME}_HFC_All_Indicators_Report.xlsx'
 MASTERSHEET_REPORT = f'{COUNTRY_NAME}_HFC_MasterSheet_Report.xlsx'
+
 
 def setup_logging():
     logging_handler = LoggingHandler()
@@ -70,7 +75,7 @@ def generate_mastersheet_report(df, base_cols, report_path):
     new_mastersheet_df = mastersheet.generate_dataframe()
     return MasterSheet.merge_with_existing_report(new_mastersheet_df, report_path)
 
-def read_data(is_pipeline_working=True):
+def read_data(is_pipeline_working=IS_PIPELINE_WORKING):
     """
     Reads data from Data Bridges for a given survey ID.
     """
@@ -83,7 +88,10 @@ def read_data(is_pipeline_working=True):
         
     else: 
         print("Getting data from Moda file extract")
-        df = pd.read_csv(DATA_BRIDGES_CONFIG['data_file_extract'], low_memory=False)
+        if TEST_MODE == True:
+            df = pd.read_pickle(DATA_BRIDGES_CONFIG['test_data_file_extract'])
+        else:
+            df = pd.read_csv(DATA_BRIDGES_CONFIG['data_file_extract'], low_memory=False)
 
     print(f"Data loaded for {df.shape[0]} entries, performing checks on survey")
     return df
@@ -105,12 +113,12 @@ if __name__ == "__main__":
     base_cols = config_handler.get_base_config()
 
     # Read data
-    df = read_data(is_pipeline_working=False)
+    df = read_data()
 
     # Generate quotas report
     admin_columns = ["_uuid", "ID01", "ID02",  "ID03", "ID04LABEL"]
-    
-    survey_completion_report = generate_quotas_report(df, admin_columns)
+    quotas = QuotasReport(df, admin_columns=admin_columns)
+    survey_completion_report =  quotas.generate_report()
 
     # DRC specific standardization / mapping
     df = map_admin_areas(df)
@@ -133,11 +141,12 @@ if __name__ == "__main__":
 
     all_indicator_report = create_all_indicators_for_db(report_mastersheet_path)
 
-    # # # # Load data to database
-    load_data(mastersheet_report, "DRCDataQualitySummaryReport")
-    load_data(enumerator_report, "DRCDataQualityEnumeratorReport")
-    load_data(survey_completion_report, "DRCDataQualityCompletionReport")
-    load_data(all_indicator_report, "DRCDataQualityAllIndicatorsReport")
+    # Load data to database
+    if TEST_MODE == False:
+        load_data(mastersheet_report, "DRCDataQualitySummaryReport")
+        load_data(enumerator_report, "DRCDataQualityEnumeratorReport")
+        load_data(survey_completion_report, "DRCDataQualityCompletionReport")
+        load_data(all_indicator_report, "DRCDataQualityAllIndicatorsReport")
 
     # Terminal: Print if there were any errors
     error_count = error_handler.error_count

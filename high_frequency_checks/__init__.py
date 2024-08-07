@@ -11,11 +11,11 @@ from .indicators.lcs_en import LCS_EN
 from .indicators.housing import Housing
 from .indicators.timing import Timing
 from .analysis.mastersheet import MasterSheet
+from .analysis.quotas import QuotasReport
 from .config.config_handler import ConfigHandler
 from .config.config_generator import ConfigGenerator
 from .helpers.dataframe_customizer import DataFrameCustomizer
 from .helpers.logging_config import LoggingHandler
-from .analysis.quotas import generate_quotas_report
 
 
 __all__ = [
@@ -31,10 +31,10 @@ __all__ = [
     'HHEXPNF_1M',
     'HHEXPNF_6M',
     'MasterSheet',
+    'QuotasReport',
     'ConfigHandler',
     'ConfigGenerator',
     'DataFrameCustomizer',
     'Timing', 
     'LoggingHandler',
-    'generate_quotas_report'
 ]
