@@ -70,17 +70,29 @@ def generate_mastersheet_report(df, base_cols, report_path):
     new_mastersheet_df = mastersheet.generate_dataframe()
     return MasterSheet.merge_with_existing_report(new_mastersheet_df, report_path)
 
+def read_data(is_pipeline_working=True):
+    """
+    Reads data from Data Bridges for a given survey ID.
+    """
+    if is_pipeline_working == True:
+        # Setup API client
+        client = DataBridgesShapes(CREDENTIALS)
+        survey_id = DATA_BRIDGES_CONFIG['survey_id']
+        print("Getting data from DataBridges")
+        df = client.get_household_survey(survey_id=survey_id, access_type='full', page_size=1000)
+        
+    else: 
+        print("Getting data from Moda file extract")
+        df = pd.read_csv(DATA_BRIDGES_CONFIG['data_file_extract'], low_memory=False)
+
+    print(f"Data loaded for {df.shape[0]} entries, performing checks on survey")
+    return df
     
 if __name__ == "__main__":
 
     # Time setup
     start_time = datetime.now()
     timestamp = start_time.strftime("%m/%d/%Y, %H:%M:%S")
-
-    # Setup API client
-    client = DataBridgesShapes(CREDENTIALS)
-    survey_id = DATA_BRIDGES_CONFIG['survey_id']
-    print(f'Checking data quality for {COUNTRY_NAME} survey #{survey_id} at {timestamp}')
 
     # Setup logging
     logging_handler = LoggingHandler()
@@ -93,12 +105,7 @@ if __name__ == "__main__":
     base_cols = config_handler.get_base_config()
 
     # Read data
-    survey_id = DATA_BRIDGES_CONFIG['survey_id']
-
-    # df = client.get_household_survey(survey_id=survey_id, access_type='full', page_size=1000)
-    df = pd.read_csv(DATA_BRIDGES_CONFIG['data_file_extract'], low_memory=False)
-    print(f"Data loaded for {df.shape[0]} entries, performing checks on survey id:{survey_id}")
-
+    df = read_data(is_pipeline_working=False)
 
     # Generate quotas report
     admin_columns = ["_uuid", "ID01", "ID02",  "ID03", "ID04LABEL"]
