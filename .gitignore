@@ -187,7 +187,7 @@ TODO.md
 data_processing_log.txt
 
 # profiling
-profile/*
+profiling/*
 
 # config files 
 databridges_api_database_credentials.yaml

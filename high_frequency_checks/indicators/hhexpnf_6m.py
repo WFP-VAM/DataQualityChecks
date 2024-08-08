@@ -1,5 +1,5 @@
 import logging
-from high_frequency_checks.helpers.base_indicator import BaseIndicator
+from high_frequency_checks.indicators.base_indicator import BaseIndicator
     
     
 class HHEXPNF_6M(BaseIndicator):

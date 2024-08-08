@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import logging
-from high_frequency_checks.helpers.base_indicator import BaseIndicator
+from high_frequency_checks.indicators.base_indicator import BaseIndicator
 
 class FCS(BaseIndicator):
     """

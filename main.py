@@ -14,7 +14,7 @@ import os
 import pandas as pd
 from datetime import datetime
 from data_bridges_knots import DataBridgesShapes
-from high_frequency_checks import MasterSheet, ConfigHandler, QuotasReport
+from high_frequency_checks import MasterSheet, ConfigHandler, QuotasReport, EnumeratorFlagsReport
 from high_frequency_checks.etl.transform import map_admin_areas, create_urban_rural, subset_for_enumerator_performance, create_all_indicators_for_db
 from high_frequency_checks.etl.load import load_data
 from high_frequency_checks.helpers.logging_config import LoggingHandler
@@ -43,6 +43,7 @@ def create_reports_folder(reports_folder = REPORT_FOLDER):
     report_mastersheet_path = os.path.join(reports_folder, MASTERSHEET_REPORT)
     return report_all_indicators_path, report_mastersheet_path
 
+# FIXME: improve performance, refactorand remove I/O operations
 def generate_all_indicators_report(df, indicators, base_cols, report_path):
     with pd.ExcelWriter(report_path) as writer:
         current_df = df.copy()
@@ -144,6 +145,11 @@ if __name__ == "__main__":
         mastersheet_report.to_excel(writer, sheet_name='MasterSheet', index=False)
 
     all_indicator_report = create_all_indicators_for_db(report_mastersheet_path)
+
+    # Enumerator Report (FIXME: This is a temporary fix)
+    file_directory = 'reports/DRC_HFC_All_Indicators_Report.xlsx'
+    enumerator_report = EnumeratorFlagsReport(file_directory)
+    enumerator_report = enumerator_report.generate_report()
 
     # Load data to database
     if TEST_MODE == False:
