@@ -3,7 +3,7 @@ abnormal_period:
 - evening
 - late_evening
 invalid_duration: 5
-long_duration_mins:  1000
+long_duration_mins:  99999999
 short_duration_mins: 10
 time_thresholds:
   afternoon:

@@ -22,8 +22,8 @@ from high_frequency_checks.helpers.file_conversion import convert_to_pickle
 from data_bridges_config import DATA_BRIDGES_CONFIG
 
 # FOR DEVELOPMENT
-TEST_MODE = True
-IS_PIPELINE_WORKING = False
+TEST_MODE = False
+IS_PIPELINE_WORKING = True
 
 # Set up of constants
 CREDENTIALS = DATA_BRIDGES_CONFIG["credentials_file_path"]
